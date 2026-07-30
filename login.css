@@ -1,0 +1,328 @@
+/* ===== AjahFi Login Page ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+:root {
+    --green: hsl(152, 75%, 26%);
+    --green-dark: hsl(152, 82%, 16%);
+    --green-bright: hsl(145, 58%, 38%);
+    --navy: #123049;
+    --gold: #d3a63f;
+    --field-text: #ffffff;
+    --input-bg: #ffffff;
+    --placeholder: #9aa3a8;
+    --radius: 16px;
+}
+
+body {
+    min-height: 100vh;
+    background: linear-gradient(180deg, #fdf4e1 0%, #fbeed6 28%, #f4ead0 52%, #eaecca 78%, #dfe7c2 100%);
+}
+
+/* Pastoral scene fixed to the bottom, fading up into the cream */
+body::before {
+    content: '';
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 46vh;
+    background: url('banner_goats.png') center 60% / cover no-repeat;
+    -webkit-mask-image: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.85) 38%, #000 100%);
+    mask-image: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.85) 38%, #000 100%);
+    opacity: 0.9;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* ===== Layout ===== */
+.login-page {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 22px 36px;
+}
+
+.lang-selector {
+    align-self: flex-end;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #ffffff;
+    border: none;
+    border-radius: var(--radius);
+    padding: 10px 16px;
+    font-weight: 700;
+    color: var(--navy);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.lang-selector .fa-earth-americas {
+    color: var(--green);
+    font-size: 16px;
+}
+
+.lang-selector .fa-chevron-down {
+    font-size: 11px;
+    color: var(--navy);
+}
+
+.login-content {
+    width: 100%;
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 14px;
+}
+
+/* ===== Branding ===== */
+.brand-logo {
+    width: 100%;
+    max-width: 280px;
+    height: auto;
+    margin-bottom: 22px;
+}
+
+.welcome-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--green-bright);
+    letter-spacing: -0.5px;
+}
+
+.welcome-sub {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-top: 6px;
+    margin-bottom: 22px;
+}
+
+.welcome-sub strong {
+    font-weight: 800;
+    color: var(--green);
+}
+
+/* ===== Form ===== */
+.login-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: var(--input-bg);
+    border: 1.5px solid transparent;
+    border-radius: var(--radius);
+    padding: 0 18px;
+    height: 58px;
+    box-shadow: 0 6px 18px rgba(18, 48, 73, 0.06);
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.input-group:focus-within {
+    border-color: var(--green);
+    box-shadow: 0 6px 20px rgba(16, 103, 63, 0.14);
+}
+
+.input-group > .field-icon {
+    color: var(--green);
+    font-size: 18px;
+    width: 20px;
+    text-align: center;
+}
+
+.input-group input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--navy);
+}
+
+.input-group input::placeholder {
+    color: var(--placeholder);
+    font-weight: 500;
+}
+
+.pw-toggle {
+    background: none;
+    border: none;
+    color: var(--placeholder);
+    font-size: 17px;
+    cursor: pointer;
+    padding: 6px;
+}
+
+.forgot-link {
+    align-self: flex-end;
+    color: var(--green);
+    font-weight: 700;
+    font-size: 15px;
+    text-decoration: underline;
+    margin-top: -4px;
+}
+
+.btn-signin {
+    height: 60px;
+    border: none;
+    border-radius: var(--radius);
+    background: linear-gradient(180deg, var(--green) 0%, var(--green-dark) 100%);
+    color: #ffffff;
+    font-family: 'Outfit', sans-serif;
+    font-size: 21px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 10px 22px rgba(16, 103, 63, 0.28);
+    transition: transform 0.15s, box-shadow 0.2s, filter 0.2s;
+    margin-top: 6px;
+}
+
+.btn-signin:hover {
+    filter: brightness(1.06);
+    box-shadow: 0 12px 26px rgba(16, 103, 63, 0.34);
+}
+
+.btn-signin:active {
+    transform: translateY(1px);
+}
+
+.signup-line {
+    text-align: center;
+    color: var(--navy);
+    font-weight: 600;
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+.signup-line a {
+    color: var(--green);
+    font-weight: 800;
+    text-decoration: underline;
+}
+
+/* ===== Choose a Role ===== */
+.role-divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    margin: 22px 0 16px;
+}
+
+.role-divider::before,
+.role-divider::after {
+    content: '';
+    flex: 1;
+    height: 3px;
+    border-radius: 3px;
+    background: linear-gradient(90deg, transparent, var(--gold));
+}
+
+.role-divider::after {
+    background: linear-gradient(90deg, var(--gold), transparent);
+}
+
+.role-divider span {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    color: var(--navy);
+    white-space: nowrap;
+}
+
+.role-cards {
+    display: flex;
+    gap: 12px;
+    width: 100%;
+}
+
+.role-card {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.72);
+    border: 2px solid transparent;
+    border-radius: var(--radius);
+    padding: 16px 8px;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s, transform 0.15s, box-shadow 0.2s;
+}
+
+.role-card:hover {
+    transform: translateY(-2px);
+}
+
+.role-card.selected {
+    background: #ffffff;
+    border-color: var(--green);
+    box-shadow: 0 8px 20px rgba(16, 103, 63, 0.18);
+}
+
+.role-avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    color: var(--green-dark);
+}
+
+.role-card[data-role="suraksha"] .role-avatar {
+    background: hsl(145, 55%, 90%);
+}
+
+.role-card[data-role="farmer"] .role-avatar {
+    background: hsl(35, 90%, 90%);
+    color: #b5771d;
+}
+
+.role-card[data-role="coordinator"] .role-avatar {
+    background: hsl(152, 45%, 88%);
+}
+
+.role-label {
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--green);
+}
+
+.version {
+    margin-top: 26px;
+    color: var(--field-text);
+    font-weight: 600;
+    font-size: 14px;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+}
+
+/* ===== Desktop centering ===== */
+@media (min-width: 640px) {
+    .login-page {
+        justify-content: flex-start;
+    }
+    .login-content {
+        margin-top: 12px;
+    }
+}

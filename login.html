@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AjahFi - Protecting Livestock, Empowering Rural Wealth. Sign in.">
+    <title>AjahFi - Sign In</title>
+    <link rel="icon" href="favicon.png">
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Login Style -->
+    <link rel="stylesheet" href="login.css">
+</head>
+
+<body>
+    <div class="login-page">
+        <!-- Language selector -->
+        <button class="lang-selector" id="langSelector" type="button">
+            <i class="fa-solid fa-earth-americas"></i>
+            <span>EN</span>
+            <i class="fa-solid fa-chevron-down"></i>
+        </button>
+
+        <div class="login-content">
+            <!-- Brand -->
+            <img src="ajahfi_logo_horizontal.png" alt="AjahFi - Protecting Livestock, Empowering Rural Wealth" class="brand-logo">
+
+            <h1 class="welcome-title">Welcome Back!</h1>
+            <p class="welcome-sub">Sign in to <strong>Coordinator</strong></p>
+
+            <!-- Login form -->
+            <form class="login-form" id="loginForm">
+                <div class="input-group">
+                    <i class="fa-solid fa-phone field-icon"></i>
+                    <input type="tel" id="mobileInput" placeholder="Enter mobile number" autocomplete="tel"
+                        inputmode="numeric" pattern="[0-9]{10}" maxlength="10" required>
+                </div>
+
+                <div class="input-group">
+                    <i class="fa-solid fa-lock field-icon"></i>
+                    <input type="password" id="passwordInput" placeholder="Enter password" autocomplete="current-password"
+                        required>
+                    <button type="button" class="pw-toggle" id="pwToggle" aria-label="Show password">
+                        <i class="fa-solid fa-eye-slash"></i>
+                    </button>
+                </div>
+
+                <a href="#" class="forgot-link">Forgot Password?</a>
+
+                <button type="submit" class="btn-signin">Sign In</button>
+            </form>
+
+        </div>
+    </div>
+
+    <script src="login.js"></script>
+</body>
+
+</html>
