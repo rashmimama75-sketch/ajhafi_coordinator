@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Goat Suraksha - Secured Farmers, Healthy Goats. View and manage all goats.">
+    <title>Goat Suraksha - Goats Directory</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- FontAwesome for Premium Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Main Style -->
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Accordion Custom Styles */
+        .farmer-accordion-card {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            margin-top: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+        }
+
+        .farmer-accordion-card:hover {
+            box-shadow: var(--shadow-md);
+        }
+
+        .accordion-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            user-select: none;
+        }
+
+        .accordion-header:hover {
+            background-color: #fafafa;
+        }
+
+        .accordion-content {
+            padding: 0 20px 20px 20px;
+            border-top: 1px solid var(--border-color);
+            background: #fafcfb;
+            display: none;
+        }
+
+        .accordion-content.active {
+            display: block;
+        }
+
+        .goat-row-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            padding: 12px 16px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            margin-top: 12px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .goat-row-card:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .view-all-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 12px;
+            padding: 12px;
+            background: #f5f3ff;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .view-all-row:hover {
+            background: #ede9fe;
+        }
+
+        .view-all-text {
+            font-size: 13px;
+            font-weight: 700;
+            color: #7c3aed;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Bottom Nav custom style */
+        .mobile-bottom-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+            border-top: 1px solid var(--border-color);
+            z-index: 999;
+            height: 64px;
+        }
+
+        .bottom-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 11px;
+            font-weight: 600;
+            flex: 1;
+            height: 100%;
+        }
+
+        .bottom-nav-item i {
+            font-size: 18px;
+        }
+
+        .bottom-nav-item.active {
+            color: #7c3aed;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-bottom-nav {
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+            }
+
+            .main-content {
+                padding-bottom: 80px !important;
+            }
+
+            .bottom-nav-item.active {
+                background-color: #f5f3ff;
+                border-radius: 12px;
+                margin: 6px;
+                height: calc(100% - 12px);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="appSidebar">
+            <div class="logo-section">
+                <img src="ajahfi_logo_horizontal.png" alt="Ajah Fi Logo" class="brand-logo-img">
+            </div>
+
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-item" id="navDashboard">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="farmers.html" class="nav-item" id="navFarmers">
+                    <i class="fa-solid fa-users-line"></i>
+                    <span>Farmers</span>
+                </a>
+                <a href="didis.html" class="nav-item" id="navDidis">
+                    <i class="fa-solid fa-user-tie"></i>
+                    <span>Suraksha Didis</span>
+                </a>
+                <a href="goats.html" class="nav-item active" id="navGoats">
+                    <i class="fa-solid fa-cow"></i>
+                    <span>Goats</span>
+                </a>
+                <a href="claims.html" class="nav-item" id="navClaims">
+                    <i class="fa-solid fa-hand-holding-dollar"></i>
+                    <span>Claims</span>
+                </a>
+                <a href="reports.html" class="nav-item" id="navReports">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Reports</span>
+                </a>
+                <a href="activity.html" class="nav-item" id="navActivity">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    <span>Activity Log</span>
+                </a>
+                <a href="settings.html" class="nav-item" id="navSettings">
+                    <i class="fa-solid fa-user"></i>
+                    <span>Profile</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="help-card">
+                    <div class="help-header">
+                        <div class="help-icon-wrapper">
+                            <i class="fa-solid fa-headset"></i>
+                        </div>
+                        <div class="help-content">
+                            <h4>Need Help?</h4>
+                            <p>Coordinator Helpdesk</p>
+                        </div>
+                    </div>
+                    <button class="btn-support" id="btnContactSupport">Contact Support</button>
+                </div>
+                <div class="copyright-text">
+                    <p>&copy; 2026 Goat Suraksha.<br>All rights reserved.</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Body -->
+        <main class="main-content">
+            <!-- Header Bar -->
+            <header class="header">
+                <div class="header-left">
+                    <!-- Mobile Sidebar Toggle -->
+                    <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle Sidebar">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <div class="welcome-text">
+                        <h1 class="user-greeting">Hello, Coordinator <span class="wave-emoji">👋</span></h1>
+                        <p class="user-subtext">Manage operations and ensure happy farmers</p>
+                    </div>
+                </div>
+
+                <div class="header-right">
+                    <div class="search-bar-wrapper">
+                        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                        <input type="text" id="mainSearchInput" placeholder="Search anything...">
+                    </div>
+
+                    <div class="notification-wrapper">
+                        <button class="btn-icon relative" id="notificationBtn" aria-label="Notifications">
+                            <i class="fa-regular fa-bell"></i>
+                            <span class="badge">3</span>
+                        </button>
+                        <!-- Quick Notification Dropdown -->
+                        <div class="notification-dropdown" id="notificationDropdown">
+                            <div class="dropdown-header">
+                                <h3>Notifications</h3>
+                                <a href="#">Mark all read</a>
+                            </div>
+                            <div class="notification-list">
+                                <div class="notification-item unread">
+                                    <div class="notif-icon bg-orange-light text-orange">
+                                        <i class="fa-solid fa-hand-holding-dollar"></i>
+                                    </div>
+                                    <div class="notif-info">
+                                        <p>New claim submitted by <strong>Ramesh Kumar</strong> (CLM1001)</p>
+                                        <span class="notif-time">5 mins ago</span>
+                                    </div>
+                                </div>
+                                <div class="notification-item unread">
+                                    <div class="notif-icon bg-blue-light text-blue">
+                                        <i class="fa-solid fa-file-shield"></i>
+                                    </div>
+                                    <div class="notif-info">
+                                        <p>Policy G12340 moved to <strong>Under Review</strong></p>
+                                        <span class="notif-time">2 hours ago</span>
+                                    </div>
+                                </div>
+                                <div class="notification-item">
+                                    <div class="notif-icon bg-green-light text-green">
+                                        <i class="fa-solid fa-user-plus"></i>
+                                    </div>
+                                    <div class="notif-info">
+                                        <p>New Didi registered: <strong>Anita Devi</strong></p>
+                                        <span class="notif-time">1 day ago</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dropdown-footer">
+                                <a href="#">See all notifications</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="profile-dropdown-wrapper">
+                        <button class="profile-trigger" id="profileDropdownBtn">
+                            <img src="goat_thumbnail.png" alt="Coordinator Profile" class="avatar-img">
+                            <div class="profile-details">
+                                <span class="profile-name">Coordinator</span>
+                                <i class="fa-solid fa-chevron-down profile-arrow"></i>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Goats Body -->
+            <div class="dashboard-body">
+                <!-- Banner Section -->
+                <section class="banner-section"
+                    style="background-image: linear-gradient(90deg, rgba(254, 250, 240, 0.95) 30%, rgba(254, 250, 240, 0.4) 70%), url('banner_goats.png');">
+                    <div class="banner-content">
+                        <span class="banner-tag"
+                            style="color: var(--brand-primary); font-weight: 700; font-size: 12px; letter-spacing: 1px; text-transform: uppercase;">Together
+                            for</span>
+                        <h2 class="banner-title"
+                            style="font-size: 28px; font-weight: 800; color: var(--text-main); margin-top: 4px; margin-bottom: 4px;">
+                            Goats</h2>
+                        <p class="banner-subtitle" style="font-size: 14px; color: var(--text-muted); font-weight: 500;">
+                            View and manage all goats added by farmers</p>
+                    </div>
+                </section>
+
+                <!-- Stats summary cards -->
+                <section class="farmers-stats-section" style="margin-top: -12px;">
+                    <div class="farmers-stats-grid">
+                        <div class="farmers-stat-card">
+                            <div class="stat-card-head">
+                                <div class="stat-icon-wrapper bg-blue-light text-blue">
+                                    <i class="fa-solid fa-users"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <span class="stat-card-label">Total Farmers</span>
+                                    <h3 class="stat-card-value">48</h3>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="farmers-stat-card">
+                            <div class="stat-card-head">
+                                <div class="stat-icon-wrapper bg-purple-light text-purple">
+                                    <i class="fa-solid fa-cow"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <span class="stat-card-label">Total Goats</span>
+                                    <h3 class="stat-card-value">256</h3>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="farmers-stat-card">
+                            <div class="stat-card-head">
+                                <div class="stat-icon-wrapper bg-green-light text-green">
+                                    <i class="fa-solid fa-circle-check"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <span class="stat-card-label">Active Goats</span>
+                                    <h3 class="stat-card-value text-green">213</h3>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="farmers-stat-card">
+                            <div class="stat-card-head">
+                                <div class="stat-icon-wrapper bg-red-light text-red">
+                                    <i class="fa-solid fa-circle-exclamation"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <span class="stat-card-label">Inactive Goats</span>
+                                    <h3 class="stat-card-value text-red">43</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Actions Filter Row -->
+                <div
+                    style="margin-top: -12px; display: flex; justify-content: flex-end; align-items: center; gap: 16px; flex-wrap: wrap;">
+                    <div class="search-box-container" style="position: relative; width: 100%; max-width: 100%;">
+                        <i class="fa-solid fa-magnifying-glass search-inner-icon"></i>
+                        <input type="text" id="goatSearchInput" placeholder="Search by Farmer or Ear Tag, Goat ID...">
+                    </div>
+                </div>
+
+                <!-- Farmer & Goats Accordion Container -->
+                <div id="accordionContainer" style="margin-top: -16px;">
+                    <!-- Ramesh Kumar Accordion -->
+                    <div class="farmer-accordion-card">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <div style="display: flex; align-items: center; gap: 16px;">
+                                <img src="https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&w=100&q=80"
+                                    alt="Farmer Avatar"
+                                    style="width: 48px; height: 48px; border-radius: var(--radius-full); object-fit: cover;">
+                                <div>
+                                    <h4
+                                        style="font-size: 15px; font-weight: 700; color: var(--text-main); margin: 0 0 4px 0;">
+                                        Ramesh Kumar</h4>
+                                    <div
+                                        style="display: flex; align-items: center; gap: 12px; font-size: 12px; color: var(--text-muted); font-weight: 550;">
+                                        <span><i class="fa-solid fa-phone"
+                                                style="margin-right: 4px; color: var(--brand-primary);"></i> +91 98765
+                                            43210</span>
+                                        <span><i class="fa-solid fa-location-dot"
+                                                style="margin-right: 4px; color: var(--brand-primary);"></i> Bargarh,
+                                            Odisha</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 32px;">
+                                <div style="text-align: right;">
+                                    <span
+                                        style="font-size: 10px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Total
+                                        Goats</span>
+                                    <h4 style="font-size: 18px; font-weight: 700; color: #7c3aed; margin: 2px 0 0 0;">18
+                                    </h4>
+                                </div>
+                                <div style="text-align: right;">
+                                    <span
+                                        style="font-size: 10px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Active</span>
+                                    <h4 style="font-size: 18px; font-weight: 700; color: #16a34a; margin: 2px 0 0 0;">15
+                                    </h4>
+                                </div>
+                                <i class="fa-solid fa-chevron-up accordion-chevron"
+                                    style="color: var(--text-muted); font-size: 12px; transition: transform 0.2s;"></i>
+                            </div>
+                        </div>
+                        <div class="accordion-content active">
+                            <!-- Goat list -->
+                            <div class="goat-row-card">
+                                <div style="display: flex; align-items: center; gap: 16px;">
+                                    <img src="goat_thumbnail.png" alt="Goat image"
+                                        style="width: 48px; height: 48px; border-radius: var(--radius-sm); object-fit: cover;">
+                                    <div>
+                                        <h5
+                                            style="font-size: 14px; font-weight: 700; color: var(--text-main); margin: 0 0 2px 0;">
+                                            GOAT ID: <a href="goat-detail.html?id=G12345" class="goat-id-link">G12345</a></h5>
+                                        <div
+                                            style="display: flex; align-items: center; gap: 12px; font-size: 12px; color: var(--text-muted); font-weight: 550; flex-wrap: wrap;">
+                                            <span>Ear Tag: ET2321</span>
+                                            <span>•</span>
+                                            <span><i class="fa-solid fa-venus"
+                                                    style="color: #ec4899; margin-right: 2px;"></i> Female</span>
+                                            <span>•</span>
+                                            <span><i class="fa-regular fa-calendar" style="margin-right: 2px;"></i> 2.5
+                                                Years</span>
+                                            <span>•</span>
+                                            <span><i class="fa-solid fa-weight-hanging" style="margin-right: 2px;"></i>
+                                                32 Kg</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 16px;">
+                                    <span class="status-pill active"
+                                        style="background-color: var(--brand-primary-light); color: var(--brand-primary); padding: 4px 10px; border-radius: var(--radius-full); font-size: 11px; font-weight: 700;">Active</span>
+                                    <button
+                                        style="background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 14px;"><i
+                                            class="fa-solid fa-chevron-right"></i></button>
+                                </div>
+                            </div>
+
+                            <div class="goat-row-card">
+                                <div style="display: flex; align-items: center; gap: 16px;">
+                                    <img src="goat_thumbnail.png" alt="Goat image"
+                                        style="width: 48px; height: 48px; border-radius: var(--radius-sm); object-fit: cover;">
+                                    <div>
+                                        <h5
+                                            style="font-size: 14px; font-weight: 700; color: var(--text-main); margin: 0 0 2px 0;">
+                                            GOAT ID: <a href="goat-detail.html?id=G12346" class="goat-id-link">G12346</a></h5>
+                                        <div
+                                            style="display: flex; align-items: center; gap: 12px; font-size: 12px; color: var(--text-muted); font-weight: 550; flex-wrap: wrap;">
+                                            <span>Ear Tag: ET2322</span>
+                                            <span>•</span>
+                                            <span><i class="fa-solid fa-mars"
+                                                    style="color: #3b82f6; margin-right: 2px;"></i> Male</span>
+                                            <span>•</span>
+                                            <span><i class="fa-regular fa-calendar" style="margin-right: 2px;"></i> 1.8
+                                                Years</span>
+                                            <span>•</span>
+                                            <span><i class="fa-solid fa-weight-hanging" style="margin-right: 2px;"></i>
+                                                28 Kg</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 16px;">
+                                    <span class="status-pill active"
+                                        style="background-color: var(--brand-primary-light); color: var(--brand-primary); padding: 4px 10px; border-radius: var(--radius-full); font-size: 11px; font-weight: 700;">Active</span>
+                                    <button
+                                        style="background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 14px;"><i
+                                            class="fa-solid fa-chevron-right"></i></button>
+                                </div>
+                            </div>
+
+                            <div class="goat-row-card">
+                                <div style="display: flex; align-items: center; gap: 16px;">
+                                    <img src="goat_thumbnail.png" alt="Goat image"
+                                        style="width: 48px; height: 48px; border-radius: var(--radius-sm); object-fit: cover;">
+                                    <div>
+                                        <h5
+                                            style="font-size: 14px; font-weight: 700; color: var(--text-main); margin: 0 0 2px 0;">
+                                            GOAT ID: <a href="goat-detail.html?id=G12347" class="goat-id-link">G12347</a></h5>
+                                        <div
+                                            style="display: flex; align-items: center; gap: 12px; font-size: 12px; color: var(--text-muted); font-weight: 550; flex-wrap: wrap;">
+                                            <span>Ear Tag: ET2323</span>
+                                            <span>•</span>
+                                            <span><i class="fa-solid fa-venus"
+                                                    style="color: #ec4899; margin-right: 2px;"></i> Female</span>
+                                            <span>•</span>
+                                            <span><i class="fa-regular fa-calendar" style="margin-right: 2px;"></i> 2.2
+                                                Years</span>
+                                            <span>•</span>
+                                            <span><i class="fa-solid fa-weight-hanging" style="margin-right: 2px;"></i>
+                                                30 Kg</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 16px;">
+                                    <span class="status-pill active"
+                                        style="background-color: var(--brand-primary-light); color: var(--brand-primary); padding: 4px 10px; border-radius: var(--radius-full); font-size: 11px; font-weight: 700;">Active</span>
+                                    <button
+                                        style="background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 14px;"><i
+                                            class="fa-solid fa-chevron-right"></i></button>
+                                </div>
+                            </div>
+
+                            <!-- View All row -->
+                            <div class="view-all-row">
+                                <div class="view-all-text">
+                                    <span>View all 18 goats</span>
+                                    <i class="fa-solid fa-chevron-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sita Devi Accordion -->
+                    <div class="farmer-accordion-card">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <div style="display: flex; align-items: center; gap: 16px;">
+                                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80"
+                                    alt="Farmer Avatar"
+                                    style="width: 48px; height: 48px; border-radius: var(--radius-full); object-fit: cover;">
+                                <div>
+                                    <h4
+                                        style="font-size: 15px; font-weight: 700; color: var(--text-main); margin: 0 0 4px 0;">
+                                        Sita Devi</h4>
+                                    <div
+                                        style="display: flex; align-items: center; gap: 12px; font-size: 12px; color: var(--text-muted); font-weight: 550;">
+                                        <span><i class="fa-solid fa-phone"
+                                                style="margin-right: 4px; color: var(--brand-primary);"></i> +91 87654
+                                            32109</span>
+                                        <span><i class="fa-solid fa-location-dot"
+                                                style="margin-right: 4px; color: var(--brand-primary);"></i> Kalahand,
+                                            Odisha</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 32px;">
+                                <div style="text-align: right;">
+                                    <span
+                                        style="font-size: 10px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Total
+                                        Goats</span>
+                                    <h4 style="font-size: 18px; font-weight: 700; color: #7c3aed; margin: 2px 0 0 0;">12
+                                    </h4>
+                                </div>
+                                <div style="text-align: right;">
+                                    <span
+                                        style="font-size: 10px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Active</span>
+                                    <h4 style="font-size: 18px; font-weight: 700; color: #16a34a; margin: 2px 0 0 0;">10
+                                    </h4>
+                                </div>
+                                <i class="fa-solid fa-chevron-down accordion-chevron"
+                                    style="color: var(--text-muted); font-size: 12px; transition: transform 0.2s;"></i>
+                            </div>
+                        </div>
+                        <div class="accordion-content">
+                            <!-- Sita Devi's Goats -->
+                            <div class="goat-row-card">
+                                <div style="display: flex; align-items: center; gap: 16px;">
+                                    <img src="goat_thumbnail.png" alt="Goat image"
+                                        style="width: 48px; height: 48px; border-radius: var(--radius-sm); object-fit: cover;">
+                                    <div>
+                                        <h5
+                                            style="font-size: 14px; font-weight: 700; color: var(--text-main); margin: 0 0 2px 0;">
+                                            GOAT ID: <a href="goat-detail.html?id=G12348" class="goat-id-link">G12348</a></h5>
+                                        <div
+                                            style="display: flex; align-items: center; gap: 12px; font-size: 12px; color: var(--text-muted); font-weight: 550; flex-wrap: wrap;">
+                                            <span>Ear Tag: ET2324</span>
+                                            <span>•</span>
+                                            <span><i class="fa-solid fa-venus"
+                                                    style="color: #ec4899; margin-right: 2px;"></i> Female</span>
+                                            <span>•</span>
+                                            <span><i class="fa-regular fa-calendar" style="margin-right: 2px;"></i> 1.5
+                                                Years</span>
+                                            <span>•</span>
+                                            <span><i class="fa-solid fa-weight-hanging" style="margin-right: 2px;"></i>
+                                                25 Kg</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 16px;">
+                                    <span class="status-pill active"
+                                        style="background-color: var(--brand-primary-light); color: var(--brand-primary); padding: 4px 10px; border-radius: var(--radius-full); font-size: 11px; font-weight: 700;">Active</span>
+                                    <button
+                                        style="background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 14px;"><i
+                                            class="fa-solid fa-chevron-right"></i></button>
+                                </div>
+                            </div>
+
+                            <div class="view-all-row">
+                                <div class="view-all-text">
+                                    <span>View all 12 goats</span>
+                                    <i class="fa-solid fa-chevron-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Babu Lal Accordion -->
+                    <div class="farmer-accordion-card">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <div style="display: flex; align-items: center; gap: 16px;">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80"
+                                    alt="Farmer Avatar"
+                                    style="width: 48px; height: 48px; border-radius: var(--radius-full); object-fit: cover;">
+                                <div>
+                                    <h4
+                                        style="font-size: 15px; font-weight: 700; color: var(--text-main); margin: 0 0 4px 0;">
+                                        Babu Lal</h4>
+                                    <div
+                                        style="display: flex; align-items: center; gap: 12px; font-size: 12px; color: var(--text-muted); font-weight: 550;">
+                                        <span><i class="fa-solid fa-phone"
+                                                style="margin-right: 4px; color: var(--brand-primary);"></i> +91 76543
+                                            21098</span>
+                                        <span><i class="fa-solid fa-location-dot"
+                                                style="margin-right: 4px; color: var(--brand-primary);"></i> Sambalpur,
+                                            Odisha</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 32px;">
+                                <div style="text-align: right;">
+                                    <span
+                                        style="font-size: 10px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Total
+                                        Goats</span>
+                                    <h4 style="font-size: 18px; font-weight: 700; color: #7c3aed; margin: 2px 0 0 0;">25
+                                    </h4>
+                                </div>
+                                <div style="text-align: right;">
+                                    <span
+                                        style="font-size: 10px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Active</span>
+                                    <h4 style="font-size: 18px; font-weight: 700; color: #16a34a; margin: 2px 0 0 0;">21
+                                    </h4>
+                                </div>
+                                <i class="fa-solid fa-chevron-down accordion-chevron"
+                                    style="color: var(--text-muted); font-size: 12px; transition: transform 0.2s;"></i>
+                            </div>
+                        </div>
+                        <div class="accordion-content">
+                            <!-- Babu Lal's Goats -->
+                            <div class="goat-row-card">
+                                <div style="display: flex; align-items: center; gap: 16px;">
+                                    <img src="goat_thumbnail.png" alt="Goat image"
+                                        style="width: 48px; height: 48px; border-radius: var(--radius-sm); object-fit: cover;">
+                                    <div>
+                                        <h5
+                                            style="font-size: 14px; font-weight: 700; color: var(--text-main); margin: 0 0 2px 0;">
+                                            GOAT ID: <a href="goat-detail.html?id=G12349" class="goat-id-link">G12349</a></h5>
+                                        <div
+                                            style="display: flex; align-items: center; gap: 12px; font-size: 12px; color: var(--text-muted); font-weight: 550; flex-wrap: wrap;">
+                                            <span>Ear Tag: ET2325</span>
+                                            <span>•</span>
+                                            <span><i class="fa-solid fa-mars"
+                                                    style="color: #3b82f6; margin-right: 2px;"></i> Male</span>
+                                            <span>•</span>
+                                            <span><i class="fa-regular fa-calendar" style="margin-right: 2px;"></i> 3.0
+                                                Years</span>
+                                            <span>•</span>
+                                            <span><i class="fa-solid fa-weight-hanging" style="margin-right: 2px;"></i>
+                                                35 Kg</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 16px;">
+                                    <span class="status-pill active"
+                                        style="background-color: var(--brand-primary-light); color: var(--brand-primary); padding: 4px 10px; border-radius: var(--radius-full); font-size: 11px; font-weight: 700;">Active</span>
+                                    <button
+                                        style="background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 14px;"><i
+                                            class="fa-solid fa-chevron-right"></i></button>
+                                </div>
+                            </div>
+
+                            <div class="view-all-row">
+                                <div class="view-all-text">
+                                    <span>View all 25 goats</span>
+                                    <i class="fa-solid fa-chevron-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Mobile Bottom Navigation Bar -->
+    <div class="mobile-bottom-nav">
+        <a href="index.html" class="bottom-nav-item">
+            <i class="fa-solid fa-house"></i>
+            <span>Home</span>
+        </a>
+        <a href="goats.html" class="bottom-nav-item active">
+            <i class="fa-solid fa-cow"></i>
+            <span>Goats</span>
+        </a>
+        <a href="claims.html" class="bottom-nav-item">
+            <i class="fa-solid fa-hand-holding-dollar"></i>
+            <span>Claims</span>
+        </a>
+        <a href="reports.html" class="bottom-nav-item">
+            <i class="fa-solid fa-chart-line"></i>
+            <span>Report</span>
+        </a>
+    </div>
+
+    <!-- Page Logic -->
+    <script src="goats.js"></script>
+    <script src="support.js"></script>
+</body>
+
+</html>

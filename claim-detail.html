@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Goat Suraksha - Secured Farmers, Healthy Goats. View claim details.">
+    <title>Goat Suraksha - Claim Details</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- FontAwesome for Premium Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Main Style -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="appSidebar">
+            <div class="logo-section">
+                <img src="ajahfi_logo_horizontal.png" alt="Ajah Fi Logo" class="brand-logo-img">
+            </div>
+
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-item" id="navDashboard">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="farmers.html" class="nav-item" id="navFarmers">
+                    <i class="fa-solid fa-users-line"></i>
+                    <span>Farmers</span>
+                </a>
+                <a href="didis.html" class="nav-item" id="navDidis">
+                    <i class="fa-solid fa-user-tie"></i>
+                    <span>Suraksha Didis</span>
+                </a>
+                <a href="goats.html" class="nav-item" id="navGoats">
+                    <i class="fa-solid fa-cow"></i>
+                    <span>Goats</span>
+                </a>
+                <a href="claims.html" class="nav-item active" id="navClaims">
+                    <i class="fa-solid fa-hand-holding-dollar"></i>
+                    <span>Claims</span>
+                </a>
+                <a href="reports.html" class="nav-item" id="navReports">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Reports</span>
+                </a>
+                <a href="activity.html" class="nav-item" id="navActivity">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    <span>Activity Log</span>
+                </a>
+                <a href="settings.html" class="nav-item" id="navSettings">
+                    <i class="fa-solid fa-user"></i>
+                    <span>Profile</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="help-card">
+                    <div class="help-header">
+                        <div class="help-icon-wrapper">
+                            <i class="fa-solid fa-headset"></i>
+                        </div>
+                        <div class="help-content">
+                            <h4>Need Help?</h4>
+                            <p>Coordinator Helpdesk</p>
+                        </div>
+                    </div>
+                    <button class="btn-support" id="btnContactSupport">Contact Support</button>
+                </div>
+                <div class="copyright-text">
+                    <p>&copy; 2026 Goat Suraksha.<br>All rights reserved.</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Body -->
+        <main class="main-content">
+            <!-- Header Bar -->
+            <header class="header">
+                <div class="header-left">
+                    <div class="welcome-text">
+                        <h1 class="user-greeting">Hello, Coordinator <span class="wave-emoji">👋</span></h1>
+                        <p class="user-subtext">Manage operations and support Suraksha Didis</p>
+                    </div>
+                </div>
+
+                <div class="header-right">
+                    <div class="search-bar-wrapper">
+                        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                        <input type="text" id="mainSearchInput" placeholder="Search anything...">
+                    </div>
+
+                    <div class="notification-wrapper">
+                        <button class="btn-icon relative" id="notificationBtn" aria-label="Notifications">
+                            <i class="fa-regular fa-bell"></i>
+                            <span class="badge">3</span>
+                        </button>
+                        <!-- Quick Notification Dropdown -->
+                        <div class="notification-dropdown" id="notificationDropdown">
+                            <div class="dropdown-header">
+                                <h3>Notifications</h3>
+                                <a href="#">Mark all read</a>
+                            </div>
+                            <div class="notification-list">
+                                <div class="notification-item unread">
+                                    <div class="notif-icon bg-orange-light text-orange">
+                                        <i class="fa-solid fa-hand-holding-dollar"></i>
+                                    </div>
+                                    <div class="notif-info">
+                                        <p>New claim submitted by <strong>Ramesh Kumar</strong> (CLM1001)</p>
+                                        <span class="notif-time">5 mins ago</span>
+                                    </div>
+                                </div>
+                                <div class="notification-item unread">
+                                    <div class="notif-icon bg-blue-light text-blue">
+                                        <i class="fa-solid fa-file-shield"></i>
+                                    </div>
+                                    <div class="notif-info">
+                                        <p>Policy G12340 moved to <strong>Under Review</strong></p>
+                                        <span class="notif-time">2 hours ago</span>
+                                    </div>
+                                </div>
+                                <div class="notification-item">
+                                    <div class="notif-icon bg-green-light text-green">
+                                        <i class="fa-solid fa-user-plus"></i>
+                                    </div>
+                                    <div class="notif-info">
+                                        <p>New Didi registered: <strong>Anita Devi</strong></p>
+                                        <span class="notif-time">1 day ago</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dropdown-footer">
+                                <a href="#">See all notifications</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="profile-dropdown-wrapper">
+                        <button class="profile-trigger" id="profileDropdownBtn">
+                            <img src="goat_thumbnail.png" alt="Coordinator Profile" class="avatar-img">
+                            <div class="profile-details">
+                                <span class="profile-name">Coordinator</span>
+                                <i class="fa-solid fa-chevron-down profile-arrow"></i>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Claim Profile Details Dashboard Body -->
+            <div class="dashboard-body" style="gap: 16px;">
+                <!-- Breadcrumbs & Action Header -->
+                <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                    <div style="display: flex; align-items: center; gap: 16px;">
+                        <a href="claims.html" class="btn-back-link">
+                            <i class="fa-solid fa-arrow-left"></i>
+                        </a>
+                        <div>
+                            <h2
+                                style="font-size: 24px; font-weight: 700; color: var(--text-main); font-family: 'Outfit', sans-serif; display: flex; align-items: center; gap: 10px; margin: 0;">
+                                Claim Details
+                            </h2>
+                            <p style="font-size: 13px; color: var(--text-muted); margin-top: 2px;">Track the progress of
+                                your claim</p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Claim Header Card -->
+                <section class="claim-detail-header-card">
+                    <div class="claim-detail-header-left">
+                        <div class="claim-detail-icon-box">
+                            <i class="fa-solid fa-file-invoice"></i>
+                        </div>
+                        <div class="claim-detail-title-info">
+                            <span class="claim-detail-id-label">Claim ID</span>
+                            <div class="claim-detail-id-row">
+                                <h3 class="claim-detail-id-val" id="lblClaimId">CLM-2026-001</h3>
+                                <span class="badge pending" id="lblClaimStatus">Pending</span>
+                            </div>
+
+                            <div class="claim-detail-meta-info">
+                                <div class="claim-detail-meta-item">
+                                    <i class="fa-regular fa-calendar-check claim-detail-meta-icon"></i>
+                                    <div class="claim-detail-meta-text">
+                                        <span class="claim-detail-meta-lbl">Claim Reported On</span>
+                                        <span class="claim-detail-meta-val" id="lblReportedDate">17 Jul 2026</span>
+                                    </div>
+                                </div>
+                                <div class="claim-detail-meta-item">
+                                    <i class="fa-regular fa-user claim-detail-meta-icon"></i>
+                                    <div class="claim-detail-meta-text">
+                                        <span class="claim-detail-meta-lbl">Reported By</span>
+                                        <span class="claim-detail-meta-val" id="lblReportedBy">Ramesh Kumar</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Right background image / overlay visual -->
+                    <div class="claim-detail-header-right"></div>
+                </section>
+
+                <!-- Two Column Details Grid -->
+                <section class="claim-detail-grid">
+                    <!-- Column 1: Goat Information -->
+                    <div class="detail-card">
+                        <div class="detail-card-header">
+                            <i class="fa-solid fa-cow text-green"></i>
+                            <h3>Goat Information</h3>
+                        </div>
+                        <div class="detail-card-body claim-goat-info-card-body">
+                            <div>
+                                <img src="goat_thumbnail.png" alt="Goat" class="claim-goat-avatar" id="goatAvatar">
+                            </div>
+                            <div class="claim-goat-details-table">
+                                <div class="info-item">
+                                    <span class="info-label">Goat ID</span>
+                                    <span class="info-value" id="lblGoatId">MT123</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Ear Tag</span>
+                                    <span class="info-value" id="lblEarTag">BG-2456</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Breed</span>
+                                    <span class="info-value" id="lblBreed">Black Bengal</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Gender</span>
+                                    <span class="info-value" id="lblGender">Female</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Age</span>
+                                    <span class="info-value" id="lblAge">2 Years</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Sum Insured</span>
+                                    <span class="info-value" id="lblSumInsured">₹ 20,000</span>
+                                </div>
+                                <div class="info-item" style="grid-column: span 2;">
+                                    <span class="info-label">Policy Number</span>
+                                    <span class="info-value" id="lblPolicyNumber">POL/2024/001234</span>
+                                </div>
+                                <div class="info-item" style="grid-column: span 2;">
+                                    <span class="info-label">Policy Valid Till</span>
+                                    <span class="info-value" id="lblPolicyValid">16 Jul 2027</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Column 2: Death Info & Uploaded Evidence -->
+                    <div style="display: flex; flex-direction: column; gap: 16px; height: 100%;">
+                        <!-- Death Information -->
+                        <div class="detail-card" style="flex: 1; margin-bottom: 0;">
+                            <div class="detail-card-header">
+                                <i class="fa-solid fa-heart-crack text-red" style="color: hsl(0, 75%, 45%);"></i>
+                                <h3>Death Information</h3>
+                            </div>
+                            <div class="detail-card-body grid-info-columns">
+                                <div class="info-item">
+                                    <span class="info-label">Date of Death</span>
+                                    <span class="info-value" id="lblDateOfDeath">17 Jul 2026</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Cause of Death</span>
+                                    <span class="info-value" id="lblCauseOfDeath">Disease</span>
+                                </div>
+                                <div class="info-item" style="grid-column: span 2;">
+                                    <span class="info-label">Location</span>
+                                    <span class="info-value" id="lblLocation">Jamdihi, Baripada, Mayurbhanj,
+                                        Odisha</span>
+                                </div>
+                                <div class="info-item" style="grid-column: span 2;">
+                                    <span class="info-label">Reported By</span>
+                                    <span class="info-value" id="lblDeathReportedBy">Ramesh Kumar</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+
+                <!-- Vaccination Details Card -->
+                <div class="detail-card">
+                    <div class="detail-card-header">
+                        <i class="fa-solid fa-syringe text-blue" style="color: var(--color-review);"></i>
+                        <h3>Vaccination Details</h3>
+                    </div>
+                    <div class="detail-card-body" style="padding: 0;">
+                        <div class="table-responsive">
+                            <table class="claims-table" style="width: 100%; margin: 0; border: none; box-shadow: none;">
+                                <thead>
+                                    <tr>
+                                        <th style="font-size: 11px; font-weight: 700; text-align: left; padding: 12px 16px; border-bottom: 1px solid var(--border-color);">Vaccine</th>
+                                        <th style="font-size: 11px; font-weight: 700; text-align: left; padding: 12px 16px; border-bottom: 1px solid var(--border-color);">Date</th>
+                                        <th style="font-size: 11px; font-weight: 700; text-align: left; padding: 12px 16px; border-bottom: 1px solid var(--border-color);">Administered By</th>
+                                        <th style="font-size: 11px; font-weight: 700; text-align: left; padding: 12px 16px; border-bottom: 1px solid var(--border-color);">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="vaccinationTableBody">
+                                    <!-- Dynamically filled by claim-detail.js -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Uploaded Evidence -->
+                <div class="detail-card">
+                    <div class="detail-card-header">
+                        <i class="fa-solid fa-camera text-blue" style="color: hsl(210, 90%, 48%);"></i>
+                        <h3>Uploaded Evidence</h3>
+                    </div>
+                    <div class="detail-card-body">
+                        <div class="claim-evidence-grid">
+                            <div class="claim-evidence-item">
+                                <img src="goat_thumbnail.png" alt="Tag" class="claim-evidence-img">
+                                <span class="claim-evidence-lbl">Tag Photo</span>
+                            </div>
+                            <div class="claim-evidence-item">
+                                <img src="goat_thumbnail.png" alt="Dead Goat" class="claim-evidence-img"
+                                    style="filter: grayscale(0.5);">
+                                <span class="claim-evidence-lbl">Dead Goat Photo</span>
+                            </div>
+                            <div class="claim-evidence-item">
+                                <img src="goat_thumbnail.png" alt="Site Visit" class="claim-evidence-img">
+                                <span class="claim-evidence-lbl">Site Visit Photo</span>
+                            </div>
+                            <div class="claim-evidence-item" style="justify-content: center; height: 100%;">
+                                <div class="claim-evidence-img"
+                                    style="display: flex; align-items: center; justify-content: center; background-color: #f1f5f9;">
+                                    <i class="fa-regular fa-file-pdf"
+                                        style="font-size: 28px; color: var(--color-rejected);"></i>
+                                </div>
+                                <span class="claim-evidence-lbl">Documents</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Claim Progress Stepper -->
+                <section class="detail-card">
+                    <div class="detail-card-header">
+                        <i class="fa-solid fa-chart-line text-orange" style="color: var(--color-pending);"></i>
+                        <h3>Claim Progress</h3>
+                    </div>
+                    <div class="detail-card-body claim-progress-container">
+                        <div class="claim-stepper">
+                            <div class="claim-stepper-progress-line" id="stepperProgressLine"></div>
+
+                            <!-- Step 1 -->
+                            <div class="claim-stepper-step completed" id="step1">
+                                <div class="claim-step-circle">
+                                    <i class="fa-solid fa-check"></i>
+                                </div>
+                                <div class="claim-step-info">
+                                    <span class="claim-step-title">Death Reported</span>
+                                    <div class="claim-step-status" id="step1Date">17 Jul 2026</div>
+                                </div>
+                            </div>
+
+                            <!-- Step 2 -->
+                            <div class="claim-stepper-step completed" id="step2">
+                                <div class="claim-step-circle">
+                                    <i class="fa-solid fa-check"></i>
+                                </div>
+                                <div class="claim-step-info">
+                                    <span class="claim-step-title">Didi Verification</span>
+                                    <div class="claim-step-status" id="step2Date">18 Jul 2026</div>
+                                </div>
+                            </div>
+
+                            <!-- Step 3 -->
+                            <div class="claim-stepper-step" id="step3">
+                                <div class="claim-step-circle">
+                                    3
+                                </div>
+                                <div class="claim-step-info">
+                                    <span class="claim-step-title">Coordinator Review</span>
+                                    <div class="claim-step-status" id="step3Status">In Progress</div>
+                                </div>
+                            </div>
+
+                            <!-- Step 4 -->
+                            <div class="claim-stepper-step" id="step4">
+                                <div class="claim-step-circle">
+                                    4
+                                </div>
+                                <div class="claim-step-info">
+                                    <span class="claim-step-title">Admin Approval</span>
+                                    <div class="claim-step-status" id="step4Status">Pending</div>
+                                </div>
+                            </div>
+
+                            <!-- Step 5 -->
+                            <div class="claim-stepper-step" id="step5">
+                                <div class="claim-step-circle">
+                                    5
+                                </div>
+                                <div class="claim-step-info">
+                                    <span class="claim-step-title">Payment Completed</span>
+                                    <div class="claim-step-status" id="step5Status">Pending</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Action Buttons: Approved and Reject -->
+                <div class="claim-action-buttons-row">
+                    <button class="btn-claim-approve" id="btnClaimApprove">
+                        <i class="fa-solid fa-circle-check"></i>
+                        <span>Approved</span>
+                    </button>
+                    <button class="btn-claim-reject" id="btnClaimReject">
+                        <i class="fa-solid fa-circle-xmark"></i>
+                        <span>Reject</span>
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Script Controllers -->
+    <script src="claim-detail.js"></script>
+    <script src="support.js"></script>
+</body>
+
+</html>

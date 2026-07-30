@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Goat Suraksha - Secured Farmers, Healthy Goats. View Suraksha Didi profile.">
+    <title>Goat Suraksha - Suraksha Didi Profile</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Premium Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Main Style -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="appSidebar">
+            <div class="logo-section">
+                <img src="ajahfi_logo_horizontal.png" alt="Ajah Fi Logo" class="brand-logo-img">
+            </div>
+            
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-item" id="navDashboard">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="farmers.html" class="nav-item" id="navFarmers">
+                    <i class="fa-solid fa-users-line"></i>
+                    <span>Farmers</span>
+                </a>
+                <a href="didis.html" class="nav-item active" id="navDidis">
+                    <i class="fa-solid fa-user-tie"></i>
+                    <span>Suraksha Didis</span>
+                </a>
+                <a href="goats.html" class="nav-item" id="navGoats">
+                    <i class="fa-solid fa-cow"></i>
+                    <span>Goats</span>
+                </a>
+                <a href="claims.html" class="nav-item" id="navClaims">
+                    <i class="fa-solid fa-hand-holding-dollar"></i>
+                    <span>Claims</span>
+                </a>
+                <a href="reports.html" class="nav-item" id="navReports">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Reports</span>
+                </a>
+                <a href="activity.html" class="nav-item" id="navActivity">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    <span>Activity Log</span>
+                </a>
+                <a href="settings.html" class="nav-item" id="navSettings">
+                    <i class="fa-solid fa-user"></i>
+                    <span>Profile</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="help-card">
+                    <div class="help-header">
+                        <div class="help-icon-wrapper">
+                            <i class="fa-solid fa-headset"></i>
+                        </div>
+                        <div class="help-content">
+                            <h4>Need Help?</h4>
+                            <p>Coordinator Helpdesk</p>
+                        </div>
+                    </div>
+                    <button class="btn-support" id="btnContactSupport">Contact Support</button>
+                </div>
+                <div class="copyright-text">
+                    <p>&copy; 2026 Goat Suraksha.<br>All rights reserved.</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Body -->
+        <main class="main-content">
+            <!-- Header Bar -->
+            <header class="header">
+                <div class="header-left">
+                    <div class="welcome-text">
+                        <h1 class="user-greeting">Hello, Coordinator <span class="wave-emoji">👋</span></h1>
+                        <p class="user-subtext">Manage operations and support Suraksha Didis</p>
+                    </div>
+                </div>
+
+                <div class="header-right">
+                    <div class="search-bar-wrapper">
+                        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                        <input type="text" id="mainSearchInput" placeholder="Search anything...">
+                    </div>
+
+                    <div class="notification-wrapper">
+                        <button class="btn-icon relative" id="notificationBtn" aria-label="Notifications">
+                            <i class="fa-regular fa-bell"></i>
+                            <span class="badge">3</span>
+                        </button>
+                        <!-- Quick Notification Dropdown -->
+                        <div class="notification-dropdown" id="notificationDropdown">
+                            <div class="dropdown-header">
+                                <h3>Notifications</h3>
+                                <a href="#">Mark all read</a>
+                            </div>
+                            <div class="notification-list">
+                                <div class="notification-item unread">
+                                    <div class="notif-icon bg-orange-light text-orange">
+                                        <i class="fa-solid fa-hand-holding-dollar"></i>
+                                    </div>
+                                    <div class="notif-info">
+                                        <p>New claim submitted by <strong>Ramesh Kumar</strong> (CLM1001)</p>
+                                        <span class="notif-time">5 mins ago</span>
+                                    </div>
+                                </div>
+                                <div class="notification-item unread">
+                                    <div class="notif-icon bg-blue-light text-blue">
+                                        <i class="fa-solid fa-file-shield"></i>
+                                    </div>
+                                    <div class="notif-info">
+                                        <p>Policy G12340 moved to <strong>Under Review</strong></p>
+                                        <span class="notif-time">2 hours ago</span>
+                                    </div>
+                                </div>
+                                <div class="notification-item">
+                                    <div class="notif-icon bg-green-light text-green">
+                                        <i class="fa-solid fa-user-plus"></i>
+                                    </div>
+                                    <div class="notif-info">
+                                        <p>New Didi registered: <strong>Anita Devi</strong></p>
+                                        <span class="notif-time">1 day ago</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dropdown-footer">
+                                <a href="#">See all notifications</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="profile-dropdown-wrapper">
+                        <button class="profile-trigger" id="profileDropdownBtn">
+                            <img src="goat_thumbnail.png" alt="Coordinator Profile" class="avatar-img">
+                            <div class="profile-details">
+                                <span class="profile-name">Coordinator</span>
+                                <i class="fa-solid fa-chevron-down profile-arrow"></i>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Didi Profile Details Dashboard Body -->
+            <div class="dashboard-body" style="gap: 16px;">
+                <!-- Didi Profile Card Header -->
+                <section class="profile-header-section">
+                    <div class="profile-header-card">
+                        <div class="profile-header-left">
+                            <img src="" alt="" class="profile-header-avatar" id="lblAvatar" onerror="this.src='https://via.placeholder.com/120/22c55e/ffffff?text=D'">
+                            <div class="profile-header-info">
+                                <div class="profile-header-title-row">
+                                    <h2 class="profile-header-name" id="lblName">Laxmi Murmu</h2>
+                                    <span class="badge approved" id="lblStatus">Active</span>
+                                </div>
+                                <p class="profile-header-role">Suraksha Didi</p>
+                                <div class="profile-header-contact-details">
+                                    <span class="profile-contact-item">
+                                        <i class="fa-solid fa-phone"></i>
+                                        <span id="lblPhone">8765432109</span>
+                                    </span>
+                                    <span class="profile-contact-item">
+                                        <i class="fa-solid fa-location-dot"></i>
+                                        <span id="lblRegion">Rairangpur, Odisha</span>
+                                    </span>
+                                </div>
+                                <div class="profile-id-badge">
+                                    <span id="lblDidiId">Didi ID: SDI-2025-00128</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="profile-header-right">
+                            <span class="profile-joined-date" id="lblJoined">Joined on 18 Jan 2025</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Details Grid Section -->
+                <section class="profile-details-grid-section">
+                    <!-- Personal Info Card -->
+                    <div class="personal-info-row" style="margin-bottom: 16px;">
+                        <div class="detail-card" style="width: 100%;">
+                            <div class="detail-card-header">
+                                <i class="fa-solid fa-user text-green"></i>
+                                <h3>Personal Information</h3>
+                            </div>
+                            <div class="detail-card-body grid-info-columns">
+                                <div class="info-item">
+                                    <span class="info-label">Date of Birth</span>
+                                    <span class="info-value" id="lblDob">12 Mar 1992</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Gender</span>
+                                    <span class="info-value" id="lblGender">Female</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Aadhaar Number</span>
+                                    <span class="info-value" id="lblAadhaar">XXXX XXXX 1234</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Mobile Number</span>
+                                    <span class="info-value" id="lblWhatsapp">8765432109</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Village</span>
+                                    <span class="info-value" id="lblVillage">Kendujhar</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Block</span>
+                                    <span class="info-value" id="lblBlock">Rairangpur</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">District</span>
+                                    <span class="info-value" id="lblDistrict">Mayurbhanj</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">State</span>
+                                    <span class="info-value" id="lblStateName">Odisha</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Pin Code</span>
+                                    <span class="info-value" id="lblPinCode">757043</span>
+                                </div>
+                                <div class="info-item full-width">
+                                    <span class="info-label">Address</span>
+                                    <span class="info-value" id="lblAddress">Kendujhar, Rairangpur, Odisha - 757043</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Work Info & Performance Grid -->
+                    <div class="profile-details-grid" style="margin-bottom: 16px;">
+                        <!-- Work Information -->
+                        <div class="profile-column">
+                            <div class="detail-card">
+                                <div class="detail-card-header">
+                                    <i class="fa-solid fa-briefcase text-green"></i>
+                                    <h3>Work Information</h3>
+                                </div>
+                                <div class="detail-card-body grid-info-columns">
+                                    <div class="info-item">
+                                        <span class="info-label">
+                                            <i class="fa-solid fa-map-location-dot text-muted" style="margin-right: 4px;"></i> Working Region
+                                        </span>
+                                        <span class="info-value" id="lblWorkingRegion">Rairangpur Block</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="info-label">
+                                            <i class="fa-solid fa-house-chimney text-muted" style="margin-right: 4px;"></i> Working Villages
+                                        </span>
+                                        <span class="info-value" id="lblWorkingVillages">12 Villages</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="info-label">
+                                            <i class="fa-solid fa-user-tie text-muted" style="margin-right: 4px;"></i> Supervisor / Coordinator
+                                        </span>
+                                        <span class="info-value" id="lblSupervisor">Biren Kumar</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="info-label">
+                                            <i class="fa-solid fa-user-check text-muted" style="margin-right: 4px;"></i> Reporting To
+                                        </span>
+                                        <span class="info-value" id="lblReportingTo">Block Coordinator</span>
+                                    </div>
+                                    <div class="info-item full-width">
+                                        <span class="info-label">
+                                            <i class="fa-regular fa-calendar text-muted" style="margin-right: 4px;"></i> Assigned On
+                                        </span>
+                                        <span class="info-value" id="lblAssignedOn">18 Jan 2025</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Performance Overview -->
+                        <div class="profile-column">
+                            <div class="detail-card">
+                                <div class="detail-card-header">
+                                    <i class="fa-solid fa-chart-line text-green"></i>
+                                    <h3>Performance Overview</h3>
+                                </div>
+                                <div class="detail-card-body goat-summary-boxes-grid">
+                                    <div class="goat-summary-box border-green" style="background-color: hsl(142, 75%, 98.5%); border: 1px solid var(--border-color); border-left: 4px solid var(--color-approved);">
+                                        <span class="summary-box-label" style="font-weight: 600;">Policies Added</span>
+                                        <h4 class="summary-box-value" style="color: var(--color-approved);" id="lblPoliciesAdded">128</h4>
+                                        <span class="stat-trend" style="color: var(--color-approved); font-size: 11px; font-weight: 600;" id="lblPoliciesTrend">
+                                            <i class="fa-solid fa-arrow-up"></i> 15% vs last month
+                                        </span>
+                                    </div>
+
+                                    <div class="goat-summary-box border-purple" style="background-color: hsl(270, 80%, 98.5%); border: 1px solid var(--border-color); border-left: 4px solid #8b5cf6;">
+                                        <span class="summary-box-label" style="font-weight: 600;">Claims Assisted</span>
+                                        <h4 class="summary-box-value" style="color: #8b5cf6;" id="lblClaimsAssisted">24</h4>
+                                        <span class="stat-trend" style="color: var(--color-approved); font-size: 11px; font-weight: 600;" id="lblClaimsTrend">
+                                            <i class="fa-solid fa-arrow-up"></i> 8% vs last month
+                                        </span>
+                                    </div>
+
+                                    <div class="goat-summary-box border-blue" style="background-color: hsl(210, 100%, 98.5%); border: 1px solid var(--border-color); border-left: 4px solid var(--color-review);">
+                                        <span class="summary-box-label" style="font-weight: 600;">Verifications Done</span>
+                                        <h4 class="summary-box-value" style="color: var(--color-review);" id="lblVerificationsDone">36</h4>
+                                        <span class="stat-trend" style="color: var(--color-approved); font-size: 11px; font-weight: 600;" id="lblVerificationsTrend">
+                                            <i class="fa-solid fa-arrow-up"></i> 12% vs last month
+                                        </span>
+                                    </div>
+
+                                    <div class="goat-summary-box border-orange" style="background-color: hsl(32, 100%, 98.5%); border: 1px solid var(--border-color); border-left: 4px solid var(--color-pending);">
+                                        <span class="summary-box-label" style="font-weight: 600;">Vaccinations Recorded</span>
+                                        <h4 class="summary-box-value" style="color: var(--color-pending);" id="lblVaccinationsRecorded">248</h4>
+                                        <span class="stat-trend" style="color: var(--color-approved); font-size: 11px; font-weight: 600;" id="lblVaccinationsTrend">
+                                            <i class="fa-solid fa-arrow-up"></i> 18% vs last month
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Activity Section -->
+                    <div class="personal-info-row" style="margin-bottom: 8px;">
+                        <div class="detail-card" style="width: 100%;">
+                            <div class="detail-card-header">
+                                <i class="fa-solid fa-clock-rotate-left text-green"></i>
+                                <h3>Recent Activity</h3>
+                            </div>
+                            <div class="detail-card-body recent-activity-list-container" id="activityContainer">
+                                <!-- Dynamically filled by didi-detail.js -->
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Bottom Action Row -->
+                <section class="profile-actions-section">
+                    <div class="profile-actions-container">
+                        <a href="" class="btn-profile-action call-btn" id="btnCallDidi">
+                            <i class="fa-solid fa-phone"></i>
+                            <span>Call Didi</span>
+                        </a>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Script Controllers -->
+    <script src="didi-detail.js"></script>
+    <script src="support.js"></script>
+</body>
+</html>

@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Goat Suraksha - Secured Farmers, Healthy Goats. Reports and performance metrics.">
+    <title>Goat Suraksha - Reports & Performance</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Premium Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Main Style -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="appSidebar">
+            <div class="logo-section">
+                <img src="ajahfi_logo_horizontal.png" alt="Ajah Fi Logo" class="brand-logo-img">
+            </div>
+            
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-item" id="navDashboard">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="farmers.html" class="nav-item" id="navFarmers">
+                    <i class="fa-solid fa-users-line"></i>
+                    <span>Farmers</span>
+                </a>
+                <a href="didis.html" class="nav-item" id="navDidis">
+                    <i class="fa-solid fa-user-tie"></i>
+                    <span>Suraksha Didis</span>
+                </a>
+                <a href="goats.html" class="nav-item" id="navGoats">
+                    <i class="fa-solid fa-cow"></i>
+                    <span>Goats</span>
+                </a>
+                <a href="claims.html" class="nav-item" id="navClaims">
+                    <i class="fa-solid fa-hand-holding-dollar"></i>
+                    <span>Claims</span>
+                </a>
+                <a href="reports.html" class="nav-item active" id="navReports">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Reports</span>
+                </a>
+                <a href="activity.html" class="nav-item" id="navActivity">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    <span>Activity Log</span>
+                </a>
+                <a href="settings.html" class="nav-item" id="navSettings">
+                    <i class="fa-solid fa-user"></i>
+                    <span>Profile</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="help-card">
+                    <div class="help-header">
+                        <div class="help-icon-wrapper">
+                            <i class="fa-solid fa-headset"></i>
+                        </div>
+                        <div class="help-content">
+                            <h4>Need Help?</h4>
+                            <p>Coordinator Helpdesk</p>
+                        </div>
+                    </div>
+                    <button class="btn-support" id="btnContactSupport">Contact Support</button>
+                </div>
+                <div class="copyright-text">
+                    <p>&copy; 2026 Goat Suraksha.<br>All rights reserved.</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Body -->
+        <main class="main-content">
+            <!-- Header Bar -->
+            <header class="header">
+                <div class="header-left">
+                    <div class="welcome-text">
+                        <h1 class="user-greeting">Hello, Coordinator <span class="wave-emoji">👋</span></h1>
+                        <p class="user-subtext">Manage operations and support Suraksha Didis</p>
+                    </div>
+                </div>
+
+                <div class="header-right">
+                    <div class="search-bar-wrapper">
+                        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                        <input type="text" id="mainSearchInput" placeholder="Search anything...">
+                    </div>
+
+                    <div class="notification-wrapper">
+                        <button class="btn-icon relative" id="notificationBtn" aria-label="Notifications">
+                            <i class="fa-regular fa-bell"></i>
+                            <span class="badge">3</span>
+                        </button>
+                        <!-- Quick Notification Dropdown -->
+                        <div class="notification-dropdown" id="notificationDropdown">
+                            <div class="dropdown-header">
+                                <h3>Notifications</h3>
+                                <a href="#">Mark all read</a>
+                            </div>
+                            <div class="notification-list">
+                                <div class="notification-item unread">
+                                    <div class="notif-icon bg-orange-light text-orange">
+                                        <i class="fa-solid fa-hand-holding-dollar"></i>
+                                    </div>
+                                    <div class="notif-info">
+                                        <p>New claim submitted by <strong>Ramesh Kumar</strong> (CLM1001)</p>
+                                        <span class="notif-time">5 mins ago</span>
+                                    </div>
+                                </div>
+                                <div class="notification-item unread">
+                                    <div class="notif-icon bg-blue-light text-blue">
+                                        <i class="fa-solid fa-file-shield"></i>
+                                    </div>
+                                    <div class="notif-info">
+                                        <p>Policy G12340 moved to <strong>Under Review</strong></p>
+                                        <span class="notif-time">2 hours ago</span>
+                                    </div>
+                                </div>
+                                <div class="notification-item">
+                                    <div class="notif-icon bg-green-light text-green">
+                                        <i class="fa-solid fa-user-plus"></i>
+                                    </div>
+                                    <div class="notif-info">
+                                        <p>New Didi registered: <strong>Anita Devi</strong></p>
+                                        <span class="notif-time">1 day ago</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dropdown-footer">
+                                <a href="#">See all notifications</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="profile-dropdown-wrapper">
+                        <button class="profile-trigger" id="profileDropdownBtn">
+                            <img src="goat_thumbnail.png" alt="Coordinator Profile" class="avatar-img">
+                            <div class="profile-details">
+                                <span class="profile-name">Coordinator</span>
+                                <i class="fa-solid fa-chevron-down profile-arrow"></i>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Body -->
+            <div class="dashboard-body">
+
+
+                <!-- Map Section -->
+                <section class="reports-map-section">
+                    <div class="detail-card">
+                        <div class="map-container-wrapper">
+                            <!-- Background Map Vector Layout -->
+                            <div class="map-vector-bg">
+                                <svg viewBox="0 0 800 400" width="100%" height="100%" class="map-svg-element">
+                                    <!-- Map region paths -->
+                                    <path d="M150,120 Q180,80 250,90 T350,110 T480,100 T580,110 T680,130 T720,180 T680,240 T580,270 T480,290 T350,300 T220,310 T130,260 T100,190 Z" fill="#eaf7ee" stroke="#a2dbb2" stroke-width="2" />
+                                    <!-- Region grid details -->
+                                    <path d="M250,90 Q300,180 350,300" stroke="#c5eed2" stroke-dasharray="4,4" fill="none" />
+                                    <path d="M480,100 Q450,200 480,290" stroke="#c5eed2" stroke-dasharray="4,4" fill="none" />
+                                    <path d="M130,190 Q400,200 720,180" stroke="#c5eed2" stroke-dasharray="4,4" fill="none" />
+                                    
+                                    <!-- Region text labels -->
+                                    <text x="210" y="130" class="map-label-text">Solan</text>
+                                    <text x="560" y="140" class="map-label-text">Nalagarh</text>
+                                    <text x="730" y="160" class="map-label-text">Kasauli</text>
+                                    <text x="220" y="270" class="map-label-text">Kandaghat</text>
+                                    <text x="690" y="290" class="map-label-text">Parwanoo</text>
+                                </svg>
+                                
+                                <!-- Active Pins Layer (Plotted using CSS positioning absolute over container) -->
+                                <div class="map-pin active-policy" style="left: 30%; top: 20%;" title="Active Policy - Solan">
+                                    <i class="fa-solid fa-shield-halved"></i>
+                                </div>
+                                <div class="map-pin claim-pin" style="left: 38%; top: 23%;" title="Claim - Solan">
+                                    <i class="fa-solid fa-file-invoice"></i>
+                                </div>
+                                <div class="map-pin active-policy" style="left: 48%; top: 28%;" title="Active Policy - Nalagarh">
+                                    <i class="fa-solid fa-shield-halved"></i>
+                                </div>
+                                <div class="map-pin active-policy" style="left: 55%; top: 29%;" title="Active Policy">
+                                    <i class="fa-solid fa-shield-halved"></i>
+                                </div>
+                                <div class="map-pin claim-pin" style="left: 39%; top: 39%;" title="Claim">
+                                    <i class="fa-solid fa-file-invoice"></i>
+                                </div>
+                                <div class="map-pin claim-pin" style="left: 61%; top: 25%;" title="Claim">
+                                    <i class="fa-solid fa-file-invoice"></i>
+                                </div>
+                                <div class="map-pin active-policy" style="left: 70%; top: 30%;" title="Active Policy - Kasauli">
+                                    <i class="fa-solid fa-shield-halved"></i>
+                                </div>
+                                <div class="map-pin claim-pin" style="left: 81%; top: 29%;" title="Claim - Kasauli">
+                                    <i class="fa-solid fa-file-invoice"></i>
+                                </div>
+                                <div class="map-pin active-policy" style="left: 78%; top: 44%;" title="Active Policy - Parwanoo">
+                                    <i class="fa-solid fa-shield-halved"></i>
+                                </div>
+                                <div class="map-pin claim-pin" style="left: 60%; top: 58%;" title="Claim">
+                                    <i class="fa-solid fa-file-invoice"></i>
+                                </div>
+                                <div class="map-pin active-policy" style="left: 50%; top: 68%;" title="Active Policy">
+                                    <i class="fa-solid fa-shield-halved"></i>
+                                </div>
+                                <div class="map-pin active-policy" style="left: 34%; top: 57%;" title="Active Policy">
+                                    <i class="fa-solid fa-shield-halved"></i>
+                                </div>
+                                <div class="map-pin active-policy" style="left: 27%; top: 43%;" title="Active Policy - Kandaghat">
+                                    <i class="fa-solid fa-shield-halved"></i>
+                                </div>
+                            </div>
+                            
+                            <!-- Legend and Map Controls -->
+                            <div class="map-controls-legend">
+                                <div class="map-legend">
+                                    <div class="legend-item">
+                                        <span class="legend-badge bg-green text-white">
+                                            <i class="fa-solid fa-check"></i>
+                                        </span>
+                                        <span class="legend-lbl">Active Policies</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <span class="legend-badge bg-purple text-white">
+                                            <i class="fa-solid fa-list-ul"></i>
+                                        </span>
+                                        <span class="legend-lbl">Claims</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="map-zoom-buttons">
+                                    <button class="zoom-btn" title="Zoom In"><i class="fa-solid fa-plus"></i></button>
+                                    <button class="zoom-btn" title="Zoom Out"><i class="fa-solid fa-minus"></i></button>
+                                    <button class="zoom-btn" title="Recenter"><i class="fa-solid fa-location-crosshairs"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Stats Summary Cards Section -->
+                <section class="farmers-stats-section">
+                    <div class="farmers-stats-grid">
+                        <!-- Card 1: Active Policies -->
+                        <div class="farmers-stat-card">
+                            <div class="stat-card-head">
+                                <div class="stat-icon-wrapper bg-green-light text-green">
+                                    <i class="fa-solid fa-shield-halved"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <span class="stat-card-label">Active Policies</span>
+                                    <h3 class="stat-card-value">986</h3>
+                                </div>
+                            </div>
+                            <div class="stat-trend text-green">
+                                <i class="fa-solid fa-arrow-up-long"></i>
+                                <span><strong>12%</strong> vs last 30 days</span>
+                            </div>
+                        </div>
+
+                        <!-- Card 2: Total Claims -->
+                        <div class="farmers-stat-card">
+                            <div class="stat-card-head">
+                                <div class="stat-icon-wrapper bg-purple-light text-purple">
+                                    <i class="fa-solid fa-clipboard-list"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <span class="stat-card-label">Total Claims</span>
+                                    <h3 class="stat-card-value">72</h3>
+                                </div>
+                            </div>
+                            <div class="stat-trend text-red">
+                                <i class="fa-solid fa-arrow-down-long"></i>
+                                <span><strong>8%</strong> vs last 30 days</span>
+                            </div>
+                        </div>
+
+                        <!-- Card 3: Today Premium Collection -->
+                        <div class="farmers-stat-card">
+                            <div class="stat-card-head">
+                                <div class="stat-icon-wrapper bg-green-light text-green">
+                                    <i class="fa-solid fa-coins"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <span class="stat-card-label">Today Premium Collection</span>
+                                    <h3 class="stat-card-value">₹ 45,860</h3>
+                                </div>
+                            </div>
+                            <div class="stat-trend text-green">
+                                <i class="fa-solid fa-arrow-up-long"></i>
+                                <span><strong>15%</strong> vs yesterday</span>
+                            </div>
+                        </div>
+
+                        <!-- Card 4: Total Premium Collection -->
+                        <div class="farmers-stat-card">
+                            <div class="stat-card-head">
+                                <div class="stat-icon-wrapper bg-purple-light text-purple">
+                                    <i class="fa-solid fa-sack-dollar"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <span class="stat-card-label">Total Premium Collection</span>
+                                    <h3 class="stat-card-value">₹ 12,48,650</h3>
+                                </div>
+                            </div>
+                            <div class="stat-trend text-green">
+                                <i class="fa-solid fa-arrow-up-long"></i>
+                                <span><strong>18%</strong> vs last month</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Activity Overview & Chart -->
+                <section class="activity-overview-section">
+                    <div class="detail-card">
+                        <div class="chart-card-header">
+                            <h3 class="chart-card-title">Activity Overview</h3>
+                            <div class="chart-filter-toggle-buttons">
+                                <button class="btn-chart-range active" data-range="7">Last 7 Days</button>
+                                <button class="btn-chart-range" data-range="30">Last 1 Month</button>
+                                <button class="btn-chart-range" data-range="365">Last 1 Year</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Responsive Custom HTML/CSS Bar Chart -->
+                        <div class="reports-bar-chart-wrapper">
+                            <!-- Y-axis labels grid line backdrop -->
+                            <div class="chart-grid-backdrop">
+                                <div class="grid-line-row"><span class="grid-axis-label">250</span><div class="grid-line"></div></div>
+                                <div class="grid-line-row"><span class="grid-axis-label">200</span><div class="grid-line"></div></div>
+                                <div class="grid-line-row"><span class="grid-axis-label">150</span><div class="grid-line"></div></div>
+                                <div class="grid-line-row"><span class="grid-axis-label">100</span><div class="grid-line"></div></div>
+                                <div class="grid-line-row"><span class="grid-axis-label">50</span><div class="grid-line"></div></div>
+                                <div class="grid-line-row"><span class="grid-axis-label">0</span><div class="grid-line base-line"></div></div>
+                            </div>
+                            
+                            <!-- Bars Layer -->
+                            <div class="chart-bars-container" id="barChartContainer">
+                                <!-- Dynamically filled by reports.js -->
+                            </div>
+                        </div>
+
+                        <!-- Legend -->
+                        <div class="chart-legend-container">
+                            <div class="chart-legend-item"><span class="color-dot bg-green"></span>Active Policies</div>
+                            <div class="chart-legend-item"><span class="color-dot bg-purple"></span>Claims</div>
+                            <div class="chart-legend-item"><span class="color-dot bg-blue"></span>Reports</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Bottom Report Actions Section -->
+                <section class="reports-bottom-actions">
+                    <div class="reports-actions-grid" style="grid-template-columns: 1fr;">
+                        <div class="report-action-card bg-blue-tint">
+                            <div class="report-action-inner">
+                                <div class="action-icon bg-blue-soft">
+                                    <i class="fa-solid fa-download text-blue"></i>
+                                </div>
+                                <div class="action-text">
+                                    <h4 class="action-card-title">Download Reports</h4>
+                                    <p class="action-card-subtitle">Download detailed reports</p>
+                                </div>
+                            </div>
+                            <i class="fa-solid fa-chevron-right action-nav-icon"></i>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Script Controllers -->
+    <script src="reports.js"></script>
+    <script src="support.js"></script>
+</body>
+</html>

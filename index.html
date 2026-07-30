@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Goat Suraksha - Secured Farmers, Healthy Goats. Dynamic analytics and claims management dashboard.">
+    <title>Goat Suraksha - Coordinator Dashboard</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- FontAwesome for Premium Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Main Style -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="appSidebar">
+            <div class="logo-section">
+                <img src="ajahfi_logo_horizontal.png" alt="Ajah Fi Logo" class="brand-logo-img">
+            </div>
+
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-item active" id="navDashboard">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="farmers.html" class="nav-item" id="navFarmers">
+                    <i class="fa-solid fa-users-line"></i>
+                    <span>Farmers</span>
+                </a>
+                <a href="didis.html" class="nav-item" id="navDidis">
+                    <i class="fa-solid fa-user-tie"></i>
+                    <span>Suraksha Didis</span>
+                </a>
+                <a href="goats.html" class="nav-item" id="navGoats">
+                    <i class="fa-solid fa-cow"></i>
+                    <span>Goats</span>
+                </a>
+                <a href="claims.html" class="nav-item" id="navClaims">
+                    <i class="fa-solid fa-hand-holding-dollar"></i>
+                    <span>Claims</span>
+                </a>
+                <a href="reports.html" class="nav-item" id="navReports">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Reports</span>
+                </a>
+                <a href="activity.html" class="nav-item" id="navActivity">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    <span>Activity Log</span>
+                </a>
+                <a href="settings.html" class="nav-item" id="navSettings">
+                    <i class="fa-solid fa-user"></i>
+                    <span>Profile</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="help-card">
+                    <div class="help-header">
+                        <div class="help-icon-wrapper">
+                            <i class="fa-solid fa-headset"></i>
+                        </div>
+                        <div class="help-content">
+                            <h4>Need Help?</h4>
+                            <p>Coordinator Helpdesk</p>
+                        </div>
+                    </div>
+                    <button class="btn-support" id="btnContactSupport">Contact Support</button>
+                </div>
+                <div class="copyright-text">
+                    <p>&copy; 2026 Goat Suraksha.<br>All rights reserved.</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Body -->
+        <main class="main-content">
+            <!-- Header Bar -->
+            <header class="header">
+                <div class="header-left">
+                    <div class="welcome-text">
+                        <h1 class="user-greeting">Hello, Coordinator <span class="wave-emoji">👋</span></h1>
+                        <p class="user-subtext">Manage operations and ensure happy farmers</p>
+                    </div>
+                </div>
+
+                <div class="header-right">
+                    <div class="search-bar-wrapper">
+                        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                        <input type="text" id="mainSearchInput" placeholder="Search anything...">
+                    </div>
+
+                    <div class="notification-wrapper">
+                        <button class="btn-icon relative" id="notificationBtn" aria-label="Notifications">
+                            <i class="fa-regular fa-bell"></i>
+                            <span class="badge">3</span>
+                        </button>
+                        <!-- Quick Notification Dropdown -->
+                        <div class="notification-dropdown" id="notificationDropdown">
+                            <div class="dropdown-header">
+                                <h3>Notifications</h3>
+                                <a href="#">Mark all read</a>
+                            </div>
+                            <div class="notification-list">
+                                <div class="notification-item unread">
+                                    <div class="notif-icon bg-orange-light text-orange">
+                                        <i class="fa-solid fa-hand-holding-dollar"></i>
+                                    </div>
+                                    <div class="notif-info">
+                                        <p>New claim submitted by <strong>Ramesh Kumar</strong> (CLM1001)</p>
+                                        <span class="notif-time">5 mins ago</span>
+                                    </div>
+                                </div>
+                                <div class="notification-item unread">
+                                    <div class="notif-icon bg-blue-light text-blue">
+                                        <i class="fa-solid fa-file-shield"></i>
+                                    </div>
+                                    <div class="notif-info">
+                                        <p>Policy G12340 moved to <strong>Under Review</strong></p>
+                                        <span class="notif-time">2 hours ago</span>
+                                    </div>
+                                </div>
+                                <div class="notification-item">
+                                    <div class="notif-icon bg-green-light text-green">
+                                        <i class="fa-solid fa-user-plus"></i>
+                                    </div>
+                                    <div class="notif-info">
+                                        <p>New Didi registered: <strong>Anita Devi</strong></p>
+                                        <span class="notif-time">1 day ago</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dropdown-footer">
+                                <a href="#">See all notifications</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="profile-dropdown-wrapper">
+                        <button class="profile-trigger" id="profileDropdownBtn">
+                            <img src="goat_thumbnail.png" alt="Coordinator Profile" class="avatar-img">
+                            <div class="profile-details">
+                                <span class="profile-name">Coordinator</span>
+                                <i class="fa-solid fa-chevron-down profile-arrow"></i>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Content Container -->
+            <div class="dashboard-body">
+                <!-- Promo Banner -->
+                <section class="banner-section"
+                    style="background-image: linear-gradient(90deg, rgba(254, 250, 240, 0.95) 30%, rgba(254, 250, 240, 0.4) 70%), url('banner_goats.png');">
+                    <div class="banner-content">
+                        <span class="banner-tag">Together for</span>
+                        <h2 class="banner-title">Secured Farmers &<br>Healthy Goats</h2>
+                        <div class="banner-leaf-wrapper">
+                            <i class="fa-solid fa-leaf banner-leaf"></i>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Overview Section -->
+                <section class="overview-section">
+                    <div class="section-header">
+                        <h2 class="section-title">Overview</h2>
+                        <div class="time-filter-wrapper">
+                            <i class="fa-regular fa-calendar-days filter-calendar-icon"></i>
+                            <select id="overviewTimeframe" class="custom-select">
+                                <option value="today">Today</option>
+                                <option value="yesterday" selected>Yesterday</option>
+                                <option value="week">This Week</option>
+                                <option value="month">This Month</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Sparkline Charts Grid -->
+                    <div class="sparklines-grid">
+                        <!-- Card 1: Active Policies -->
+                        <div class="sparkline-card">
+                            <div class="sparkline-header">
+                                <div class="sparkline-title-group">
+                                    <div class="sparkline-icon-box bg-blue-light text-blue">
+                                        <i class="fa-solid fa-shield-halved"></i>
+                                    </div>
+                                    <div class="sparkline-meta">
+                                        <span class="sparkline-label">Active Policies</span>
+                                        <h3 class="sparkline-value" id="valActivePolicies">986</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="trend-indicator text-green">
+                                <i class="fa-solid fa-arrow-up-long"></i>
+                                <span><strong>12%</strong> vs last week</span>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="chartActivePolicies"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Card 2: Claims History -->
+                        <div class="sparkline-card">
+                            <div class="sparkline-header">
+                                <div class="sparkline-title-group">
+                                    <div class="sparkline-icon-box bg-purple-light text-purple">
+                                        <i class="fa-solid fa-clipboard-list"></i>
+                                    </div>
+                                    <div class="sparkline-meta">
+                                        <span class="sparkline-label">Claims History</span>
+                                        <h3 class="sparkline-value" id="valClaimsHistory">72</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="trend-indicator text-red">
+                                <i class="fa-solid fa-arrow-down-long"></i>
+                                <span><strong>8%</strong> vs last week</span>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="chartClaimsHistory"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Card 3: Enrollments -->
+                        <div class="sparkline-card">
+                            <div class="sparkline-header">
+                                <div class="sparkline-title-group">
+                                    <div class="sparkline-icon-box bg-green-light text-green">
+                                        <i class="fa-solid fa-user-check"></i>
+                                    </div>
+                                    <div class="sparkline-meta">
+                                        <span class="sparkline-label">Enrollments</span>
+                                        <h3 class="sparkline-value" id="valEnrollments">48</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="trend-indicator text-green">
+                                <i class="fa-solid fa-arrow-up-long"></i>
+                                <span><strong>5%</strong> vs last week</span>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="chartEnrollments"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Card 4: Total Premium -->
+                        <div class="sparkline-card">
+                            <div class="sparkline-header">
+                                <div class="sparkline-title-group">
+                                    <div class="sparkline-icon-box bg-orange-light text-orange">
+                                        <i class="fa-solid fa-indian-rupee-sign"></i>
+                                    </div>
+                                    <div class="sparkline-meta">
+                                        <span class="sparkline-label">Total Premium</span>
+                                        <h3 class="sparkline-value" id="valTotalPremium">₹12.8 Lakh</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="trend-indicator text-green">
+                                <i class="fa-solid fa-arrow-up-long"></i>
+                                <span><strong>10%</strong> vs last week</span>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="chartTotalPremium"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Summary Cards Row (Suraksha Didis & Total Farmers) -->
+                    <div class="summary-cards-row">
+                        <!-- Total Suraksha Didis Card -->
+                        <div class="summary-card suraksha-didi-card">
+                            <div class="summary-card-inner">
+                                <div class="summary-avatar-box orange-avatar">
+                                    <i class="fa-solid fa-user-ninja"></i>
+                                </div>
+                                <div class="summary-details">
+                                    <span class="summary-title">Total Suraksha Didis</span>
+                                    <h3 class="summary-value" id="valTotalDidis">156</h3>
+                                </div>
+                            </div>
+                            <a href="didis.html" class="btn-card-action text-orange" id="btnViewDidis">
+                                <span>View All</span>
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+                            <div class="decorative-wave orange-wave">
+                                <svg viewBox="0 0 500 150" preserveAspectRatio="none">
+                                    <path
+                                        d="M-0.84,59.50 C194.97,126.61 310.66,-10.55 504.22,46.67 L500.00,150.00 L0.00,150.00 Z"
+                                        style="stroke: none; fill: rgba(255, 122, 0, 0.05);"></path>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <!-- Total Farmers Card -->
+                        <div class="summary-card total-farmers-card">
+                            <div class="summary-card-inner">
+                                <div class="summary-avatar-box green-avatar">
+                                    <i class="fa-solid fa-tractor"></i>
+                                </div>
+                                <div class="summary-details">
+                                    <span class="summary-title">Total Farmers</span>
+                                    <h3 class="summary-value" id="valTotalFarmers">1,248</h3>
+                                </div>
+                            </div>
+                            <a href="farmers.html" class="btn-card-action text-green" id="btnViewFarmers">
+                                <span>View All</span>
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+                            <div class="decorative-wave green-wave">
+                                <svg viewBox="0 0 500 150" preserveAspectRatio="none">
+                                    <path
+                                        d="M-0.84,59.50 C194.97,126.61 310.66,-10.55 504.22,46.67 L500.00,150.00 L0.00,150.00 Z"
+                                        style="stroke: none; fill: rgba(34, 197, 94, 0.05);"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Claim Overview Section -->
+                <section class="claims-overview-section">
+                    <div class="section-header">
+                        <h2 class="section-title">Claim Overview</h2>
+                        <a href="#" class="header-link text-green" id="linkClaimOverviewDetails">
+                            <span>View Details</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+
+                    <div class="claims-status-grid">
+                        <!-- Pending Card -->
+                        <div class="claims-status-card">
+                            <div class="claims-status-meta">
+                                <div class="claims-status-head">
+                                    <div class="status-icon bg-orange-light text-orange">
+                                        <i class="fa-solid fa-circle-notch fa-spin"></i>
+                                    </div>
+                                    <div class="status-number-group">
+                                        <h3 class="status-count">72</h3>
+                                        <span class="status-label">Pending</span>
+                                    </div>
+                                </div>
+                                <span class="status-subtext">Needs Action</span>
+                            </div>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar bg-orange" style="width: 60%"></div>
+                            </div>
+                        </div>
+
+                        <!-- Under Review Card -->
+                        <div class="claims-status-card">
+                            <div class="claims-status-meta">
+                                <div class="claims-status-head">
+                                    <div class="status-icon bg-blue-light text-blue">
+                                        <i class="fa-solid fa-magnifying-glass-chart"></i>
+                                    </div>
+                                    <div class="status-number-group">
+                                        <h3 class="status-count">18</h3>
+                                        <span class="status-label">Under Review</span>
+                                    </div>
+                                </div>
+                                <span class="status-subtext">In Process</span>
+                            </div>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar bg-blue" style="width: 25%"></div>
+                            </div>
+                        </div>
+
+                        <!-- Approved Card -->
+                        <div class="claims-status-card">
+                            <div class="claims-status-meta">
+                                <div class="claims-status-head">
+                                    <div class="status-icon bg-green-light text-green">
+                                        <i class="fa-regular fa-circle-check"></i>
+                                    </div>
+                                    <div class="status-number-group">
+                                        <h3 class="status-count">24</h3>
+                                        <span class="status-label">Approved</span>
+                                    </div>
+                                </div>
+                                <span class="status-subtext">Completed</span>
+                            </div>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar bg-green" style="width: 80%"></div>
+                            </div>
+                        </div>
+
+                        <!-- Rejected Card -->
+                        <div class="claims-status-card clickable" id="rejectedCard">
+                            <div class="claims-status-meta">
+                                <div class="claims-status-head">
+                                    <div class="status-icon bg-purple-light text-purple">
+                                        <i class="fa-regular fa-circle-xmark"></i>
+                                    </div>
+                                    <div class="status-number-group">
+                                        <h3 class="status-count">10</h3>
+                                        <span class="status-label">Rejected</span>
+                                    </div>
+                                </div>
+                                <span class="status-subtext">View Details</span>
+                            </div>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar bg-purple" style="width: 15%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Recent Claims Section -->
+                <section class="recent-claims-section">
+                    <div class="section-header">
+                        <h2 class="section-title">Recent Claims</h2>
+                        <a href="#" class="header-link text-green" id="linkRecentClaimsViewAll">
+                            <span>View All</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="claims-table">
+                            <thead>
+                                <tr>
+                                    <th>GOAT DETAILS</th>
+                                    <th>FARMER</th>
+                                    <th>DATE OF DEATH</th>
+                                    <th>CLAIM ID</th>
+                                    <th>STATUS</th>
+                                    <th>ACTION</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="claimsTableBody">
+                                <!-- Dynamic claims rows inserted by app.js -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Table Footer / Pagination -->
+                    <div class="table-pagination-footer">
+                        <span class="pagination-info" id="paginationInfo">Showing 1 to 3 of 10 entries</span>
+                        <div class="pagination-controls" id="paginationControls">
+                            <!-- Injected by app.js -->
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Claim Detail Modal -->
+    <div class="modal" id="claimModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Claim Details - <span id="modalClaimId">CLM1001</span></h2>
+                <button class="btn-close-modal" id="btnCloseModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-grid">
+                    <div class="modal-photo-section">
+                        <img src="goat_thumbnail.png" alt="Goat profile" class="modal-goat-img">
+                        <span class="modal-goat-id" id="modalGoatId">GOAT ID: G12345</span>
+                    </div>
+                    <div class="modal-info-section">
+                        <div class="info-group">
+                            <span class="info-label">Farmer Name</span>
+                            <span class="info-value" id="modalFarmerName">Ramesh Kumar</span>
+                        </div>
+                        <div class="info-group">
+                            <span class="info-label">Date of Demise</span>
+                            <span class="info-value" id="modalDateOfDeath">22 Jul 2026</span>
+                        </div>
+                        <div class="info-group">
+                            <span class="info-label">Claim Status</span>
+                            <span class="badge" id="modalStatusBadge">Pending</span>
+                        </div>
+                        <div class="info-group">
+                            <span class="info-label">Policy Number</span>
+                            <span class="info-value">POL-986221</span>
+                        </div>
+                        <div class="info-group">
+                            <span class="info-label">Assigned Suraksha Didi</span>
+                            <span class="info-value">Sita Devi (ID: D304)</span>
+                        </div>
+                        <div class="info-group">
+                            <span class="info-label">Claim Amount</span>
+                            <span class="info-value">₹15,000</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer-actions">
+                    <button class="btn btn-secondary" id="btnRejectClaim">Reject Claim</button>
+                    <button class="btn btn-primary" id="btnApproveClaim">Approve Claim</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ChartJS Library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- App Logic -->
+    <script src="app.js"></script>
+    <script src="support.js"></script>
+</body>
+
+</html>

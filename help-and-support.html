@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Goat Suraksha - Secured Farmers, Healthy Goats. Help & Support.">
+    <title>Goat Suraksha - Help & Support</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- FontAwesome for Premium Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Main Style -->
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Card & Layout Custom Styles */
+        .help-container-single {
+            width: 100%;
+            max-width: 100%;
+            margin: 20px 0 40px 0;
+            padding: 0 24px;
+            box-sizing: border-box;
+        }
+
+        .help-section-card {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 16px;
+        }
+
+        .topic-list-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .topic-list-item:hover {
+            border-color: var(--brand-primary);
+            background-color: #fafcfb;
+            transform: translateY(-1px);
+        }
+
+        .topic-accordion-item {
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            margin-bottom: 12px;
+            overflow: hidden;
+            background: white;
+            transition: all var(--transition-fast);
+        }
+
+        .topic-accordion-item:hover {
+            border-color: var(--brand-primary);
+        }
+
+        .topic-accordion-item .topic-list-item {
+            border: none !important;
+            margin-bottom: 0 !important;
+        }
+
+        .topic-accordion-content {
+            padding: 16px 20px 20px 72px;
+            font-size: 13.5px;
+            color: var(--text-muted);
+            line-height: 1.6;
+            font-weight: 500;
+            background-color: #fafcfb;
+            border-top: 1px solid #f1f5f9;
+        }
+
+        .topic-left {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .topic-icon-box {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: #f0fdf4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #16a34a;
+            font-size: 16px;
+            border: 1px solid #dcfce7;
+            flex-shrink: 0;
+        }
+
+        .topic-details {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .topic-title {
+            font-size: 13.5px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .topic-subtitle {
+            font-size: 11.5px;
+            color: var(--text-muted);
+            font-weight: 550;
+        }
+
+        .topic-chevron {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .section-heading-label {
+            font-family: 'Outfit', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin: 8px 0 8px 0;
+        }
+
+        /* Support elements styling */
+        .support-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #f4f6f4;
+            border: 1px solid #e6ebe6;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+            cursor: pointer;
+            transition: border-color var(--transition-fast);
+        }
+
+        .support-box:hover {
+            border-color: #16a34a;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .contact-card-sub {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 10px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .contact-sub-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: var(--radius-full);
+            background: #f0fdf4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #16a34a;
+            font-size: 16px;
+        }
+
+        .contact-sub-label {
+            font-size: 11.5px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .contact-sub-value {
+            font-size: 13.5px;
+            font-weight: 700;
+            color: #16a34a;
+            text-decoration: none;
+        }
+
+        .timing-box,
+        .tip-box {
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+            padding: 16px;
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .timing-box i,
+        .tip-box i {
+            font-size: 18px;
+            color: #16a34a;
+            margin-top: 2px;
+        }
+
+        .timing-title,
+        .tip-title {
+            font-size: 13.5px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin: 0 0 4px 0;
+        }
+
+        .timing-desc,
+        .tip-desc {
+            font-size: 12px;
+            color: var(--text-muted);
+            line-height: 1.5;
+            font-weight: 550;
+            margin: 0;
+        }
+
+        /* Mobile Navigation Bottom Bar */
+        .mobile-bottom-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+            border-top: 1px solid var(--border-color);
+            z-index: 999;
+            height: 64px;
+        }
+
+        .bottom-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 11px;
+            font-weight: 600;
+            flex: 1;
+            height: 100%;
+        }
+
+        .bottom-nav-item i {
+            font-size: 18px;
+        }
+
+        .bottom-nav-item.active {
+            color: #16a34a;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-bottom-nav {
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+            }
+
+            .main-content {
+                padding-bottom: 80px !important;
+            }
+
+            .bottom-nav-item.active {
+                background-color: #f0fdf4;
+                border-radius: 12px;
+                margin: 6px;
+                height: calc(100% - 12px);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="appSidebar">
+            <div class="logo-section">
+                <img src="ajahfi_logo_horizontal.png" alt="Ajah Fi Logo" class="brand-logo-img">
+            </div>
+
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-item" id="navDashboard">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="farmers.html" class="nav-item" id="navFarmers">
+                    <i class="fa-solid fa-users-line"></i>
+                    <span>Farmers</span>
+                </a>
+                <a href="didis.html" class="nav-item" id="navDidis">
+                    <i class="fa-solid fa-user-tie"></i>
+                    <span>Suraksha Didis</span>
+                </a>
+                <a href="goats.html" class="nav-item" id="navGoats">
+                    <i class="fa-solid fa-cow"></i>
+                    <span>Goats</span>
+                </a>
+                <a href="claims.html" class="nav-item" id="navClaims">
+                    <i class="fa-solid fa-hand-holding-dollar"></i>
+                    <span>Claims</span>
+                </a>
+                <a href="reports.html" class="nav-item" id="navReports">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Reports</span>
+                </a>
+                <a href="activity.html" class="nav-item" id="navActivity">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    <span>Activity Log</span>
+                </a>
+                <a href="settings.html" class="nav-item active" id="navSettings">
+                    <i class="fa-solid fa-user"></i>
+                    <span>Profile</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="help-card">
+                    <div class="help-header">
+                        <div class="help-icon-wrapper">
+                            <i class="fa-solid fa-headset"></i>
+                        </div>
+                        <div class="help-content">
+                            <h4>Need Help?</h4>
+                            <p>Coordinator Helpdesk</p>
+                        </div>
+                    </div>
+                    <button class="btn-support" id="btnContactSupport">Contact Support</button>
+                </div>
+                <div class="copyright-text">
+                    <p>&copy; 2026 Goat Suraksha.<br>All rights reserved.</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Body -->
+        <main class="main-content">
+            <!-- Header Bar -->
+            <!-- Back Button and Title -->
+            <div
+                style="display: flex; align-items: center; gap: 16px; margin: 24px 24px 8px 24px; padding-bottom: 8px;">
+                <a href="settings.html"
+                    style="text-decoration: none; color: var(--text-main); font-size: 20px; display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: var(--radius-full); background: white; box-shadow: var(--shadow-sm); border: 1px solid var(--border-color); transition: all 0.2s;">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </a>
+                <h1
+                    style="font-family: 'Outfit', sans-serif; font-size: 28px; font-weight: 800; color: #472c1b; margin: 0;">
+                    Help & Support</h1>
+            </div>
+
+            <!-- Single Column layout container -->
+            <div class="help-container-single">
+
+                <!-- Center Header Title block -->
+                <div style="text-align: center; margin-bottom: 16px;">
+                    <h2
+                        style="font-family: 'Outfit', sans-serif; font-size: 24px; font-weight: 800; color: var(--text-main); margin: 0 0 8px 0;">
+                        How can we help you?</h2>
+                    <p style="font-size: 14px; color: var(--text-muted); font-weight: 550; margin: 0;">We're here to
+                        assist you with any queries or issues.</p>
+                </div>
+
+                <!-- Popular Topics Section -->
+                <h3 class="section-heading-label">Popular Topics</h3>
+                <div class="help-section-card"
+                    style="background: transparent; border: none; padding: 0; box-shadow: none;">
+
+                    <div class="topic-accordion-item">
+                        <div class="topic-list-item" onclick="toggleHelpAccordion(this)">
+                            <div class="topic-left">
+                                <div class="topic-icon-box">
+                                    <i class="fa-solid fa-file-circle-plus"></i>
+                                </div>
+                                <div class="topic-details">
+                                    <span class="topic-title">Policy related queries</span>
+                                    <span class="topic-subtitle">Learn about policies, coverage, benefits and
+                                        more.</span>
+                                </div>
+                            </div>
+                            <i class="fa-solid fa-chevron-right topic-chevron"></i>
+                        </div>
+                        <div class="topic-accordion-content" style="display: none;">
+                            You can view your active policies in the Farmers section or the Dashboard. For detailed
+                            policy guidelines, benefits, and exclusions, refer to the policy document provided to you
+                            during registration. If you need a copy of your policy document, please contact your
+                            coordinator.
+                        </div>
+                    </div>
+
+                    <div class="topic-accordion-item">
+                        <div class="topic-list-item" onclick="toggleHelpAccordion(this)">
+                            <div class="topic-left">
+                                <div class="topic-icon-box">
+                                    <i class="fa-solid fa-indian-rupee-sign"></i>
+                                </div>
+                                <div class="topic-details">
+                                    <span class="topic-title">Premium payment</span>
+                                    <span class="topic-subtitle">Learn about payments, due dates, receipts and failed
+                                        transactions.</span>
+                                </div>
+                            </div>
+                            <i class="fa-solid fa-chevron-right topic-chevron"></i>
+                        </div>
+                        <div class="topic-accordion-content" style="display: none;">
+                            Premium payments are collected monthly or annually depending on your policy plan. You can
+                            pay via UPI, Bank Transfer, or Cash through your local Suraksha Didi. Always ask for a
+                            payment receipt and ensure it is updated in the app.
+                        </div>
+                    </div>
+
+                    <div class="topic-accordion-item">
+                        <div class="topic-list-item" onclick="toggleHelpAccordion(this)">
+                            <div class="topic-left">
+                                <div class="topic-icon-box">
+                                    <i class="fa-solid fa-shield-halved"></i>
+                                </div>
+                                <div class="topic-details">
+                                    <span class="topic-title">Claim process</span>
+                                    <span class="topic-subtitle">Understand how to raise a claim and track its
+                                        status.</span>
+                                </div>
+                            </div>
+                            <i class="fa-solid fa-chevron-right topic-chevron"></i>
+                        </div>
+                        <div class="topic-accordion-content" style="display: none;">
+                            To initiate a claim, submit the claim request through the Claims tab. You will need to
+                            provide the Goat ID, health details, and a verification photo from your Suraksha Didi.
+                            Claims are typically processed within 7 working days after verification.
+                        </div>
+                    </div>
+
+                    <div class="topic-accordion-item">
+                        <div class="topic-list-item" onclick="toggleHelpAccordion(this)">
+                            <div class="topic-left">
+                                <div class="topic-icon-box">
+                                    <i class="fa-solid fa-file-circle-plus"></i>
+                                </div>
+                                <div class="topic-details">
+                                    <span class="topic-title">Policy details</span>
+                                    <span class="topic-subtitle">Know your policy status, duration, documents and
+                                        renewals.</span>
+                                </div>
+                            </div>
+                            <i class="fa-solid fa-chevron-right topic-chevron"></i>
+                        </div>
+                        <div class="topic-accordion-content" style="display: none;">
+                            Each policy covers goat health treatment and secure life insurance. The duration is usually
+                            1 year from the activation date. You can check the specific status, expiry date, and renewal
+                            options directly on the Goat details page.
+                        </div>
+                    </div>
+
+                    <div class="topic-accordion-item">
+                        <div class="topic-list-item" onclick="toggleHelpAccordion(this)">
+                            <div class="topic-left">
+                                <div class="topic-icon-box">
+                                    <i class="fa-regular fa-user"></i>
+                                </div>
+                                <div class="topic-details">
+                                    <span class="topic-title">Account & profile</span>
+                                    <span class="topic-subtitle">Manage your account, update profile and personal
+                                        information.</span>
+                                </div>
+                            </div>
+                            <i class="fa-solid fa-chevron-right topic-chevron"></i>
+                        </div>
+                        <div class="topic-accordion-content" style="display: none;">
+                            Manage your personal profile, contact number, and login credentials from the Profile
+                            Settings tab. If you need to change your registered mobile number or role, please raise a
+                            request with the system administrator.
+                        </div>
+                    </div>
+
+                    <div class="topic-accordion-item">
+                        <div class="topic-list-item" onclick="toggleHelpAccordion(this)">
+                            <div class="topic-left">
+                                <div class="topic-icon-box">
+                                    <i class="fa-regular fa-circle-question"></i>
+                                </div>
+                                <div class="topic-details">
+                                    <span class="topic-title">Other queries</span>
+                                    <span class="topic-subtitle">Can't find what you're looking for? We're here to
+                                        help.</span>
+                                </div>
+                            </div>
+                            <i class="fa-solid fa-chevron-right topic-chevron"></i>
+                        </div>
+                        <div class="topic-accordion-content" style="display: none;">
+                            For other questions or technical support, please contact our helpline at +91 92373 92712 or
+                            chat with us. You can also write to support@ajafi.com, and our coordinator support team will
+                            resolve your issue within 24 hours.
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <!-- Still Need Help Section -->
+                <h3 class="section-heading-label">Still need help?</h3>
+                <div class="help-section-card">
+
+                    <div class="support-box" onclick="window.location.href='mailto:support@ajafi.com'">
+                        <div class="topic-left">
+                            <div class="topic-icon-box">
+                                <i class="fa-solid fa-headset"></i>
+                            </div>
+                            <div class="topic-details">
+                                <span class="topic-title" style="color: #16a34a;">Contact Us</span>
+                                <span class="topic-subtitle">Our support team is ready to help you.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="contact-grid">
+                        <div class="contact-card-sub" onclick="window.location.href='https://wa.me/919237392712'"
+                            style="cursor: pointer;">
+                            <div class="contact-sub-icon">
+                                <i class="fa-regular fa-comment-dots"></i>
+                            </div>
+                            <span class="contact-sub-label">Chat Us</span>
+                            <span class="contact-sub-value">+91 92373 92712</span>
+                        </div>
+
+                        <div class="contact-card-sub" onclick="window.location.href='tel:+919237392712'"
+                            style="cursor: pointer;">
+                            <div class="contact-sub-icon">
+                                <i class="fa-solid fa-phone"></i>
+                            </div>
+                            <span class="contact-sub-label">Call Us</span>
+                            <span class="contact-sub-value">+91 92373 92712</span>
+                        </div>
+                    </div>
+
+                    <div class="timing-box">
+                        <i class="fa-regular fa-clock"></i>
+                        <div>
+                            <h4 class="timing-title">Support Timing</h4>
+                            <p class="timing-desc">Mon - Sat : 9:00 AM - 7:00 PM<br>(Except Sundays & Public Holidays)
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="tip-box">
+                        <i class="fa-regular fa-lightbulb"></i>
+                        <div>
+                            <h4 class="tip-title">Quick Tip</h4>
+                            <p class="tip-desc">For faster resolution, please keep your GOAT ID or registered mobile
+                                number ready while contacting us.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+    </div>
+    </main>
+    </div>
+
+    <!-- Mobile Bottom Navigation Bar -->
+    <div class="mobile-bottom-nav">
+        <a href="index.html" class="bottom-nav-item">
+            <i class="fa-solid fa-house"></i>
+            <span>Home</span>
+        </a>
+        <a href="reports.html" class="bottom-nav-item">
+            <i class="fa-solid fa-chart-line"></i>
+            <span>Reports</span>
+        </a>
+        <a href="claims.html" class="bottom-nav-item">
+            <i class="fa-solid fa-hand-holding-dollar"></i>
+            <span>Claims</span>
+        </a>
+        <a href="activity.html" class="bottom-nav-item">
+            <i class="fa-solid fa-clock-rotate-left"></i>
+            <span>Activity</span>
+        </a>
+        <a href="help-and-support.html" class="bottom-nav-item active">
+            <i class="fa-solid fa-headset"></i>
+            <span>Help & Support</span>
+        </a>
+    </div>
+
+    <!-- Page Interaction Logic -->
+    <script>
+        docntListener('DOMContentLoaded', () => {
+            const sidebar = document.getElementById('appSidebar');
+            const sidebarToggleBtn = document.getElementById('sidebarToggle');
+            const notificationBtn = document.getElementById('notificationBtn');
+            const notificationDropdown = document.getElementById('notificationDropdown');
+            const profileBtn = document.getElementById('profileDropdownBtn');
+
+            if (sidebarToggleBtn) {
+                sidebarToggleBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    sidebar.classList.toggle('active');
+                });
+            }
+
+            document.addEventListener('click', (e) => {
+                if (sidebar && !sidebar.contains(e.target) && (!sidebarToggleBtn || e.target !== sidebarToggleBtn)) {
+                    sidebar.classList.remove('active');
+                }
+                if (notificationDropdown && !notificationDropdown.contains(e.target) && notificationBtn && e.target !== notificationBtn && !notificationBtn.contains(e.target)) {
+                    notificationDropdown.classList.remove('active');
+                }
+            });
+
+            if (notificationBtn) {
+                notificationBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    notificationDropdown.classList.toggle('active');
+                });
+            }
+
+            if (profileBtn) {
+                profileBtn.addEventListener('click', () => {
+                    alert("Profile settings & Coordinator options coming soon!");
+                });
+            }
+        });
+
+        function toggleHelpAccordion(element) {
+            const parent = element.parentElement;
+            const content = parent.querySelector('.topic-accordion-content');
+            const chevron = element.querySelector('.topic-chevron');
+            const isVisible = content.style.display === 'block';
+
+            // Close other accordions
+            document.querySelectorAll('.topic-accordion-content').forEach(el => {
+                el.style.display = 'none';
+                el.classList.remove('active');
+            });
+            document.querySelectorAll('.topic-chevron').forEach(el => {
+                el.className = 'fa-solid fa-chevron-right topic-chevron';
+            });
+
+            if (!isVisible) {
+                content.style.display = 'block';
+                content.classList.add('active');
+                chevron.className = 'fa-solid fa-chevron-down topic-chevron';
+            }
+        }
+
+        function toggleRulesDropdown(element) {
+            const wrapper = element.parentElement;
+            const content = wrapper.querySelector('.rules-dropdown-content');
+            const chevron = element.querySelector('.rules-chevron');
+            const isVisible = content.style.display === 'block';
+
+            if (isVisible) {
+                content.style.display = 'none';
+                chevron.style.transform = 'rotate(0deg)';
+                element.style.borderRadius = '12px';
+            } else {
+                content.style.display = 'block';
+                chevron.style.transform = 'rotate(180deg)';
+                element.style.borderRadius = '12px 12px 0 0';
+            }
+        }
+    </script>
+    <script src="support.js"></script>
+</body>
+
+</html>

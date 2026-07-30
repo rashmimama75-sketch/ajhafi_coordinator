@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Goat Suraksha - Secured Farmers, Healthy Goats. View and manage claims.">
+    <title>Goat Suraksha - Claims Directory</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Premium Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Main Style -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="appSidebar">
+            <div class="logo-section">
+                <img src="ajahfi_logo_horizontal.png" alt="Ajah Fi Logo" class="brand-logo-img">
+            </div>
+            
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-item" id="navDashboard">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="farmers.html" class="nav-item" id="navFarmers">
+                    <i class="fa-solid fa-users-line"></i>
+                    <span>Farmers</span>
+                </a>
+                <a href="didis.html" class="nav-item" id="navDidis">
+                    <i class="fa-solid fa-user-tie"></i>
+                    <span>Suraksha Didis</span>
+                </a>
+                <a href="goats.html" class="nav-item" id="navGoats">
+                    <i class="fa-solid fa-cow"></i>
+                    <span>Goats</span>
+                </a>
+                <a href="claims.html" class="nav-item active" id="navClaims">
+                    <i class="fa-solid fa-hand-holding-dollar"></i>
+                    <span>Claims</span>
+                </a>
+                <a href="reports.html" class="nav-item" id="navReports">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Reports</span>
+                </a>
+                <a href="activity.html" class="nav-item" id="navActivity">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    <span>Activity Log</span>
+                </a>
+                <a href="settings.html" class="nav-item" id="navSettings">
+                    <i class="fa-solid fa-user"></i>
+                    <span>Profile</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="help-card">
+                    <div class="help-header">
+                        <div class="help-icon-wrapper">
+                            <i class="fa-solid fa-headset"></i>
+                        </div>
+                        <div class="help-content">
+                            <h4>Need Help?</h4>
+                            <p>Coordinator Helpdesk</p>
+                        </div>
+                    </div>
+                    <button class="btn-support" id="btnContactSupport">Contact Support</button>
+                </div>
+                <div class="copyright-text">
+                    <p>&copy; 2026 Goat Suraksha.<br>All rights reserved.</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Body -->
+        <main class="main-content">
+            <!-- Header Bar -->
+            <header class="header">
+                <div class="header-left">
+                    <div class="welcome-text">
+                        <h1 class="user-greeting">Hello, Coordinator <span class="wave-emoji">👋</span></h1>
+                        <p class="user-subtext">Manage operations and support Suraksha Didis</p>
+                    </div>
+                </div>
+
+                <div class="header-right">
+                    <div class="search-bar-wrapper">
+                        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                        <input type="text" id="mainSearchInput" placeholder="Search anything...">
+                    </div>
+
+                    <div class="notification-wrapper">
+                        <button class="btn-icon relative" id="notificationBtn" aria-label="Notifications">
+                            <i class="fa-regular fa-bell"></i>
+                            <span class="badge">3</span>
+                        </button>
+                        <!-- Quick Notification Dropdown -->
+                        <div class="notification-dropdown" id="notificationDropdown">
+                            <div class="dropdown-header">
+                                <h3>Notifications</h3>
+                                <a href="#">Mark all read</a>
+                            </div>
+                            <div class="notification-list">
+                                <div class="notification-item unread">
+                                    <div class="notif-icon bg-orange-light text-orange">
+                                        <i class="fa-solid fa-hand-holding-dollar"></i>
+                                    </div>
+                                    <div class="notif-info">
+                                        <p>New claim submitted by <strong>Ramesh Kumar</strong> (CLM1001)</p>
+                                        <span class="notif-time">5 mins ago</span>
+                                    </div>
+                                </div>
+                                <div class="notification-item unread">
+                                    <div class="notif-icon bg-blue-light text-blue">
+                                        <i class="fa-solid fa-file-shield"></i>
+                                    </div>
+                                    <div class="notif-info">
+                                        <p>Policy G12340 moved to <strong>Under Review</strong></p>
+                                        <span class="notif-time">2 hours ago</span>
+                                    </div>
+                                </div>
+                                <div class="notification-item">
+                                    <div class="notif-icon bg-green-light text-green">
+                                        <i class="fa-solid fa-user-plus"></i>
+                                    </div>
+                                    <div class="notif-info">
+                                        <p>New Didi registered: <strong>Anita Devi</strong></p>
+                                        <span class="notif-time">1 day ago</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dropdown-footer">
+                                <a href="#">See all notifications</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="profile-dropdown-wrapper">
+                        <button class="profile-trigger" id="profileDropdownBtn">
+                            <img src="goat_thumbnail.png" alt="Coordinator Profile" class="avatar-img">
+                            <div class="profile-details">
+                                <span class="profile-name">Coordinator</span>
+                                <i class="fa-solid fa-chevron-down profile-arrow"></i>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Claims Dashboard Body -->
+            <div class="dashboard-body">
+                <!-- Banner Section -->
+                <section class="banner-section claims-banner">
+                    <div class="banner-content">
+                        <span class="banner-tag">GOAT SURAKSHA</span>
+                        <h2 class="banner-title">Claims</h2>
+                        <p class="banner-subtitle">Track, review and manage all goat insurance claims</p>
+                    </div>
+                </section>
+
+                <!-- Summary KPI Cards -->
+                <section class="claims-summary-section">
+                    <div class="claims-summary-grid">
+                        <div class="claims-summary-card card-all active" data-filter="all">
+                            <span class="summary-card-icon bg-orange-light text-orange">
+                                <i class="fa-solid fa-file-invoice"></i>
+                            </span>
+                            <div class="summary-card-info">
+                                <h3 class="summary-card-val">72</h3>
+                                <span class="summary-card-lbl">Total Claims</span>
+                                <span class="summary-card-sub">All Time</span>
+                            </div>
+                        </div>
+                        <div class="claims-summary-card card-pending" data-filter="pending">
+                            <span class="summary-card-icon bg-orange-light text-orange">
+                                <i class="fa-solid fa-clock"></i>
+                            </span>
+                            <div class="summary-card-info">
+                                <h3 class="summary-card-val" style="color: var(--color-pending);">18</h3>
+                                <span class="summary-card-lbl">Pending</span>
+                                <span class="summary-card-sub">Needs Action</span>
+                            </div>
+                        </div>
+                        <div class="claims-summary-card card-review" data-filter="under review">
+                            <span class="summary-card-icon bg-blue-light text-blue">
+                                <i class="fa-solid fa-rotate"></i>
+                            </span>
+                            <div class="summary-card-info">
+                                <h3 class="summary-card-val" style="color: var(--color-review);">22</h3>
+                                <span class="summary-card-lbl">Under Review</span>
+                                <span class="summary-card-sub">In Process</span>
+                            </div>
+                        </div>
+                        <div class="claims-summary-card card-approved" data-filter="approved">
+                            <span class="summary-card-icon bg-green-light text-green">
+                                <i class="fa-solid fa-circle-check"></i>
+                            </span>
+                            <div class="summary-card-info">
+                                <h3 class="summary-card-val" style="color: var(--color-approved);">24</h3>
+                                <span class="summary-card-lbl">Approved</span>
+                                <span class="summary-card-sub">Completed</span>
+                            </div>
+                        </div>
+                        <div class="claims-summary-card card-rejected" data-filter="rejected">
+                            <span class="summary-card-icon bg-purple-light text-purple">
+                                <i class="fa-solid fa-circle-xmark"></i>
+                            </span>
+                            <div class="summary-card-info">
+                                <h3 class="summary-card-val" style="color: var(--color-rejected);">8</h3>
+                                <span class="summary-card-lbl">Rejected</span>
+                                <span class="summary-card-sub">Not Approved</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Claims Tabs Navigation Section -->
+                <section class="claims-tabs-section">
+                    <div class="claims-tabs-container" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--border-color); width: 100%;">
+                        <div style="display: flex; gap: 8px;">
+                            <button class="claims-tab active" data-filter="all">
+                                <i class="fa-solid fa-file-invoice"></i>
+                                <span>All Claims</span>
+                            </button>
+                            <button class="claims-tab" data-filter="pending">
+                                <i class="fa-regular fa-clock"></i>
+                                <span>Pending</span>
+                            </button>
+                            <button class="claims-tab" data-filter="under review">
+                                <i class="fa-solid fa-arrows-spin"></i>
+                                <span>Under Review</span>
+                            </button>
+                            <button class="claims-tab" data-filter="approved">
+                                <i class="fa-regular fa-circle-check"></i>
+                                <span>Approved</span>
+                            </button>
+                            <button class="claims-tab" data-filter="rejected">
+                                <i class="fa-regular fa-circle-xmark"></i>
+                                <span>Rejected</span>
+                            </button>
+                        </div>
+                        
+                        <!-- Search box -->
+                        <div class="search-box-container" style="width: 320px; margin-bottom: 6px;">
+                            <i class="fa-solid fa-magnifying-glass search-inner-icon"></i>
+                            <input type="text" id="claimSearchInput" placeholder="Search by Claim ID, Farmer or GOAT ID...">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Claims List Container -->
+                <section class="claims-list-section">
+                    <div class="claims-list-wrapper" id="claimsListContainer">
+                        <!-- Dynamically filled by claims.js -->
+                    </div>
+                </section>
+
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Script Controllers -->
+    <script src="claims.js"></script>
+    <script src="support.js"></script>
+</body>
+</html>

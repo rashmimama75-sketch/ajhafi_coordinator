@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Goat Suraksha - Secured Farmers, Healthy Goats. Settings and profile page.">
+    <title>Goat Suraksha - Settings</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- FontAwesome for Premium Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Main Style -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation (AgriApp style from design) -->
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="appSidebar">
+            <div class="logo-section">
+                <img src="ajahfi_logo_horizontal.png" alt="Ajah Fi Logo" class="brand-logo-img">
+            </div>
+
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-item" id="navDashboard">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="farmers.html" class="nav-item" id="navFarmers">
+                    <i class="fa-solid fa-users-line"></i>
+                    <span>Farmers</span>
+                </a>
+                <a href="didis.html" class="nav-item" id="navDidis">
+                    <i class="fa-solid fa-user-tie"></i>
+                    <span>Suraksha Didis</span>
+                </a>
+                <a href="goats.html" class="nav-item" id="navGoats">
+                    <i class="fa-solid fa-cow"></i>
+                    <span>Goats</span>
+                </a>
+                <a href="claims.html" class="nav-item" id="navClaims">
+                    <i class="fa-solid fa-hand-holding-dollar"></i>
+                    <span>Claims</span>
+                </a>
+                <a href="reports.html" class="nav-item" id="navReports">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Reports</span>
+                </a>
+                <a href="activity.html" class="nav-item" id="navActivity">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    <span>Activity Log</span>
+                </a>
+                <a href="settings.html" class="nav-item active" id="navSettings">
+                    <i class="fa-solid fa-user"></i>
+                    <span>Profile</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="help-card">
+                    <div class="help-header">
+                        <div class="help-icon-wrapper">
+                            <i class="fa-solid fa-headset"></i>
+                        </div>
+                        <div class="help-content">
+                            <h4>Need Help?</h4>
+                            <p>Coordinator Helpdesk</p>
+                        </div>
+                    </div>
+                    <button class="btn-support" id="btnContactSupport">Contact Support</button>
+                </div>
+                <div class="copyright-text">
+                    <p>&copy; 2026 Goat Suraksha.<br>All rights reserved.</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Body -->
+        <main class="main-content" style="background-color: #fbfbfa; min-height: 100vh;">
+            <div class="settings-container">
+
+                <!-- Cover Banner Card -->
+                <div class="settings-banner-card">
+                    <div class="settings-profile-left">
+                        <div class="settings-avatar-container">
+                            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=150&q=80"
+                                alt="Rashmi Sharma Profile Photo" class="settings-avatar-lg">
+                            <button class="btn-camera-edit" aria-label="Change Profile Photo">
+                                <i class="fa-solid fa-camera"></i>
+                            </button>
+                        </div>
+                        <div class="settings-profile-info">
+                            <h2 class="settings-display-name">Rashmi Sharma</h2>
+                            <div class="settings-role-badge">Coordinator</div>
+                            <div class="settings-joined-date">
+                                <i class="fa-regular fa-calendar"></i>
+                                <span>Joined on 15 Mar 2023</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="settings-profile-right">
+                        <button class="btn-edit-profile">
+                            <i class="fa-solid fa-pencil"></i>
+                            <span>Edit Profile</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Two-Column Grid for Information and Settings -->
+                <div class="settings-grid">
+                    <!-- Left: My Information -->
+                    <div class="settings-card personal-info-card">
+                        <div class="personal-info-header">
+                            <div class="personal-info-icon-wrapper">
+                                <i class="fa-regular fa-user"></i>
+                            </div>
+                            <h3 class="personal-info-title">Personal Information</h3>
+                        </div>
+
+                        <div class="personal-info-list">
+                            <div class="personal-info-row">
+                                <div class="personal-info-label">Full Name</div>
+                                <div class="personal-info-value">Rashmi Sharma</div>
+                            </div>
+                            <div class="personal-info-row">
+                                <div class="personal-info-label">Role</div>
+                                <div class="personal-info-value">Coordinator</div>
+                            </div>
+                            <div class="personal-info-row">
+                                <div class="personal-info-label">Phone Number</div>
+                                <div class="personal-info-value">+91 98765 43210</div>
+                            </div>
+                            <div class="personal-info-row">
+                                <div class="personal-info-label">Date of Birth</div>
+                                <div class="personal-info-value">12 Aug 1994</div>
+                            </div>
+                            <div class="personal-info-row">
+                                <div class="personal-info-label">Gender</div>
+                                <div class="personal-info-value">Female</div>
+                            </div>
+                            <div class="personal-info-row">
+                                <div class="personal-info-label">Address</div>
+                                <div class="personal-info-value">
+                                    12, Green Park Colony,<br>
+                                    Bhopal, Madhya Pradesh - 462001
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Menu Options -->
+                    <div class="settings-card">
+                        <a href="change-password.html" class="settings-option-item">
+                            <div class="settings-option-left">
+                                <div class="info-icon-box">
+                                    <i class="fa-solid fa-lock"></i>
+                                </div>
+                                <span class="settings-option-title">Change Password</span>
+                            </div>
+                            <div class="settings-option-right">
+                                <i class="fa-solid fa-chevron-right settings-option-chevron"></i>
+                            </div>
+                        </a>
+
+                        <a href="#" class="settings-option-item">
+                            <div class="settings-option-left">
+                                <div class="info-icon-box">
+                                    <i class="fa-solid fa-earth-americas"></i>
+                                </div>
+                                <span class="settings-option-title">Language</span>
+                            </div>
+                            <div class="settings-option-right">
+                                <span class="settings-option-value">English</span>
+                                <i class="fa-solid fa-chevron-right settings-option-chevron"></i>
+                            </div>
+                        </a>
+
+                        <a href="help-and-support.html" class="settings-option-item">
+                            <div class="settings-option-left">
+                                <div class="info-icon-box">
+                                    <i class="fa-solid fa-headset"></i>
+                                </div>
+                                <span class="settings-option-title">Help & Support</span>
+                            </div>
+                            <div class="settings-option-right">
+                                <i class="fa-solid fa-chevron-right settings-option-chevron"></i>
+                            </div>
+                        </a>
+
+                        <a href="privacy-policy.html" class="settings-option-item">
+                            <div class="settings-option-left">
+                                <div class="info-icon-box">
+                                    <i class="fa-solid fa-user-shield"></i>
+                                </div>
+                                <span class="settings-option-title">Privacy Policy</span>
+                            </div>
+                            <div class="settings-option-right">
+                                <i class="fa-solid fa-chevron-right settings-option-chevron"></i>
+                            </div>
+                        </a>
+
+                        <a href="terms-and-conditions.html" class="settings-option-item">
+                            <div class="settings-option-left">
+                                <div class="info-icon-box">
+                                    <i class="fa-solid fa-file-invoice"></i>
+                                </div>
+                                <span class="settings-option-title">Terms & Conditions</span>
+                            </div>
+                            <div class="settings-option-right">
+                                <i class="fa-solid fa-chevron-right settings-option-chevron"></i>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Full Width Logout Button -->
+                <button class="btn-logout-full" onclick="alert('Logging out...')">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </main>
+    </div>
+    <script src="support.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Goat Suraksha - Secured Farmers, Healthy Goats. Activity log and system-wide audit trail.">
+    <title>Goat Suraksha - Activity Log</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- FontAwesome for Premium Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Main Style -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="appSidebar">
+            <div class="logo-section">
+                <img src="ajahfi_logo_horizontal.png" alt="Ajah Fi Logo" class="brand-logo-img">
+            </div>
+
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-item" id="navDashboard">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="farmers.html" class="nav-item" id="navFarmers">
+                    <i class="fa-solid fa-users-line"></i>
+                    <span>Farmers</span>
+                </a>
+                <a href="didis.html" class="nav-item" id="navDidis">
+                    <i class="fa-solid fa-user-tie"></i>
+                    <span>Suraksha Didis</span>
+                </a>
+                <a href="goats.html" class="nav-item" id="navGoats">
+                    <i class="fa-solid fa-cow"></i>
+                    <span>Goats</span>
+                </a>
+                <a href="claims.html" class="nav-item" id="navClaims">
+                    <i class="fa-solid fa-hand-holding-dollar"></i>
+                    <span>Claims</span>
+                </a>
+                <a href="reports.html" class="nav-item" id="navReports">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Reports</span>
+                </a>
+                <a href="activity.html" class="nav-item active" id="navActivity">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    <span>Activity Log</span>
+                </a>
+                <a href="settings.html" class="nav-item" id="navSettings">
+                    <i class="fa-solid fa-user"></i>
+                    <span>Profile</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="help-card">
+                    <div class="help-header">
+                        <div class="help-icon-wrapper">
+                            <i class="fa-solid fa-headset"></i>
+                        </div>
+                        <div class="help-content">
+                            <h4>Need Help?</h4>
+                            <p>Coordinator Helpdesk</p>
+                        </div>
+                    </div>
+                    <button class="btn-support" id="btnContactSupport">Contact Support</button>
+                </div>
+                <div class="copyright-text">
+                    <p>&copy; 2026 Goat Suraksha.<br>All rights reserved.</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Body -->
+        <main class="main-content">
+            <!-- Header Bar -->
+            <header class="header">
+                <div class="header-left">
+                    <div class="welcome-text">
+                        <h1 class="user-greeting">Hello, Coordinator <span class="wave-emoji">👋</span></h1>
+                        <p class="user-subtext">Manage operations and ensure happy farmers</p>
+                    </div>
+                </div>
+
+                <div class="header-right">
+                    <div class="search-bar-wrapper">
+                        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                        <input type="text" id="mainSearchInput" placeholder="Search anything...">
+                    </div>
+
+                    <div class="notification-wrapper">
+                        <button class="btn-icon relative" id="notificationBtn" aria-label="Notifications">
+                            <i class="fa-regular fa-bell"></i>
+                            <span class="badge">3</span>
+                        </button>
+                        <!-- Quick Notification Dropdown -->
+                        <div class="notification-dropdown" id="notificationDropdown">
+                            <div class="dropdown-header">
+                                <h3>Notifications</h3>
+                                <a href="#">Mark all read</a>
+                            </div>
+                            <div class="notification-list">
+                                <div class="notification-item unread">
+                                    <div class="notif-icon bg-orange-light text-orange">
+                                        <i class="fa-solid fa-hand-holding-dollar"></i>
+                                    </div>
+                                    <div class="notif-info">
+                                        <p>New claim submitted by <strong>Ramesh Kumar</strong> (CLM1001)</p>
+                                        <span class="notif-time">5 mins ago</span>
+                                    </div>
+                                </div>
+                                <div class="notification-item unread">
+                                    <div class="notif-icon bg-blue-light text-blue">
+                                        <i class="fa-solid fa-file-shield"></i>
+                                    </div>
+                                    <div class="notif-info">
+                                        <p>Policy G12340 moved to <strong>Under Review</strong></p>
+                                        <span class="notif-time">2 hours ago</span>
+                                    </div>
+                                </div>
+                                <div class="notification-item">
+                                    <div class="notif-icon bg-green-light text-green">
+                                        <i class="fa-solid fa-user-plus"></i>
+                                    </div>
+                                    <div class="notif-info">
+                                        <p>New Didi registered: <strong>Anita Devi</strong></p>
+                                        <span class="notif-time">1 day ago</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dropdown-footer">
+                                <a href="#">See all notifications</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="profile-dropdown-wrapper">
+                        <button class="profile-trigger" id="profileDropdownBtn">
+                            <img src="goat_thumbnail.png" alt="Coordinator Profile" class="avatar-img">
+                            <div class="profile-details">
+                                <span class="profile-name">Coordinator</span>
+                                <i class="fa-solid fa-chevron-down profile-arrow"></i>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Content Container -->
+            <div class="dashboard-body">
+                <!-- Recent Activity Timeline Card -->
+                <section class="activity-timeline-section">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 16px;">
+                        <h3 style="font-family: 'Outfit', sans-serif; font-size: 18px; font-weight: 700; margin: 0;">Recent Activity</h3>
+                        <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                            <div class="activity-search-right">
+                                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                                <input type="text" id="activitySearchInput" placeholder="Search activity...">
+                            </div>
+                            <button class="btn-filter" id="btnActivityFilter">
+                                <i class="fa-solid fa-filter"></i>
+                                <span>Filter</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="activity-timeline-card">
+                        <div class="activity-timeline" id="activityTimelineContainer">
+                            <!-- Timeline items -->
+                            <div class="activity-timeline-item dot-green" data-type="enrollment">
+                                <div class="activity-indicator-group">
+                                    <div class="activity-timeline-dot"></div>
+                                    <div class="activity-icon-box bg-green-light text-green">
+                                        <i class="fa-solid fa-user-plus"></i>
+                                    </div>
+                                </div>
+                                <div class="activity-details-block">
+                                    <div class="activity-text-info">
+                                        <span class="activity-title">New Goat Enrolled</span>
+                                        <span class="activity-description">Didi Sushmita Behera enrolled a new goat</span>
+                                    </div>
+                                    <div class="activity-tags">
+                                        <span class="activity-badge badge-farmer-green">Farmer: Santosh Kumar</span>
+                                        <span class="activity-badge badge-gray">GOAT ID: G12345</span>
+                                    </div>
+                                    <div class="activity-right-group">
+                                        <span class="activity-time">10:30 AM</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="activity-timeline-item dot-purple" data-type="claim">
+                                <div class="activity-indicator-group">
+                                    <div class="activity-timeline-dot"></div>
+                                    <div class="activity-icon-box bg-purple-light text-purple">
+                                        <i class="fa-solid fa-file-invoice"></i>
+                                    </div>
+                                </div>
+                                <div class="activity-details-block">
+                                    <div class="activity-text-info">
+                                        <span class="activity-title">Claim Raised</span>
+                                        <span class="activity-description">Didi Sushmita Behera raised a claim</span>
+                                    </div>
+                                    <div class="activity-tags">
+                                        <span class="activity-badge badge-claim-purple">Claim ID: CLM1001</span>
+                                        <span class="activity-badge badge-gray">GOAT ID: G12345</span>
+                                    </div>
+                                    <div class="activity-right-group">
+                                        <span class="activity-time">09:45 AM</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="activity-timeline-item dot-orange" data-type="policy">
+                                <div class="activity-indicator-group">
+                                    <div class="activity-timeline-dot"></div>
+                                    <div class="activity-icon-box bg-orange-light text-orange">
+                                        <i class="fa-solid fa-shield-halved"></i>
+                                    </div>
+                                </div>
+                                <div class="activity-details-block">
+                                    <div class="activity-text-info">
+                                        <span class="activity-title">Policy Issued</span>
+                                        <span class="activity-description">Policy issued for a new enrollment</span>
+                                    </div>
+                                    <div class="activity-tags">
+                                        <span class="activity-badge badge-policy-orange">Policy ID: POL7890</span>
+                                        <span class="activity-badge badge-gray">Farmer: Sita Devi</span>
+                                    </div>
+                                    <div class="activity-right-group">
+                                        <span class="activity-time">09:20 AM</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="activity-timeline-item dot-blue" data-type="approval">
+                                <div class="activity-indicator-group">
+                                    <div class="activity-timeline-dot"></div>
+                                    <div class="activity-icon-box bg-blue-light text-blue">
+                                        <i class="fa-solid fa-circle-check"></i>
+                                    </div>
+                                </div>
+                                <div class="activity-details-block">
+                                    <div class="activity-text-info">
+                                        <span class="activity-title">Claim Approved</span>
+                                        <span class="activity-description">Claim has been approved by Coordinator</span>
+                                    </div>
+                                    <div class="activity-tags">
+                                        <span class="activity-badge badge-blue">Claim ID: CLM0999</span>
+                                        <span class="activity-badge badge-gray">GOAT ID: G12310</span>
+                                    </div>
+                                    <div class="activity-right-group">
+                                        <span class="activity-time">Yesterday, 04:30 PM</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="activity-timeline-item dot-green" data-type="enrollment">
+                                <div class="activity-indicator-group">
+                                    <div class="activity-timeline-dot"></div>
+                                    <div class="activity-icon-box bg-green-light text-green">
+                                        <i class="fa-solid fa-user-group"></i>
+                                    </div>
+                                </div>
+                                <div class="activity-details-block">
+                                    <div class="activity-text-info">
+                                        <span class="activity-title">Multiple Goats Enrolled</span>
+                                        <span class="activity-description">Didi Laxmi Nayak enrolled 3 goats</span>
+                                    </div>
+                                    <div class="activity-tags">
+                                        <span class="activity-badge badge-farmer-green">Farmer: Mohan Singh</span>
+                                        <span class="activity-badge badge-gray">Total Goats: 3</span>
+                                    </div>
+                                    <div class="activity-right-group">
+                                        <span class="activity-time">Yesterday, 03:15 PM</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="activity-timeline-item dot-purple" data-type="review">
+                                <div class="activity-indicator-group">
+                                    <div class="activity-timeline-dot"></div>
+                                    <div class="activity-icon-box bg-purple-light text-purple">
+                                        <i class="fa-solid fa-rotate"></i>
+                                    </div>
+                                </div>
+                                <div class="activity-details-block">
+                                    <div class="activity-text-info">
+                                        <span class="activity-title">Claim Under Review</span>
+                                        <span class="activity-description">Claim is under review</span>
+                                    </div>
+                                    <div class="activity-tags">
+                                        <span class="activity-badge badge-claim-purple">Claim ID: CLM0998</span>
+                                        <span class="activity-badge badge-gray">GOAT ID: G12285</span>
+                                    </div>
+                                    <div class="activity-right-group">
+                                        <span class="activity-time">Yesterday, 11:10 AM</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="activity-timeline-item dot-blue" data-type="enrollment">
+                                <div class="activity-indicator-group">
+                                    <div class="activity-timeline-dot"></div>
+                                    <div class="activity-icon-box bg-blue-light text-blue">
+                                        <i class="fa-solid fa-shield-halved"></i>
+                                    </div>
+                                </div>
+                                <div class="activity-details-block">
+                                    <div class="activity-text-info">
+                                        <span class="activity-title">Enrollment Added</span>
+                                        <span class="activity-description">Enrollment added for GOAT ID: G12311</span>
+                                    </div>
+                                    <div class="activity-tags">
+                                        <span class="activity-badge badge-blue">Enrollment ID: END012</span>
+                                        <span class="activity-badge badge-gray">GOAT ID: G12311</span>
+                                    </div>
+                                    <div class="activity-right-group">
+                                        <span class="activity-time">22 Jul 2026, 04:05 PM</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- ChartJS Library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Activity Log Script -->
+    <script src="activity.js"></script>
+    <script src="support.js"></script>
+</body>
+
+</html>

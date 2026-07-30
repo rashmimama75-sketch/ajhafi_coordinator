@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Goat Suraksha - Secured Farmers, Healthy Goats. View and manage farmers.">
+    <title>Goat Suraksha - Farmers Directory</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Premium Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Main Style -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="appSidebar">
+            <div class="logo-section">
+                <img src="ajahfi_logo_horizontal.png" alt="Ajah Fi Logo" class="brand-logo-img">
+            </div>
+            
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-item" id="navDashboard">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="farmers.html" class="nav-item active" id="navFarmers">
+                    <i class="fa-solid fa-users-line"></i>
+                    <span>Farmers</span>
+                </a>
+                <a href="didis.html" class="nav-item" id="navDidis">
+                    <i class="fa-solid fa-user-tie"></i>
+                    <span>Suraksha Didis</span>
+                </a>
+                <a href="goats.html" class="nav-item" id="navGoats">
+                    <i class="fa-solid fa-cow"></i>
+                    <span>Goats</span>
+                </a>
+                <a href="claims.html" class="nav-item" id="navClaims">
+                    <i class="fa-solid fa-hand-holding-dollar"></i>
+                    <span>Claims</span>
+                </a>
+                <a href="reports.html" class="nav-item" id="navReports">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Reports</span>
+                </a>
+                <a href="activity.html" class="nav-item" id="navActivity">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    <span>Activity Log</span>
+                </a>
+                <a href="settings.html" class="nav-item" id="navSettings">
+                    <i class="fa-solid fa-user"></i>
+                    <span>Profile</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="help-card">
+                    <div class="help-header">
+                        <div class="help-icon-wrapper">
+                            <i class="fa-solid fa-headset"></i>
+                        </div>
+                        <div class="help-content">
+                            <h4>Need Help?</h4>
+                            <p>Coordinator Helpdesk</p>
+                        </div>
+                    </div>
+                    <button class="btn-support" id="btnContactSupport">Contact Support</button>
+                </div>
+                <div class="copyright-text">
+                    <p>&copy; 2026 Goat Suraksha.<br>All rights reserved.</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Body -->
+        <main class="main-content">
+            <!-- Header Bar -->
+            <header class="header">
+                <div class="header-left">
+                    <div class="welcome-text">
+                        <h1 class="user-greeting">Hello, Coordinator <span class="wave-emoji">👋</span></h1>
+                        <p class="user-subtext">Manage operations and ensure happy farmers</p>
+                    </div>
+                </div>
+
+                <div class="header-right">
+                    <div class="search-bar-wrapper">
+                        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                        <input type="text" id="mainSearchInput" placeholder="Search anything...">
+                    </div>
+
+                    <div class="notification-wrapper">
+                        <button class="btn-icon relative" id="notificationBtn" aria-label="Notifications">
+                            <i class="fa-regular fa-bell"></i>
+                            <span class="badge">3</span>
+                        </button>
+                        <!-- Quick Notification Dropdown -->
+                        <div class="notification-dropdown" id="notificationDropdown">
+                            <div class="dropdown-header">
+                                <h3>Notifications</h3>
+                                <a href="#">Mark all read</a>
+                            </div>
+                            <div class="notification-list">
+                                <div class="notification-item unread">
+                                    <div class="notif-icon bg-orange-light text-orange">
+                                        <i class="fa-solid fa-hand-holding-dollar"></i>
+                                    </div>
+                                    <div class="notif-info">
+                                        <p>New claim submitted by <strong>Ramesh Kumar</strong> (CLM1001)</p>
+                                        <span class="notif-time">5 mins ago</span>
+                                    </div>
+                                </div>
+                                <div class="notification-item unread">
+                                    <div class="notif-icon bg-blue-light text-blue">
+                                        <i class="fa-solid fa-file-shield"></i>
+                                    </div>
+                                    <div class="notif-info">
+                                        <p>Policy G12340 moved to <strong>Under Review</strong></p>
+                                        <span class="notif-time">2 hours ago</span>
+                                    </div>
+                                </div>
+                                <div class="notification-item">
+                                    <div class="notif-icon bg-green-light text-green">
+                                        <i class="fa-solid fa-user-plus"></i>
+                                    </div>
+                                    <div class="notif-info">
+                                        <p>New Didi registered: <strong>Anita Devi</strong></p>
+                                        <span class="notif-time">1 day ago</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dropdown-footer">
+                                <a href="#">See all notifications</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="profile-dropdown-wrapper">
+                        <button class="profile-trigger" id="profileDropdownBtn">
+                            <img src="goat_thumbnail.png" alt="Coordinator Profile" class="avatar-img">
+                            <div class="profile-details">
+                                <span class="profile-name">Coordinator</span>
+                                <i class="fa-solid fa-chevron-down profile-arrow"></i>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Farmers Dashboard Body -->
+            <div class="dashboard-body">
+                <!-- Banner Section -->
+                <section class="banner-section farmers-banner">
+                    <div class="banner-content">
+                        <span class="banner-badge">GOAT SURAKSHA</span>
+                        <h2 class="banner-title">Farmers</h2>
+                        <p class="banner-subtitle">View and manage all farmers across all regions.</p>
+                    </div>
+                </section>
+
+                <!-- Stats Summary Cards Section -->
+                <section class="farmers-stats-section">
+                    <div class="farmers-stats-grid">
+                        <!-- Card 1: Total Farmers -->
+                        <div class="farmers-stat-card">
+                            <div class="stat-card-head">
+                                <div class="stat-icon-wrapper bg-green-light text-green">
+                                    <i class="fa-solid fa-users"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <span class="stat-card-label">Total Farmers</span>
+                                    <h3 class="stat-card-value">1,248</h3>
+                                </div>
+                            </div>
+                            <div class="stat-trend text-green">
+                                <i class="fa-solid fa-arrow-up-long"></i>
+                                <span><strong>15%</strong> vs last month</span>
+                            </div>
+                        </div>
+
+                        <!-- Card 2: Active Farmers -->
+                        <div class="farmers-stat-card">
+                            <div class="stat-card-head">
+                                <div class="stat-icon-wrapper bg-purple-light text-purple">
+                                    <i class="fa-solid fa-user-check"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <span class="stat-card-label">Active Farmers</span>
+                                    <h3 class="stat-card-value">1,102</h3>
+                                </div>
+                            </div>
+                            <div class="stat-trend text-green">
+                                <i class="fa-solid fa-arrow-up-long"></i>
+                                <span><strong>10%</strong> vs last month</span>
+                            </div>
+                        </div>
+
+                        <!-- Card 3: Inactive Farmers -->
+                        <div class="farmers-stat-card">
+                            <div class="stat-card-head">
+                                <div class="stat-icon-wrapper bg-orange-light text-orange">
+                                    <i class="fa-solid fa-user-xmark"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <span class="stat-card-label">Inactive Farmers</span>
+                                    <h3 class="stat-card-value">146</h3>
+                                </div>
+                            </div>
+                            <div class="stat-trend text-red">
+                                <i class="fa-solid fa-arrow-down-long"></i>
+                                <span><strong>8%</strong> vs last month</span>
+                            </div>
+                        </div>
+
+                        <!-- Card 4: Total Regions -->
+                        <div class="farmers-stat-card">
+                            <div class="stat-card-head">
+                                <div class="stat-icon-wrapper bg-blue-light text-blue">
+                                    <i class="fa-solid fa-map-location-dot"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <span class="stat-card-label">Total Regions</span>
+                                    <h3 class="stat-card-value">12</h3>
+                                </div>
+                            </div>
+                            <div class="stat-trend text-muted">
+                                <span><strong>No</strong> change</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Farmers Directory Card Section -->
+                <section class="farmers-table-section">
+                    <div class="farmers-table-card">
+                        <div class="table-card-header">
+                            <h3 class="table-card-title">All Farmers</h3>
+                            <div class="table-actions">
+                                <div class="search-box-container">
+                                    <i class="fa-solid fa-magnifying-glass search-inner-icon"></i>
+                                    <input type="text" id="farmerSearchInput" placeholder="Search by name or mobile number...">
+                                </div>
+                                <button class="btn-filter-action" id="btnFarmerFilter">
+                                    <i class="fa-solid fa-filter"></i>
+                                    <span>Filter</span>
+                                </button>
+                                <!-- Filter Dropdown (Hidden by default) -->
+                                <div class="filter-dropdown-menu" id="filterDropdown">
+                                    <div class="filter-group">
+                                        <label>Status</label>
+                                        <select id="filterStatus" class="filter-select">
+                                            <option value="all">All Statuses</option>
+                                            <option value="Active">Active</option>
+                                            <option value="Inactive">Inactive</option>
+                                        </select>
+                                    </div>
+                                    <div class="filter-group">
+                                        <label>Region</label>
+                                        <select id="filterRegion" class="filter-select">
+                                            <option value="all">All Regions</option>
+                                            <option value="Rairangpur">Rairangpur</option>
+                                            <option value="Baripada">Baripada</option>
+                                            <option value="Karanjia">Karanjia</option>
+                                            <option value="Udala">Udala</option>
+                                            <option value="Jashipur">Jashipur</option>
+                                        </select>
+                                    </div>
+                                    <div class="filter-actions-row">
+                                        <button class="btn-filter-reset" id="btnFilterReset">Reset</button>
+                                        <button class="btn-filter-apply" id="btnFilterApply">Apply</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Responsive Table Container -->
+                        <div class="table-wrapper">
+                            <table class="farmers-table">
+                                <thead>
+                                    <tr>
+                                        <th>Farmer Name</th>
+                                        <th>Mobile Number</th>
+                                        <th>Region</th>
+                                        <th>Status</th>
+                                        <th>Joined On</th>
+                                        <th style="text-align: center;">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="farmersTableBody">
+                                    <!-- Dynamic rows will be rendered by farmers.js -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Table Pagination Section -->
+                        <div class="table-pagination-footer">
+                            <span class="pagination-info" id="paginationSummary">Showing 1 to 10 of 1,248</span>
+                            <div class="pagination-controls" id="paginationControls">
+                                <!-- Dynamic pagination will be rendered by farmers.js -->
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Chart.js and Custom JS -->
+    <script src="farmers.js"></script>
+    <script src="support.js"></script>
+</body>
+</html>

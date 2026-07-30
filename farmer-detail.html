@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Goat Suraksha - Secured Farmers, Healthy Goats. View farmer profile.">
+    <title>Goat Suraksha - Farmer Profile</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Premium Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Main Style -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="appSidebar">
+            <div class="logo-section">
+                <img src="ajahfi_logo_horizontal.png" alt="Ajah Fi Logo" class="brand-logo-img">
+            </div>
+            
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-item" id="navDashboard">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="farmers.html" class="nav-item active" id="navFarmers">
+                    <i class="fa-solid fa-users-line"></i>
+                    <span>Farmers</span>
+                </a>
+                <a href="didis.html" class="nav-item" id="navDidis">
+                    <i class="fa-solid fa-user-tie"></i>
+                    <span>Suraksha Didis</span>
+                </a>
+                <a href="goats.html" class="nav-item" id="navGoats">
+                    <i class="fa-solid fa-cow"></i>
+                    <span>Goats</span>
+                </a>
+                <a href="claims.html" class="nav-item" id="navClaims">
+                    <i class="fa-solid fa-hand-holding-dollar"></i>
+                    <span>Claims</span>
+                </a>
+                <a href="reports.html" class="nav-item" id="navReports">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Reports</span>
+                </a>
+                <a href="activity.html" class="nav-item" id="navActivity">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    <span>Activity Log</span>
+                </a>
+                <a href="settings.html" class="nav-item" id="navSettings">
+                    <i class="fa-solid fa-user"></i>
+                    <span>Profile</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="help-card">
+                    <div class="help-header">
+                        <div class="help-icon-wrapper">
+                            <i class="fa-solid fa-headset"></i>
+                        </div>
+                        <div class="help-content">
+                            <h4>Need Help?</h4>
+                            <p>Coordinator Helpdesk</p>
+                        </div>
+                    </div>
+                    <button class="btn-support" id="btnContactSupport">Contact Support</button>
+                </div>
+                <div class="copyright-text">
+                    <p>&copy; 2026 Goat Suraksha.<br>All rights reserved.</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Body -->
+        <main class="main-content">
+            <!-- Header Bar -->
+            <header class="header">
+                <div class="header-left">
+                    <div class="welcome-text">
+                        <h1 class="user-greeting">Hello, Coordinator <span class="wave-emoji">👋</span></h1>
+                        <p class="user-subtext">Manage operations and ensure happy farmers</p>
+                    </div>
+                </div>
+
+                <div class="header-right">
+                    <div class="search-bar-wrapper">
+                        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                        <input type="text" id="mainSearchInput" placeholder="Search anything...">
+                    </div>
+
+                    <div class="notification-wrapper">
+                        <button class="btn-icon relative" id="notificationBtn" aria-label="Notifications">
+                            <i class="fa-regular fa-bell"></i>
+                            <span class="badge">3</span>
+                        </button>
+                        <!-- Quick Notification Dropdown -->
+                        <div class="notification-dropdown" id="notificationDropdown">
+                            <div class="dropdown-header">
+                                <h3>Notifications</h3>
+                                <a href="#">Mark all read</a>
+                            </div>
+                            <div class="notification-list">
+                                <div class="notification-item unread">
+                                    <div class="notif-icon bg-orange-light text-orange">
+                                        <i class="fa-solid fa-hand-holding-dollar"></i>
+                                    </div>
+                                    <div class="notif-info">
+                                        <p>New claim submitted by <strong>Ramesh Kumar</strong> (CLM1001)</p>
+                                        <span class="notif-time">5 mins ago</span>
+                                    </div>
+                                </div>
+                                <div class="notification-item unread">
+                                    <div class="notif-icon bg-blue-light text-blue">
+                                        <i class="fa-solid fa-file-shield"></i>
+                                    </div>
+                                    <div class="notif-info">
+                                        <p>Policy G12340 moved to <strong>Under Review</strong></p>
+                                        <span class="notif-time">2 hours ago</span>
+                                    </div>
+                                </div>
+                                <div class="notification-item">
+                                    <div class="notif-icon bg-green-light text-green">
+                                        <i class="fa-solid fa-user-plus"></i>
+                                    </div>
+                                    <div class="notif-info">
+                                        <p>New Didi registered: <strong>Anita Devi</strong></p>
+                                        <span class="notif-time">1 day ago</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dropdown-footer">
+                                <a href="#">See all notifications</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="profile-dropdown-wrapper">
+                        <button class="profile-trigger" id="profileDropdownBtn">
+                            <img src="goat_thumbnail.png" alt="Coordinator Profile" class="avatar-img">
+                            <div class="profile-details">
+                                <span class="profile-name">Coordinator</span>
+                                <i class="fa-solid fa-chevron-down profile-arrow"></i>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Farmer Profile Details Dashboard Body -->
+            <div class="dashboard-body" style="gap: 16px;">
+                <!-- Farmer Profile Card Header -->
+                <section class="profile-header-section">
+                    <div class="profile-header-card">
+                        <div class="profile-header-left">
+                            <img src="" alt="" class="profile-header-avatar" id="lblAvatar" onerror="this.src='https://via.placeholder.com/120/22c55e/ffffff?text=F'">
+                            <div class="profile-header-info">
+                                <div class="profile-header-title-row">
+                                    <h2 class="profile-header-name" id="lblName">Ramesh Kumar</h2>
+                                    <span class="badge approved" id="lblStatus">Active Farmer</span>
+                                </div>
+                                <p class="profile-header-role">Farmer</p>
+                                <div class="profile-header-contact-details">
+                                    <span class="profile-contact-item">
+                                        <i class="fa-solid fa-phone"></i>
+                                        <span id="lblPhone">9876543210</span>
+                                    </span>
+                                    <span class="profile-contact-item">
+                                        <i class="fa-solid fa-location-dot"></i>
+                                        <span id="lblRegion">Kendujhar, Rairangpur, Odisha - 757043</span>
+                                    </span>
+                                </div>
+                                <div class="profile-id-badge">
+                                    <span id="lblFarmerId">Farmer ID: FRM-2025-00156</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="profile-header-right">
+                            <span class="profile-joined-date" id="lblJoined">Joined on 12 Jan 2025</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Details Grid Section -->
+                <section class="profile-details-grid-section">
+                    <!-- Personal Info Card (Full Width) -->
+                    <div class="personal-info-row" style="margin-bottom: 16px;">
+                        <div class="detail-card" style="width: 100%;">
+                            <div class="detail-card-header">
+                                <i class="fa-solid fa-user text-green"></i>
+                                <h3>Personal Information</h3>
+                            </div>
+                            <div class="detail-card-body grid-info-columns">
+                                <div class="info-item">
+                                    <span class="info-label">Date of Birth</span>
+                                    <span class="info-value" id="lblDob">15 Aug 1985</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Gender</span>
+                                    <span class="info-value" id="lblGender">Male</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Aadhaar Number</span>
+                                    <span class="info-value" id="lblAadhaar">XXXX XXXX 5678</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Mobile Number</span>
+                                    <span class="info-value" id="lblWhatsapp">9876543210</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Village</span>
+                                    <span class="info-value" id="lblVillage">Nuasahi</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Block</span>
+                                    <span class="info-value" id="lblBlock">Rairangpur</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">District</span>
+                                    <span class="info-value" id="lblDistrict">Mayurbhanj</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">State</span>
+                                    <span class="info-value" id="lblStateName">Odisha</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Pin Code</span>
+                                    <span class="info-value" id="lblPinCode">757043</span>
+                                </div>
+                                <div class="info-item full-width">
+                                    <span class="info-label">Address</span>
+                                    <span class="info-value" id="lblAddress">Village - Nuasahi, PO - Kendujhar, PS - Rairangpur, Odisha - 757043</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="profile-details-grid">
+                        
+                        <!-- Column 1: Goat Summary -->
+                        <div class="profile-column">
+                            <div class="detail-card">
+                                <div class="detail-card-header">
+                                    <i class="fa-solid fa-cow text-green"></i>
+                                    <h3>Goat Summary</h3>
+                                </div>
+                                <div class="detail-card-body goat-summary-boxes-grid">
+                                    
+                                    <div class="goat-summary-box border-green">
+                                        <span class="summary-box-label">Total Goats</span>
+                                        <h4 class="summary-box-value text-green" id="lblTotalGoats">32</h4>
+                                        <a href="#" class="summary-box-link text-green">
+                                            <span>View Details</span>
+                                            <i class="fa-solid fa-arrow-right"></i>
+                                        </a>
+                                    </div>
+
+                                    <div class="goat-summary-box border-purple">
+                                        <span class="summary-box-label">Insured Goats</span>
+                                        <h4 class="summary-box-value text-purple" id="lblInsuredGoats">28</h4>
+                                        <a href="#" class="summary-box-link text-purple">
+                                            <span>View Details</span>
+                                            <i class="fa-solid fa-arrow-right"></i>
+                                        </a>
+                                    </div>
+
+                                    <div class="goat-summary-box border-blue">
+                                        <span class="summary-box-label">Active Policies</span>
+                                        <h4 class="summary-box-value text-blue" id="lblActivePolicies">5</h4>
+                                        <a href="#" class="summary-box-link text-blue">
+                                            <span>View Details</span>
+                                            <i class="fa-solid fa-arrow-right"></i>
+                                        </a>
+                                    </div>
+
+                                    <div class="goat-summary-box border-orange">
+                                        <span class="summary-box-label">Total Claims</span>
+                                        <h4 class="summary-box-value text-orange" id="lblTotalClaims">2</h4>
+                                        <a href="#" class="summary-box-link text-orange">
+                                            <span>View Details</span>
+                                            <i class="fa-solid fa-arrow-right"></i>
+                                        </a>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Column 2: Recent Activity -->
+                        <div class="profile-column">
+                            <!-- Recent Activity Card -->
+                            <div class="detail-card">
+                                <div class="detail-card-header">
+                                    <i class="fa-solid fa-clock-rotate-left text-green"></i>
+                                    <h3>Recent Activity</h3>
+                                </div>
+                                <div class="detail-card-body recent-activity-list-container">
+                                    <div class="detail-activity-item">
+                                        <div class="activity-left">
+                                            <div class="activity-icon bg-green-light text-green">
+                                                <i class="fa-solid fa-file-invoice"></i>
+                                            </div>
+                                            <div class="activity-text">
+                                                <h5 class="activity-title-val">Policy purchased for 2 goats</h5>
+                                                <p class="activity-subtext-val">Policy ID: POL-2025-00234 • 22 Jul 2026</p>
+                                            </div>
+                                        </div>
+                                        <i class="fa-solid fa-chevron-right chevron-nav-icon"></i>
+                                    </div>
+
+                                    <div class="detail-activity-item">
+                                        <div class="activity-left">
+                                            <div class="activity-icon bg-purple-light text-purple">
+                                                <i class="fa-solid fa-hand-holding-dollar"></i>
+                                            </div>
+                                            <div class="activity-text">
+                                                <h5 class="activity-title-val">Claim submitted for 1 goat</h5>
+                                                <p class="activity-subtext-val">Claim ID: CLM-2025-00087 • 20 Jul 2026</p>
+                                            </div>
+                                        </div>
+                                        <i class="fa-solid fa-chevron-right chevron-nav-icon"></i>
+                                    </div>
+
+                                    <div class="detail-activity-item">
+                                        <div class="activity-left">
+                                            <div class="activity-icon bg-blue-light text-blue">
+                                                <i class="fa-solid fa-syringe"></i>
+                                            </div>
+                                            <div class="activity-text">
+                                                <h5 class="activity-title-val">Goat vaccination recorded</h5>
+                                                <p class="activity-subtext-val">3 goats vaccinated • 18 Jul 2026</p>
+                                            </div>
+                                        </div>
+                                        <i class="fa-solid fa-chevron-right chevron-nav-icon"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Bottom Action Row -->
+                <section class="profile-actions-section">
+                    <div class="profile-actions-container">
+                        <a href="" class="btn-profile-action call-btn" id="btnCallFarmer">
+                            <i class="fa-solid fa-phone"></i>
+                            <span>Call Farmer</span>
+                        </a>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Script Controllers -->
+    <script src="farmer-detail.js"></script>
+    <script src="support.js"></script>
+</body>
+</html>

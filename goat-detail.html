@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Goat Details - Goat Suraksha</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom Style Sheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="appSidebar">
+            <div class="sidebar-header">
+                <div class="brand-logo-wrapper" style="padding: 10px 0;">
+                    <img src="ajahfi_logo_horizontal.png" alt="AJAFI Logo" class="brand-logo-img" style="max-height: 55px;">
+                </div>
+            </div>
+
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-item" id="navDashboard">
+                    <i class="fa-solid fa-chart-pie"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="farmers.html" class="nav-item" id="navFarmers">
+                    <i class="fa-solid fa-users-line"></i>
+                    <span>Farmers</span>
+                </a>
+                <a href="didis.html" class="nav-item" id="navDidis">
+                    <i class="fa-solid fa-user-tie"></i>
+                    <span>Suraksha Didis</span>
+                </a>
+                <a href="goats.html" class="nav-item active" id="navGoats">
+                    <i class="fa-solid fa-cow"></i>
+                    <span>Goats</span>
+                </a>
+                <a href="claims.html" class="nav-item" id="navClaims">
+                    <i class="fa-solid fa-hand-holding-dollar"></i>
+                    <span>Claims</span>
+                </a>
+                <a href="reports.html" class="nav-item" id="navReports">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Reports</span>
+                </a>
+                <a href="activity.html" class="nav-item" id="navActivity">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    <span>Activity Log</span>
+                </a>
+                <a href="settings.html" class="nav-item" id="navSettings">
+                    <i class="fa-solid fa-user"></i>
+                    <span>Profile</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="help-card">
+                    <div class="help-header">
+                        <div class="help-icon-wrapper">
+                            <i class="fa-solid fa-headset"></i>
+                        </div>
+                        <div class="help-content">
+                            <h4>Need Help?</h4>
+                            <p>Coordinator Helpdesk</p>
+                        </div>
+                    </div>
+                    <button class="btn-support" id="btnContactSupport">Contact Support</button>
+                </div>
+                <div class="copyright-text">
+                    <p>&copy; 2026 Goat Suraksha.<br>All rights reserved.</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Body -->
+        <main class="main-content">
+            <!-- Header Bar -->
+            <header class="header">
+                <div class="header-left">
+                    <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle Sidebar">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <div class="welcome-text">
+                        <h1 class="user-greeting">Hello, Coordinator <span class="wave-emoji">👋</span></h1>
+                        <p class="user-subtext">Manage operations and ensure happy farmers</p>
+                    </div>
+                </div>
+
+                <div class="header-right">
+                    <div class="search-bar-wrapper">
+                        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                        <input type="text" placeholder="Search anything...">
+                    </div>
+
+                    <div class="notification-wrapper">
+                        <button class="btn-icon relative" id="notificationBtn" aria-label="Notifications">
+                            <i class="fa-regular fa-bell"></i>
+                            <span class="badge">3</span>
+                        </button>
+                        <div class="notification-dropdown" id="notificationDropdown">
+                            <div class="dropdown-header">
+                                <h3>Notifications</h3>
+                                <span class="count">3 New</span>
+                            </div>
+                            <div class="dropdown-body">
+                                <div class="notification-item">
+                                    <div class="notif-icon bg-green-light text-green">
+                                        <i class="fa-solid fa-circle-check"></i>
+                                    </div>
+                                    <div class="notif-info">
+                                        <p>Claim <strong>#CLM1005</strong> approved by Manager</p>
+                                        <span class="notif-time">2 hours ago</span>
+                                    </div>
+                                </div>
+                                <div class="notification-item">
+                                    <div class="notif-icon bg-orange-light text-orange">
+                                        <i class="fa-solid fa-clock"></i>
+                                    </div>
+                                    <div class="notif-info">
+                                        <p>Verification pending for <strong>Sita Devi</strong></p>
+                                        <span class="notif-time">5 hours ago</span>
+                                    </div>
+                                </div>
+                                <div class="notification-item">
+                                    <div class="notif-icon bg-blue-light text-blue">
+                                        <i class="fa-solid fa-cow"></i>
+                                    </div>
+                                    <div class="notif-info">
+                                        <p>New policy registered by <strong>Laxmi Murmu</strong></p>
+                                        <span class="notif-time">Yesterday</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dropdown-footer">
+                                <a href="activity.html">View All Notifications</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="profile-trigger" id="profileDropdownBtn">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="Coordinator Avatar" class="avatar-img">
+                        <div class="profile-details">
+                            <span class="profile-name">Ramesh Kumar</span>
+                            <i class="fa-solid fa-chevron-down profile-arrow"></i>
+                        </div>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Goat Detail Body -->
+            <div class="dashboard-body">
+                <!-- Breadcrumbs Header -->
+                <div style="display: flex; align-items: center; gap: 16px; width: 100%;">
+                    <a href="goats.html" class="btn-back-link">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </a>
+                    <div>
+                        <h2 style="font-size: 24px; font-weight: 700; color: var(--text-main); font-family: 'Outfit', sans-serif; margin: 0;">
+                            Goat Details
+                        </h2>
+                    </div>
+                </div>
+
+                <!-- Goat Header Card -->
+                <section class="goat-detail-header-card">
+                    <div class="goat-header-info">
+                        <div class="goat-id-badge-container">
+                            <h3 class="goat-header-id-val" id="lblGoatHeaderId">SS-786</h3>
+                            <span class="status-pill active" id="lblGoatStatus" style="background-color: var(--brand-primary); color: #ffffff; padding: 4px 10px; border-radius: var(--radius-full); font-size: 11px; font-weight: 700;">• Claimed</span>
+                        </div>
+                        <div class="goat-policy-subcard">
+                            <div class="goat-policy-subcard-item">
+                                <span class="goat-policy-lbl">Valid Till</span>
+                                <span class="goat-policy-val" id="lblPolicyValidTill">2027-07-29</span>
+                            </div>
+                            <div class="goat-policy-subcard-item" style="border-left: 1px solid var(--border-color); padding-left: 32px;">
+                                <span class="goat-policy-lbl">Policy No.</span>
+                                <span class="goat-policy-val" id="lblPolicyNo">POL-20260729-0004</span>
+                            </div>
+                        </div>
+                    </div>
+                    <img src="goat_thumbnail.png" alt="Goat Illustration" class="goat-header-image">
+                </section>
+
+                <!-- Two-Column Details Grid -->
+                <section class="claim-detail-grid">
+                    <!-- Column 1: Goat Information -->
+                    <div class="detail-card">
+                        <div class="detail-card-header">
+                            <i class="fa-solid fa-cow text-green" style="color: var(--brand-primary);"></i>
+                            <h3>Goat Information</h3>
+                        </div>
+                        <div class="detail-card-body">
+                            <div class="goat-info-grid-container">
+                                <div class="goat-info-grid-item">
+                                    <div class="goat-info-grid-icon-box" style="background-color: #eff6ff; color: #3b82f6;">
+                                        <i class="fa-solid fa-tag"></i>
+                                    </div>
+                                    <div class="goat-info-grid-content">
+                                        <span class="info-label">Ear Tag</span>
+                                        <span class="info-value" id="lblEarTag">SS-786</span>
+                                    </div>
+                                </div>
+                                <div class="goat-info-grid-item">
+                                    <div class="goat-info-grid-icon-box" style="background-color: #fdf2f8; color: #ec4899;">
+                                        <i class="fa-solid fa-venus-mars"></i>
+                                    </div>
+                                    <div class="goat-info-grid-content">
+                                        <span class="info-label">Gender</span>
+                                        <span class="info-value" id="lblGender">Female</span>
+                                    </div>
+                                </div>
+                                <div class="goat-info-grid-item">
+                                    <div class="goat-info-grid-icon-box" style="background-color: #fef3c7; color: #d97706;">
+                                        <i class="fa-regular fa-calendar"></i>
+                                    </div>
+                                    <div class="goat-info-grid-content">
+                                        <span class="info-label">Age</span>
+                                        <span class="info-value" id="lblAge">6 yr 5 mo</span>
+                                    </div>
+                                </div>
+                                <div class="goat-info-grid-item">
+                                    <div class="goat-info-grid-icon-box" style="background-color: #ecfdf5; color: #059669;">
+                                        <i class="fa-solid fa-weight-hanging"></i>
+                                    </div>
+                                    <div class="goat-info-grid-content">
+                                        <span class="info-label">Weight</span>
+                                        <span class="info-value" id="lblWeight">88 kg</span>
+                                    </div>
+                                </div>
+                                <div class="goat-info-grid-item">
+                                    <div class="goat-info-grid-icon-box" style="background-color: #f5f3ff; color: #7c3aed;">
+                                        <i class="fa-solid fa-paw"></i>
+                                    </div>
+                                    <div class="goat-info-grid-content">
+                                        <span class="info-label">Breed</span>
+                                        <span class="info-value" id="lblBreed">Black Bengal</span>
+                                    </div>
+                                </div>
+                                <div class="goat-info-grid-item">
+                                    <div class="goat-info-grid-icon-box" style="background-color: #fff1f2; color: #e11d48;">
+                                        <i class="fa-regular fa-clock"></i>
+                                    </div>
+                                    <div class="goat-info-grid-content">
+                                        <span class="info-label">Date of Birth</span>
+                                        <span class="info-value" id="lblDob">28 Feb 2020</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Column 2: Policy & Insurance Details -->
+                    <div class="detail-card">
+                        <div class="detail-card-header">
+                            <i class="fa-solid fa-shield-halved text-blue" style="color: #3b82f6;"></i>
+                            <h3>Policy & Insurance Details</h3>
+                        </div>
+                        <div class="detail-card-body">
+                            <div class="goat-info-grid-container">
+                                <div class="goat-info-grid-item">
+                                    <div class="goat-info-grid-icon-box" style="background-color: #ecfdf5; color: #059669;">
+                                        <i class="fa-solid fa-calendar-check"></i>
+                                    </div>
+                                    <div class="goat-info-grid-content">
+                                        <span class="info-label">Policy Start</span>
+                                        <span class="info-value" id="lblPolicyStart">2026-07-29</span>
+                                    </div>
+                                </div>
+                                <div class="goat-info-grid-item">
+                                    <div class="goat-info-grid-icon-box" style="background-color: #fff1f2; color: #e11d48;">
+                                        <i class="fa-solid fa-calendar-xmark"></i>
+                                    </div>
+                                    <div class="goat-info-grid-content">
+                                        <span class="info-label">Policy End</span>
+                                        <span class="info-value" id="lblPolicyEnd">2027-07-29</span>
+                                    </div>
+                                </div>
+                                <div class="goat-info-grid-item">
+                                    <div class="goat-info-grid-icon-box" style="background-color: #e0f2fe; color: #0284c7;">
+                                        <i class="fa-solid fa-indian-rupee-sign"></i>
+                                    </div>
+                                    <div class="goat-info-grid-content">
+                                        <span class="info-label">Premium Paid</span>
+                                        <span class="info-value" id="lblPremium">₹ 350</span>
+                                    </div>
+                                </div>
+                                <div class="goat-info-grid-item">
+                                    <div class="goat-info-grid-icon-box" style="background-color: #f5f3ff; color: #7c3aed;">
+                                        <i class="fa-solid fa-signature"></i>
+                                    </div>
+                                    <div class="goat-info-grid-content">
+                                        <span class="info-label">Insured By</span>
+                                        <span class="info-value" id="lblInsuredBy">Rashmi</span>
+                                    </div>
+                                </div>
+                                <div class="goat-info-grid-item" style="grid-column: span 2;">
+                                    <div class="goat-info-grid-icon-box" style="background-color: #fdf2f8; color: #db2777;">
+                                        <i class="fa-solid fa-building-shield"></i>
+                                    </div>
+                                    <div class="goat-info-grid-content">
+                                        <span class="info-label">Issued By</span>
+                                        <span class="info-value" id="lblIssuedBy">AjahFi Goat Insurance</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Vaccination Details Card -->
+                <section class="detail-card">
+                    <div class="detail-card-header">
+                        <i class="fa-solid fa-syringe text-blue" style="color: #2563eb;"></i>
+                        <h3>Vaccination Details</h3>
+                    </div>
+                    <div class="detail-card-body">
+                        <div class="vaccination-list-container" id="vaccinationList">
+                            <!-- Dynamically loaded -->
+                        </div>
+                        <div style="margin-top: 16px; font-size: 13px; font-weight: 700; color: var(--text-muted);" id="lblVaccinationSummary">
+                            Completed: 1 / 4
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Goat Images Card -->
+                <section class="detail-card">
+                    <div class="goat-images-header-row">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <i class="fa-regular fa-image" style="color: var(--brand-primary); font-size: 18px;"></i>
+                            <h3 class="goat-images-title">Goat Images</h3>
+                        </div>
+                        <button class="btn-toggle-images" id="btnToggleImages">Show Less</button>
+                    </div>
+                    <div class="detail-card-body" style="padding: 0;">
+                        <div class="goat-images-grid" id="goatImagesGrid">
+                            <div class="goat-image-grid-card">
+                                <img src="goat_thumbnail.png" alt="Goat Front View">
+                            </div>
+                            <div class="goat-image-grid-card">
+                                <img src="goat_thumbnail.png" alt="Goat Side View">
+                            </div>
+                            <div class="goat-image-grid-card">
+                                <img src="goat_thumbnail.png" alt="Goat Tag View">
+                            </div>
+                            <div class="goat-image-grid-card">
+                                <img src="goat_thumbnail.png" alt="Goat Back View">
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Footer Action Buttons -->
+                <button class="btn-view-policy-details" id="btnViewPolicyDetails">
+                    <i class="fa-regular fa-file-lines"></i>
+                    View Policy Details
+                </button>
+            </div>
+        </main>
+    </div>
+
+    <!-- Page Logic scripts -->
+    <script src="goat-detail.js"></script>
+    <script src="support.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Goat Suraksha - Secured Farmers, Healthy Goats. Terms & Conditions.">
+    <title>Goat Suraksha - Terms & Conditions</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- FontAwesome for Premium Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Main Style -->
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Mobile Bottom Navigation Bar */
+        .mobile-bottom-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+            border-top: 1px solid var(--border-color);
+            z-index: 999;
+            height: 64px;
+        }
+
+        .bottom-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 11px;
+            font-weight: 600;
+            flex: 1;
+            height: 100%;
+        }
+
+        .bottom-nav-item i {
+            font-size: 18px;
+        }
+
+        .bottom-nav-item.active {
+            color: #7c3aed;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-bottom-nav {
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+            }
+
+            .main-content {
+                padding-bottom: 80px !important;
+            }
+
+            .bottom-nav-item.active {
+                background-color: #f5f3ff;
+                border-radius: 12px;
+                margin: 6px;
+                height: calc(100% - 12px);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="appSidebar">
+            <div class="logo-section">
+                <img src="ajahfi_logo_horizontal.png" alt="Ajah Fi Logo" class="brand-logo-img">
+            </div>
+
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-item" id="navDashboard">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="farmers.html" class="nav-item" id="navFarmers">
+                    <i class="fa-solid fa-users-line"></i>
+                    <span>Farmers</span>
+                </a>
+                <a href="didis.html" class="nav-item" id="navDidis">
+                    <i class="fa-solid fa-user-tie"></i>
+                    <span>Suraksha Didis</span>
+                </a>
+                <a href="goats.html" class="nav-item" id="navGoats">
+                    <i class="fa-solid fa-cow"></i>
+                    <span>Goats</span>
+                </a>
+                <a href="claims.html" class="nav-item" id="navClaims">
+                    <i class="fa-solid fa-hand-holding-dollar"></i>
+                    <span>Claims</span>
+                </a>
+                <a href="reports.html" class="nav-item" id="navReports">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Reports</span>
+                </a>
+                <a href="activity.html" class="nav-item" id="navActivity">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    <span>Activity Log</span>
+                </a>
+                <a href="settings.html" class="nav-item active" id="navSettings">
+                    <i class="fa-solid fa-user"></i>
+                    <span>Profile</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="help-card">
+                    <div class="help-header">
+                        <div class="help-icon-wrapper">
+                            <i class="fa-solid fa-headset"></i>
+                        </div>
+                        <div class="help-content">
+                            <h4>Need Help?</h4>
+                            <p>Coordinator Helpdesk</p>
+                        </div>
+                    </div>
+                    <button class="btn-support" id="btnContactSupport">Contact Support</button>
+                </div>
+                <div class="copyright-text">
+                    <p>&copy; 2026 Goat Suraksha.<br>All rights reserved.</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Body -->
+        <main class="main-content">
+            <!-- Back Button and Title -->
+            <div style="display: flex; align-items: center; gap: 16px; margin: 24px 24px 8px 24px; padding-bottom: 8px;">
+                <a href="settings.html" style="text-decoration: none; color: var(--text-main); font-size: 20px; display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: var(--radius-full); background: white; box-shadow: var(--shadow-sm); border: 1px solid var(--border-color); transition: all 0.2s;">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </a>
+                <h1 style="font-family: 'Outfit', sans-serif; font-size: 28px; font-weight: 800; color: #472c1b; margin: 0;">Terms & Conditions</h1>
+            </div>
+
+            <div style="margin: 0 24px 8px 24px;">
+                <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; font-weight: 500; margin: 0;">
+                    Please read these terms carefully before using the Goat Suraksha dashboard application.
+                </p>
+            </div>
+
+            <!-- Main Content Container -->
+            <div style="max-width: 1200px; margin: 8px auto 40px auto; padding: 0 20px; box-sizing: border-box;">
+        <div style="display: flex; flex-direction: column; gap: 20px; position: relative; z-index: 1;">
+            
+            <!-- Read Carefully Banner Card -->
+            <div style="padding: 20px; background-color: #f4fcf7; border: 1px solid #bbf7d0; border-radius: 16px; display: flex; gap: 16px; align-items: center; box-shadow: var(--shadow-sm);">
+                <div style="width: 44px; height: 44px; border-radius: var(--radius-full); background: white; border: 1.5px solid #16a34a; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: #16a34a; font-size: 20px;">
+                    <i class="fa-solid fa-check"></i>
+                </div>
+                <div>
+                    <h4 style="font-family: 'Outfit', sans-serif; font-size: 15px; font-weight: 700; color: #14532d; margin: 0 0 4px 0;">Please read these terms carefully</h4>
+                    <p style="font-size: 13px; color: #166534; font-weight: 500; margin: 0; line-height: 1.4;">By using AJAFI, you agree to comply with and be bound by the following terms and conditions.</p>
+                </div>
+            </div>
+
+            <!-- Section 1 -->
+            <div style="background: white; border: 1px solid var(--border-color); border-radius: 16px; padding: 24px; box-shadow: var(--shadow-sm); display: flex; gap: 16px; align-items: flex-start;">
+                <div style="width: 44px; height: 44px; border-radius: 10px; background: #f0fdf4; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid #dcfce7;">
+                    <i class="fa-solid fa-handshake" style="font-size: 18px; color: #16a34a;"></i>
+                </div>
+                <div>
+                    <h3 style="font-family: 'Outfit', sans-serif; font-size: 15px; font-weight: 700; color: var(--text-main); margin: 0 0 6px 0;">1. Acceptance of Terms</h3>
+                    <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5; margin: 0; font-weight: 500;">By accessing or using the AJAFI app, you agree to be bound by these Terms & Conditions and our Privacy Policy. If you do not agree, please do not use the app.</p>
+                </div>
+            </div>
+
+            <!-- Section 2 -->
+            <div style="background: white; border: 1px solid var(--border-color); border-radius: 16px; padding: 24px; box-shadow: var(--shadow-sm); display: flex; gap: 16px; align-items: flex-start;">
+                <div style="width: 44px; height: 44px; border-radius: 10px; background: #f0fdf4; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid #dcfce7;">
+                    <i class="fa-solid fa-mobile-screen-button" style="font-size: 18px; color: #16a34a;"></i>
+                </div>
+                <div>
+                    <h3 style="font-family: 'Outfit', sans-serif; font-size: 15px; font-weight: 700; color: var(--text-main); margin: 0 0 6px 0;">2. Use of the App</h3>
+                    <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5; margin: 0; font-weight: 500;">AJAFI is intended to help users manage and insure their goats. You agree to use the app only for lawful purposes and in accordance with these terms.</p>
+                </div>
+            </div>
+
+            <!-- Section 3 -->
+            <div style="background: white; border: 1px solid var(--border-color); border-radius: 16px; padding: 24px; box-shadow: var(--shadow-sm); display: flex; gap: 16px; align-items: flex-start;">
+                <div style="width: 44px; height: 44px; border-radius: 10px; background: #f0fdf4; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid #dcfce7;">
+                    <i class="fa-regular fa-user" style="font-size: 18px; color: #16a34a;"></i>
+                </div>
+                <div>
+                    <h3 style="font-family: 'Outfit', sans-serif; font-size: 15px; font-weight: 700; color: var(--text-main); margin: 0 0 6px 0;">3. User Responsibilities</h3>
+                    <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5; margin: 0; font-weight: 500;">You agree to provide accurate information and keep your account secure. You are responsible for all activities under your account.</p>
+                </div>
+            </div>
+
+            <!-- Section 4 -->
+            <div style="background: white; border: 1px solid var(--border-color); border-radius: 16px; padding: 24px; box-shadow: var(--shadow-sm); display: flex; gap: 16px; align-items: flex-start;">
+                <div style="width: 44px; height: 44px; border-radius: 10px; background: #f0fdf4; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid #dcfce7;">
+                    <i class="fa-solid fa-lock" style="font-size: 18px; color: #16a34a;"></i>
+                </div>
+                <div>
+                    <h3 style="font-family: 'Outfit', sans-serif; font-size: 15px; font-weight: 700; color: var(--text-main); margin: 0 0 6px 0;">4. Data & Privacy</h3>
+                    <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5; margin: 0; font-weight: 500;">Your privacy is important to us. Please review our Privacy Policy to understand how we collect, use, and protect your information.</p>
+                </div>
+            </div>
+
+            <!-- Section 5 -->
+            <div style="background: white; border: 1px solid var(--border-color); border-radius: 16px; padding: 24px; box-shadow: var(--shadow-sm); display: flex; gap: 16px; align-items: flex-start;">
+                <div style="width: 44px; height: 44px; border-radius: 10px; background: #f0fdf4; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid #dcfce7;">
+                    <i class="fa-solid fa-circle-exclamation" style="font-size: 18px; color: #16a34a;"></i>
+                </div>
+                <div>
+                    <h3 style="font-family: 'Outfit', sans-serif; font-size: 15px; font-weight: 700; color: var(--text-main); margin: 0 0 6px 0;">5. Limitation of Liability</h3>
+                    <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5; margin: 0; font-weight: 500;">AJAFI is not liable for any indirect, incidental, or consequential damages resulting from the use of the app.</p>
+                </div>
+            </div>
+
+            <!-- Section 6 -->
+            <div style="background: white; border: 1px solid var(--border-color); border-radius: 16px; padding: 24px; box-shadow: var(--shadow-sm); display: flex; gap: 16px; align-items: flex-start;">
+                <div style="width: 44px; height: 44px; border-radius: 10px; background: #f0fdf4; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid #dcfce7;">
+                    <i class="fa-solid fa-arrows-rotate" style="font-size: 18px; color: #16a34a;"></i>
+                </div>
+                <div>
+                    <h3 style="font-family: 'Outfit', sans-serif; font-size: 15px; font-weight: 700; color: var(--text-main); margin: 0 0 6px 0;">6. Changes to Terms</h3>
+                    <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5; margin: 0; font-weight: 500;">We may update these Terms & Conditions from time to time. Continued use of the app after changes means you accept the revised terms.</p>
+                </div>
+            </div>
+
+            <!-- Footer summary banner Card -->
+            <div style="padding: 16px 20px; background: white; border-radius: 16px; display: flex; gap: 16px; align-items: center; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); flex-wrap: wrap;">
+                <div style="width: 36px; height: 36px; border-radius: 8px; background: #f0fdf4; border: 1px solid #dcfce7; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                    <i class="fa-regular fa-calendar-days" style="font-size: 16px; color: #16a34a;"></i>
+                </div>
+                <div style="font-size: 13.5px; font-weight: 600; color: var(--text-main); line-height: 1.4;">
+                    Last Updated: 16 May 2025 <span style="font-weight: 500; color: var(--text-muted); margin-left: 12px;">We recommend reviewing these terms periodically.</span>
+                </div>
+            </div>
+
+            <!-- Agree Button -->
+            <button onclick="window.location.href='settings.html'" style="margin-top: 4px; width: 100%; border: none; background: #14532d; color: white; padding: 14px; font-size: 16px; font-weight: 700; border-radius: 16px; cursor: pointer; transition: background-color 0.2s; font-family: inherit; box-shadow: var(--shadow-sm);" onmouseover="this.style.backgroundColor='#166534'" onmouseout="this.style.backgroundColor='#14532d'">I Agree</button>
+        </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Mobile Bottom Navigation Bar -->
+    <div class="mobile-bottom-nav">
+        <a href="index.html" class="bottom-nav-item">
+            <i class="fa-solid fa-house"></i>
+            <span>Home</span>
+        </a>
+        <a href="reports.html" class="bottom-nav-item">
+            <i class="fa-solid fa-chart-line"></i>
+            <span>Reports</span>
+        </a>
+        <a href="claims.html" class="bottom-nav-item">
+            <i class="fa-solid fa-hand-holding-dollar"></i>
+            <span>Claims</span>
+        </a>
+        <a href="activity.html" class="bottom-nav-item">
+            <i class="fa-solid fa-clock-rotate-left"></i>
+            <span>Activity</span>
+        </a>
+        <a href="goats.html" class="bottom-nav-item">
+            <i class="fa-solid fa-cow"></i>
+            <span>Goats</span>
+        </a>
+    </div>
+
+    <!-- Page Interaction Logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sidebar = document.getElementById('appSidebar');
+            const sidebarToggleBtn = document.getElementById('sidebarToggle');
+            const notificationBtn = document.getElementById('notificationBtn');
+            const notificationDropdown = document.getElementById('notificationDropdown');
+            const profileBtn = document.getElementById('profileDropdownBtn');
+
+            if (sidebarToggleBtn) {
+                sidebarToggleBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    sidebar.classList.toggle('active');
+                });
+            }
+
+            document.addEventListener('click', (e) => {
+                if (sidebar && !sidebar.contains(e.target) && (!sidebarToggleBtn || e.target !== sidebarToggleBtn)) {
+                    sidebar.classList.remove('active');
+                }
+                if (notificationDropdown && !notificationDropdown.contains(e.target) && notificationBtn && e.target !== notificationBtn && !notificationBtn.contains(e.target)) {
+                    notificationDropdown.classList.remove('active');
+                }
+            });
+
+            if (notificationBtn) {
+                notificationBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    notificationDropdown.classList.toggle('active');
+                });
+            }
+
+            if (profileBtn) {
+                profileBtn.addEventListener('click', () => {
+                    alert("Profile settings & Coordinator options coming soon!");
+                });
+            }
+        });
+    </script>
+    <script src="support.js"></script>
+</body>
+
+</html>
