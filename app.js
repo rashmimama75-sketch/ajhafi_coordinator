@@ -447,4 +447,50 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initialize View
     renderTable();
+
+    // --- Live dashboard stats from backend (/coordinator/dashboard) ---
+    function fmtNum(n) {
+        if (n === null || n === undefined || isNaN(n)) return '—';
+        return Number(n).toLocaleString('en-IN');
+    }
+    function fmtPremium(n) {
+        if (n === null || n === undefined || isNaN(n)) return '—';
+        n = Number(n);
+        if (n >= 10000000) return '₹' + (n / 10000000).toFixed(2).replace(/\.00$/, '') + ' Cr';
+        if (n >= 100000) return '₹' + (n / 100000).toFixed(1).replace(/\.0$/, '') + ' Lakh';
+        return '₹' + n.toLocaleString('en-IN');
+    }
+    function setStat(id, val) {
+        const el = document.getElementById(id);
+        if (el && val !== undefined && val !== null && !isNaN(val)) el.textContent = fmtNum(val);
+    }
+
+    async function loadDashboardStats() {
+        if (!window.AjahFiAPI) return;
+        try {
+            const d = await AjahFiAPI.get('/coordinator/dashboard');
+            if (!d) return;
+            setStat('valActivePolicies', d.active_policies);
+            setStat('valClaimsHistory', d.total_claims);
+            setStat('valEnrollments', d.total_enrollments);
+            setStat('valTotalDidis', d.total_didis);
+            setStat('valTotalFarmers', d.total_farmers);
+            if (d.total_premium !== undefined && d.total_premium !== null) {
+                const el = document.getElementById('valTotalPremium');
+                if (el) el.textContent = fmtPremium(d.total_premium);
+            }
+
+            const statusCards = document.querySelectorAll('.claims-status-card .status-count');
+            if (statusCards.length >= 4) {
+                statusCards[0].textContent = fmtNum(d.claims_pending);
+                statusCards[1].textContent = fmtNum(d.claims_under_review);
+                statusCards[2].textContent = fmtNum(d.claims_approved);
+                statusCards[3].textContent = fmtNum(d.claims_rejected);
+            }
+        } catch (err) {
+            // Keep the placeholder numbers if the call fails; log for debugging.
+            console.warn('Could not load dashboard stats:', err.message);
+        }
+    }
+    loadDashboardStats();
 });
