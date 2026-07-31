@@ -143,13 +143,48 @@ document.addEventListener('DOMContentLoaded', () => {
         renderVaccinations(c.vaccinations);
         setStepper(st.label);
 
-        // Action buttons (display only — mutations intentionally not wired)
+        // Action buttons (onclick assignment so re-renders don't stack handlers)
         const btnPDF = document.getElementById('btnDownloadPDF');
-        if (btnPDF) btnPDF.addEventListener('click', () => alert('Generating PDF receipt for claim: ' + c.claim_number));
+        if (btnPDF) btnPDF.onclick = () => alert('Generating PDF receipt for claim: ' + c.claim_number);
         const btnApprove = document.getElementById('btnClaimApprove');
-        if (btnApprove) btnApprove.addEventListener('click', () => alert('Approve action is not enabled in this view.'));
+        if (btnApprove) btnApprove.onclick = () => reviewClaim(c, 'approve', btnApprove);
         const btnReject = document.getElementById('btnClaimReject');
-        if (btnReject) btnReject.addEventListener('click', () => alert('Reject action is not enabled in this view.'));
+        if (btnReject) btnReject.onclick = () => reviewClaim(c, 'reject', btnReject);
+    }
+
+    // Send an approve/reject decision to the backend, then refresh the page.
+    async function reviewClaim(c, action, btn) {
+        const body = { claim_number: c.claim_number, action: action };
+
+        if (action === 'approve') {
+            const def = (c.claim_amount != null ? c.claim_amount : c.sum_insured) || '';
+            const input = prompt('Approve claim ' + c.claim_number + '\nEnter the approved claim amount (₹):', def);
+            if (input === null) return; // cancelled
+            const amt = Number(String(input).replace(/[^0-9.]/g, ''));
+            if (isNaN(amt) || amt <= 0) { alert('Please enter a valid amount.'); return; }
+            body.claim_amount = amt;
+        } else {
+            if (!confirm('Reject claim ' + c.claim_number + '?\nThis submits your review decision to the backend.')) return;
+        }
+
+        const original = btn.textContent;
+        btn.disabled = true;
+        btn.textContent = 'Please wait…';
+        try {
+            const res = await AjahFiAPI.post('/coordinator/review_claim', body);
+            if (res && res.status === 'success') {
+                alert('Claim ' + (action === 'approve' ? 'approved' : 'rejected') + ' successfully.');
+                loadClaim(); // refresh with the new state
+            } else {
+                alert('Could not ' + action + ' claim: ' + ((res && res.reason) || 'unknown error'));
+                btn.disabled = false;
+                btn.textContent = original;
+            }
+        } catch (err) {
+            alert('Could not ' + action + ' claim: ' + err.message);
+            btn.disabled = false;
+            btn.textContent = original;
+        }
     }
 
     async function loadClaim() {
