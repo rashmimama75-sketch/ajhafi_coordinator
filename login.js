@@ -42,10 +42,18 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- Sign in ---
+    // --- Sign in (real backend auth) ---
     const loginForm = document.getElementById('loginForm');
+    const signInBtn = loginForm ? loginForm.querySelector('.btn-signin') : null;
+
+    function setLoading(isLoading) {
+        if (!signInBtn) return;
+        signInBtn.disabled = isLoading;
+        signInBtn.textContent = isLoading ? 'Signing in…' : 'Sign In';
+    }
+
     if (loginForm) {
-        loginForm.addEventListener('submit', (e) => {
+        loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const mobile = document.getElementById('mobileInput').value.trim();
             const password = pwInput.value;
@@ -60,32 +68,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            // ----------------------------------------------------------------
-            // TODO: Connect to backend here.
-            // When you have the backend URL, replace the demo redirect below
-            // with a real login request, e.g.:
-            //
-            // const res = await fetch(`${API_BASE_URL}/auth/login`, {
-            //     method: 'POST',
-            //     headers: { 'Content-Type': 'application/json' },
-            //     body: JSON.stringify({ mobile, password, role: selectedRole })
-            // });
-            // const data = await res.json();
-            // if (res.ok) { localStorage.setItem('token', data.token); ... }
-            // ----------------------------------------------------------------
+            // Only the Coordinator dashboard is built in this project.
+            const backendRole = 'co';
 
-            // Demo behaviour (no backend yet): save a session flag and send
-            // Coordinator to the dashboard. When the backend is connected,
-            // store the real token returned by the API instead.
-            if (selectedRole === 'coordinator') {
-                localStorage.setItem('ajahfi_auth', JSON.stringify({
-                    role: selectedRole,
-                    mobile: mobile,
-                    ts: Date.now()
-                }));
-                window.location.href = 'index.html';
-            } else {
-                alert(`Signed in as "${selectedRole}". (This role's dashboard isn't built yet.)`);
+            setLoading(true);
+            try {
+                const data = await AjahFiAPI.login(mobile, password, backendRole);
+
+                if (data && data.access_token) {
+                    AjahFiAPI.setToken(data.access_token);
+                    AjahFiAPI.setProfile({ role: backendRole, mobile: mobile, ts: Date.now() });
+                    window.location.href = 'index.html';
+                } else {
+                    alert(data && data.reason ? data.reason : 'Login failed. Please check your details and try again.');
+                }
+            } catch (err) {
+                alert('Could not sign in: ' + err.message);
+            } finally {
+                setLoading(false);
             }
         });
     }

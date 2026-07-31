@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Auth gate: redirects to login.html if not signed in -->
     <script src="auth-guard.js"></script>
+    <!-- API layer (backend base URL + fetch helpers) -->
+    <script src="api.js"></script>
     <meta name="description" content="Goat Suraksha - Secured Farmers, Healthy Goats. Settings and profile page.">
     <title>Goat Suraksha - Settings</title>
     <!-- Fonts -->
@@ -222,7 +224,7 @@
                 </div>
 
                 <!-- Full Width Logout Button -->
-                <button class="btn-logout-full" onclick="localStorage.removeItem('ajahfi_auth'); window.location.replace('login.html');">
+                <button class="btn-logout-full" onclick="(window.AjahFiAPI ? AjahFiAPI.logout() : Promise.resolve()).finally(function(){ localStorage.removeItem('ajahfi_token'); localStorage.removeItem('ajahfi_auth'); window.location.replace('login.html'); });">
                     <i class="fa-solid fa-arrow-right-from-bracket"></i>
                     <span>Logout</span>
                 </button>
