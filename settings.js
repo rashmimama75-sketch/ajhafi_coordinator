@@ -26,9 +26,8 @@ document.addEventListener('DOMContentLoaded', () => {
             setText('lblProfileFullName', name);
             setText('lblProfileRoleText', roleLabel);
             setText('lblProfilePhone', p.mobile_number);
-            // Date of birth and gender are not exposed by the profile endpoint
-            setText('lblProfileDob', '—');
-            setText('lblProfileGender', '—');
+            // NOTE: the profile endpoint does not expose date of birth or gender,
+            // so those rows were removed from the page.
             setText('lblProfileAddress', village);
         } catch (err) {
             console.warn('Could not load profile:', err.message);
