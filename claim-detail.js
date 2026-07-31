@@ -1,128 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // --- Mock Claims Database ---
-    const claimsData = [
-        {
-            id: 'CLM1001',
-            farmer: 'Ramesh Kumar',
-            goatId: 'G12345',
-            earTag: 'BG-2456',
-            breed: 'Black Bengal',
-            gender: 'Female',
-            age: '2 Years',
-            sumInsured: '₹ 20,000',
-            policyNumber: 'POL/2024/001234',
-            policyValid: '16 Jul 2027',
-            deathDate: '22 Jul 2026',
-            raisedDate: '23 Jul 2026, 09:45 AM',
-            status: 'Pending',
-            statusClass: 'pending',
-            amount: '₹ 5,000',
-            cause: 'Disease',
-            location: 'Jamdihi, Baripada, Mayurbhanj, Odisha',
-            avatar: 'https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&w=80&q=80'
-        },
-        {
-            id: 'CLM1002',
-            farmer: 'Sita Devi',
-            goatId: 'G23450',
-            earTag: 'BG-8812',
-            breed: 'Sirohi',
-            gender: 'Female',
-            age: '3 Years',
-            sumInsured: '₹ 25,000',
-            policyNumber: 'POL/2024/009845',
-            policyValid: '20 Jul 2027',
-            deathDate: '21 Jul 2026',
-            raisedDate: '21 Jul 2026, 11:20 AM',
-            status: 'Under Review',
-            statusClass: 'under-review',
-            amount: '₹ 5,000',
-            cause: 'Accident',
-            location: 'Karanjia, Mayurbhanj, Odisha',
-            avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=80&q=80'
-        },
-        {
-            id: 'CLM0999',
-            farmer: 'Mohan Singh',
-            goatId: 'G12310',
-            earTag: 'BG-1092',
-            breed: 'Beetal',
-            gender: 'Male',
-            age: '1.5 Years',
-            sumInsured: '₹ 18,000',
-            policyNumber: 'POL/2023/007742',
-            policyValid: '18 Jun 2026',
-            deathDate: '20 Jul 2026',
-            raisedDate: '20 Jul 2026, 04:10 PM',
-            status: 'Approved',
-            statusClass: 'approved',
-            amount: '₹ 5,000',
-            cause: 'Disease',
-            location: 'Bhanjpur, Baripada, Odisha',
-            avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=80&q=80'
-        },
-        {
-            id: 'CLM0997',
-            farmer: 'Laxmi Nayak',
-            goatId: 'G12250',
-            earTag: 'BG-4321',
-            breed: 'Jamunapari',
-            gender: 'Female',
-            age: '4 Years',
-            sumInsured: '₹ 30,000',
-            policyNumber: 'POL/2024/005510',
-            policyValid: '02 Feb 2027',
-            deathDate: '19 Jul 2026',
-            raisedDate: '19 Jul 2026, 02:30 PM',
-            status: 'Rejected',
-            statusClass: 'rejected',
-            amount: '₹ 5,000',
-            cause: 'Bloating',
-            location: 'Udala, Mayurbhanj, Odisha',
-            avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=80&q=80'
-        },
-        {
-            id: 'CLM1003',
-            farmer: 'Babu Lal',
-            goatId: 'G23330',
-            earTag: 'BG-2311',
-            breed: 'Black Bengal',
-            gender: 'Male',
-            age: '2.5 Years',
-            sumInsured: '₹ 22,000',
-            policyNumber: 'POL/2024/008892',
-            policyValid: '10 Aug 2027',
-            deathDate: '23 Jul 2026',
-            raisedDate: '23 Jul 2026, 08:15 AM',
-            status: 'Under Review',
-            statusClass: 'under-review',
-            amount: '₹ 5,000',
-            cause: 'Pneumonia',
-            location: 'Jashipur, Mayurbhanj, Odisha',
-            avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=80&q=80'
-        },
-        {
-            id: 'CLM1004',
-            farmer: 'Purnima Behera',
-            goatId: 'G12401',
-            earTag: 'BG-6789',
-            breed: 'Sirohi',
-            gender: 'Female',
-            age: '1 Year',
-            sumInsured: '₹ 15,000',
-            policyNumber: 'POL/2025/000214',
-            policyValid: '15 Jan 2028',
-            deathDate: '23 Jul 2026',
-            raisedDate: '23 Jul 2026, 10:50 AM',
-            status: 'Pending',
-            statusClass: 'pending',
-            amount: '₹ 5,000',
-            cause: 'Disease',
-            location: 'Rairangpur, Mayurbhanj, Odisha',
-            avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=80&q=80'
-        }
-    ];
-
     // --- DOM Elements ---
     const sidebar = document.getElementById('appSidebar');
     const sidebarToggleBtn = document.getElementById('sidebarToggle');
@@ -130,236 +6,165 @@ document.addEventListener('DOMContentLoaded', () => {
     const notificationDropdown = document.getElementById('notificationDropdown');
     const profileBtn = document.getElementById('profileDropdownBtn');
 
-    // UI Fields
-    const lblClaimId = document.getElementById('lblClaimId');
-    const lblClaimStatus = document.getElementById('lblClaimStatus');
-    const lblReportedDate = document.getElementById('lblReportedDate');
-    const lblReportedBy = document.getElementById('lblReportedBy');
-
-    const lblGoatId = document.getElementById('lblGoatId');
-    const lblEarTag = document.getElementById('lblEarTag');
-    const lblBreed = document.getElementById('lblBreed');
-    const lblGender = document.getElementById('lblGender');
-    const lblAge = document.getElementById('lblAge');
-    const lblSumInsured = document.getElementById('lblSumInsured');
-    const lblPolicyNumber = document.getElementById('lblPolicyNumber');
-    const lblPolicyValid = document.getElementById('lblPolicyValid');
-
-    const lblDateOfDeath = document.getElementById('lblDateOfDeath');
-    const lblCauseOfDeath = document.getElementById('lblCauseOfDeath');
-    const lblLocation = document.getElementById('lblLocation');
-    const lblDeathReportedBy = document.getElementById('lblDeathReportedBy');
-
-    // Stepper nodes
-    const stepperProgressLine = document.getElementById('stepperProgressLine');
-    const step3 = document.getElementById('step3');
-    const step3Status = document.getElementById('step3Status');
-    const step4 = document.getElementById('step4');
-    const step4Status = document.getElementById('step4Status');
-    const step5 = document.getElementById('step5');
-    const step5Status = document.getElementById('step5Status');
-
-    // Get claim ID from URL query params
-    const urlParams = new URLSearchParams(window.location.search);
-    const claimIdParam = urlParams.get('id');
-
-    // Find claim
-    let claim = claimsData.find(c => c.id === claimIdParam);
-
-    // Fallback/Dynamic generation if ID is not found or is custom
-    if (!claim && claimIdParam) {
-        // Simple hash calculation to generate stable random values
-        let hash = 0;
-        for (let i = 0; i < claimIdParam.length; hash += claimIdParam.charCodeAt(i++));
-
-        const farmers = ['Ramesh Kumar', 'Sita Devi', 'Mohan Singh', 'Laxmi Nayak', 'Babu Lal', 'Purnima Behera'];
-        const breeds = ['Black Bengal', 'Sirohi', 'Beetal', 'Jamunapari'];
-        const causes = ['Disease', 'Accident', 'Bloating', 'Pneumonia'];
-        const locations = ['Jamdihi, Baripada, Mayurbhanj, Odisha', 'Karanjia, Mayurbhanj, Odisha', 'Udala, Mayurbhanj, Odisha', 'Rairangpur, Mayurbhanj, Odisha'];
-        const statuses = ['Pending', 'Under Review', 'Approved', 'Rejected'];
-
-        const selectedStatus = statuses[hash % statuses.length];
-        const statusClass = selectedStatus.toLowerCase().replace(' ', '-');
-
-        claim = {
-            id: claimIdParam,
-            farmer: farmers[hash % farmers.length],
-            goatId: `G12${300 + (hash % 600)}`,
-            earTag: `BG-${1000 + (hash % 8999)}`,
-            breed: breeds[hash % breeds.length],
-            gender: hash % 2 === 0 ? 'Female' : 'Male',
-            age: `${1 + (hash % 3)} Years`,
-            sumInsured: `₹ ${15000 + (hash % 3 * 5000)}`,
-            policyNumber: `POL/2024/00${1000 + (hash % 8999)}`,
-            policyValid: `${10 + (hash % 15)} Jul 2027`,
-            deathDate: `${15 + (hash % 5)} Jul 2026`,
-            raisedDate: `${16 + (hash % 5)} Jul 2026, 10:00 AM`,
-            status: selectedStatus,
-            statusClass: statusClass,
-            amount: '₹ 5,000',
-            cause: causes[hash % causes.length],
-            location: locations[hash % locations.length],
-            avatar: 'https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&w=80&q=80'
-        };
-    }
-
-    // Default fallback if no param at all
-    if (!claim) {
-        claim = claimsData[0];
-    }
-
-    // --- Fill UI Fields ---
-    lblClaimId.textContent = claim.id;
-    lblClaimStatus.textContent = claim.status;
-    lblClaimStatus.className = `badge ${claim.statusClass}`;
-
-    lblReportedDate.textContent = claim.raisedDate.split(',')[0];
-    lblReportedBy.textContent = claim.farmer;
-
-    lblGoatId.textContent = claim.goatId;
-    lblEarTag.textContent = claim.earTag;
-    lblBreed.textContent = claim.breed;
-    lblGender.textContent = claim.gender;
-    lblAge.textContent = claim.age;
-    lblSumInsured.textContent = claim.sumInsured;
-    lblPolicyNumber.textContent = claim.policyNumber;
-    lblPolicyValid.textContent = claim.policyValid;
-
-    lblDateOfDeath.textContent = claim.deathDate;
-    lblCauseOfDeath.textContent = claim.cause;
-    lblLocation.textContent = claim.location;
-    lblDeathReportedBy.textContent = claim.farmer;
-
-    // --- Populate Vaccination History ---
-    const vaccinationTableBody = document.getElementById('vaccinationTableBody');
-    if (vaccinationTableBody) {
-        const vaccinations = [
-            { name: 'PPR Vaccine', date: '12 Jan 2026', by: 'Sita Devi (Didi)', status: 'Completed', statusClass: 'approved' },
-            { name: 'Goat Pox Vaccine', date: '05 Feb 2026', by: 'Sita Devi (Didi)', status: 'Completed', statusClass: 'approved' },
-            { name: 'FMD Vaccine', date: '20 Mar 2026', by: 'Dr. B. K. Mohanty (Vet)', status: 'Completed', statusClass: 'approved' },
-            { name: 'Enterotoxaemia (ET) Vaccine', date: '15 May 2026', by: 'Gita Rani (Didi)', status: 'Completed', statusClass: 'approved' }
-        ];
-
-        vaccinationTableBody.innerHTML = '';
-        vaccinations.forEach(vac => {
-            const row = `
-                <tr>
-                    <td style="padding: 12px 16px; font-size: 13px; font-weight: 600; color: var(--text-main); border-bottom: 1px solid var(--border-color);">${vac.name}</td>
-                    <td style="padding: 12px 16px; font-size: 13px; color: var(--text-muted); border-bottom: 1px solid var(--border-color);">${vac.date}</td>
-                    <td style="padding: 12px 16px; font-size: 13px; color: var(--text-muted); border-bottom: 1px solid var(--border-color);">${vac.by}</td>
-                    <td style="padding: 12px 16px; border-bottom: 1px solid var(--border-color);"><span class="badge ${vac.statusClass}" style="padding: 4px 8px; font-size: 11px;">${vac.status}</span></td>
-                </tr>
-            `;
-            vaccinationTableBody.insertAdjacentHTML('beforeend', row);
-        });
-    }
-
-    // Set stepper states
-    if (claim.status === 'Pending') {
-        stepperProgressLine.style.width = '37.5%'; // Line reaches halfway to Step 3
-
-        step3.classList.add('active');
-        step3Status.textContent = 'In Progress';
-        step3Status.style.color = 'var(--brand-primary)';
-
-        step4.className = 'claim-stepper-step pending';
-        step4Status.textContent = 'Pending';
-
-        step5.className = 'claim-stepper-step pending';
-        step5Status.textContent = 'Pending';
-    }
-    else if (claim.status === 'Under Review') {
-        stepperProgressLine.style.width = '62.5%'; // Line reaches step 3 and goes halfway to Step 4
-
-        step3.className = 'claim-stepper-step completed';
-        step3.querySelector('.claim-step-circle').innerHTML = '<i class="fa-solid fa-check"></i>';
-
-        step4.className = 'claim-stepper-step active';
-        step4Status.textContent = 'In Progress';
-        step4Status.style.color = 'var(--brand-primary)';
-
-        step5.className = 'claim-stepper-step pending';
-        step5Status.textContent = 'Pending';
-    }
-    else if (claim.status === 'Approved') {
-        stepperProgressLine.style.width = '100%'; // Full line
-
-        step3.className = 'claim-stepper-step completed';
-        step3.querySelector('.claim-step-circle').innerHTML = '<i class="fa-solid fa-check"></i>';
-
-        step4.className = 'claim-stepper-step completed';
-        step4.querySelector('.claim-step-circle').innerHTML = '<i class="fa-solid fa-check"></i>';
-        step4Status.textContent = 'Approved';
-
-        step5.className = 'claim-stepper-step completed';
-        step5.querySelector('.claim-step-circle').innerHTML = '<i class="fa-solid fa-check"></i>';
-        step5Status.textContent = 'Paid';
-    }
-    else if (claim.status === 'Rejected') {
-        stepperProgressLine.style.width = '75%'; // Reaches step 4 but stops
-
-        step3.className = 'claim-stepper-step completed';
-        step3.querySelector('.claim-step-circle').innerHTML = '<i class="fa-solid fa-check"></i>';
-
-        step4.className = 'claim-stepper-step active';
-        step4.querySelector('.claim-step-circle').style.borderColor = 'var(--color-rejected)';
-        step4.querySelector('.claim-step-circle').style.color = 'var(--color-rejected)';
-        step4Status.textContent = 'Rejected';
-        step4Status.style.color = 'var(--color-rejected)';
-
-        step5.className = 'claim-stepper-step pending';
-        step5Status.textContent = 'Cancelled';
-    }
-
-    // --- Buttons Actions ---
-    const btnDownloadPDF = document.getElementById('btnDownloadPDF');
-    if (btnDownloadPDF) {
-        btnDownloadPDF.addEventListener('click', () => {
-            alert(`Generating and downloading PDF receipt for claim: ${claim.id}`);
-        });
-    }
-
-    const btnClaimApprove = document.getElementById('btnClaimApprove');
-    if (btnClaimApprove) {
-        btnClaimApprove.addEventListener('click', () => {
-            alert(`Claim ${claim.id} has been Approved successfully.`);
-        });
-    }
-
-    const btnClaimReject = document.getElementById('btnClaimReject');
-    if (btnClaimReject) {
-        btnClaimReject.addEventListener('click', () => {
-            alert(`Claim ${claim.id} has been Rejected.`);
-        });
-    }
-
     // --- Sidebar & Notification Toggle ---
     if (sidebarToggleBtn) {
-        sidebarToggleBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            sidebar.classList.toggle('active');
-        });
+        sidebarToggleBtn.addEventListener('click', (e) => { e.stopPropagation(); sidebar.classList.toggle('active'); });
     }
-
     document.addEventListener('click', (e) => {
-        if (sidebar && !sidebar.contains(e.target) && (!sidebarToggleBtn || e.target !== sidebarToggleBtn)) {
-            sidebar.classList.remove('active');
-        }
-        if (notificationDropdown && !notificationDropdown.contains(e.target) && notificationBtn && e.target !== notificationBtn && !notificationBtn.contains(e.target)) {
-            notificationDropdown.classList.remove('active');
-        }
+        if (sidebar && !sidebar.contains(e.target) && (!sidebarToggleBtn || e.target !== sidebarToggleBtn)) sidebar.classList.remove('active');
+        if (notificationDropdown && !notificationDropdown.contains(e.target) && notificationBtn && e.target !== notificationBtn && !notificationBtn.contains(e.target)) notificationDropdown.classList.remove('active');
     });
+    if (notificationBtn) notificationBtn.addEventListener('click', (e) => { e.stopPropagation(); notificationDropdown.classList.toggle('active'); });
+    if (profileBtn) profileBtn.addEventListener('click', () => alert("Profile settings & Coordinator options coming soon!"));
 
-    if (notificationBtn) {
-        notificationBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            notificationDropdown.classList.toggle('active');
-        });
+    // --- Helpers ---
+    const setText = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = (val == null || val === '') ? '—' : val; };
+    function cap(s) { s = String(s || ''); return s ? s.charAt(0).toUpperCase() + s.slice(1) : ''; }
+    function fmtDate(iso) {
+        if (!iso) return '—';
+        const d = new Date(String(iso).replace(' ', 'T'));
+        if (isNaN(d)) return String(iso);
+        return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+    }
+    function ageLabel(months) {
+        if (months == null || isNaN(months)) return '—';
+        months = Number(months);
+        if (months < 12) return months + ' mo';
+        const y = Math.floor(months / 12), m = months % 12;
+        return m ? (y + 'y ' + m + 'm') : (y + (y === 1 ? ' Year' : ' Years'));
+    }
+    function money(n) { return (n == null || isNaN(n)) ? '—' : '₹ ' + Number(n).toLocaleString('en-IN'); }
+    function mapStatus(s) {
+        const k = String(s || '').toLowerCase();
+        if (k === 'claimed' || k === 'approved' || k === 'paid') return { label: 'Approved', cls: 'approved' };
+        if (k === 'rejected') return { label: 'Rejected', cls: 'rejected' };
+        if (k === 'hold' || k === 'under review') return { label: 'Under Review', cls: 'under-review' };
+        if (k === 'pending') return { label: 'Pending', cls: 'pending' };
+        return { label: cap(s) || '—', cls: 'pending' };
     }
 
-    if (profileBtn) {
-        profileBtn.addEventListener('click', () => {
-            alert("Profile settings & Coordinator options coming soon!");
-        });
+    const VAX_NAMES = { ppr: 'PPR Vaccine', et_tt: 'Enterotoxaemia (ET-TT)', ett: 'Enterotoxaemia (ET)', goat_pox: 'Goat Pox Vaccine', fmd: 'FMD Vaccine' };
+
+    function renderVaccinations(vaccinations) {
+        const body = document.getElementById('vaccinationTableBody');
+        if (!body) return;
+        if (!vaccinations || !vaccinations.length) {
+            body.innerHTML = '<tr><td colspan="4" style="padding:16px;text-align:center;color:var(--text-muted);font-size:13px;">No vaccination records.</td></tr>';
+            return;
+        }
+        body.innerHTML = vaccinations.map(v => {
+            const name = VAX_NAMES[(v.vaccine_type || '').toLowerCase()] || cap((v.vaccine_type || '').replace(/_/g, ' ')) + ' Vaccine';
+            const done = String(v.status || '').toLowerCase() === 'done' || String(v.status || '').toLowerCase() === 'completed';
+            const statusLabel = done ? 'Completed' : cap(v.status || 'Pending');
+            const statusCls = done ? 'approved' : 'pending';
+            const by = v.batch_number ? ('Batch: ' + v.batch_number) : '—';
+            return `
+                <tr>
+                    <td style="padding: 12px 16px; font-size: 13px; font-weight: 600; color: var(--text-main); border-bottom: 1px solid var(--border-color);">${name}</td>
+                    <td style="padding: 12px 16px; font-size: 13px; color: var(--text-muted); border-bottom: 1px solid var(--border-color);">${fmtDate(v.date)}</td>
+                    <td style="padding: 12px 16px; font-size: 13px; color: var(--text-muted); border-bottom: 1px solid var(--border-color);">${by}</td>
+                    <td style="padding: 12px 16px; border-bottom: 1px solid var(--border-color);"><span class="badge ${statusCls}" style="padding: 4px 8px; font-size: 11px;">${statusLabel}</span></td>
+                </tr>`;
+        }).join('');
     }
+
+    function setStepper(statusLabel) {
+        const stepperProgressLine = document.getElementById('stepperProgressLine');
+        const step3 = document.getElementById('step3');
+        const step3Status = document.getElementById('step3Status');
+        const step4 = document.getElementById('step4');
+        const step4Status = document.getElementById('step4Status');
+        const step5 = document.getElementById('step5');
+        const step5Status = document.getElementById('step5Status');
+        if (!stepperProgressLine || !step3 || !step4 || !step5) return;
+
+        if (statusLabel === 'Pending') {
+            stepperProgressLine.style.width = '37.5%';
+            step3.classList.add('active');
+            if (step3Status) { step3Status.textContent = 'In Progress'; step3Status.style.color = 'var(--brand-primary)'; }
+            step4.className = 'claim-stepper-step pending';
+            if (step4Status) step4Status.textContent = 'Pending';
+            step5.className = 'claim-stepper-step pending';
+            if (step5Status) step5Status.textContent = 'Pending';
+        } else if (statusLabel === 'Under Review') {
+            stepperProgressLine.style.width = '62.5%';
+            step3.className = 'claim-stepper-step completed';
+            const c3 = step3.querySelector('.claim-step-circle'); if (c3) c3.innerHTML = '<i class="fa-solid fa-check"></i>';
+            step4.className = 'claim-stepper-step active';
+            if (step4Status) { step4Status.textContent = 'In Progress'; step4Status.style.color = 'var(--brand-primary)'; }
+            step5.className = 'claim-stepper-step pending';
+            if (step5Status) step5Status.textContent = 'Pending';
+        } else if (statusLabel === 'Approved') {
+            stepperProgressLine.style.width = '100%';
+            ['3', '4', '5'].forEach(n => {
+                const st = document.getElementById('step' + n);
+                st.className = 'claim-stepper-step completed';
+                const c = st.querySelector('.claim-step-circle'); if (c) c.innerHTML = '<i class="fa-solid fa-check"></i>';
+            });
+            if (step4Status) step4Status.textContent = 'Approved';
+            if (step5Status) step5Status.textContent = 'Paid';
+        } else if (statusLabel === 'Rejected') {
+            stepperProgressLine.style.width = '75%';
+            step3.className = 'claim-stepper-step completed';
+            const c3 = step3.querySelector('.claim-step-circle'); if (c3) c3.innerHTML = '<i class="fa-solid fa-check"></i>';
+            step4.className = 'claim-stepper-step active';
+            const c4 = step4.querySelector('.claim-step-circle');
+            if (c4) { c4.style.borderColor = 'var(--color-rejected)'; c4.style.color = 'var(--color-rejected)'; }
+            if (step4Status) { step4Status.textContent = 'Rejected'; step4Status.style.color = 'var(--color-rejected)'; }
+            step5.className = 'claim-stepper-step pending';
+            if (step5Status) step5Status.textContent = 'Cancelled';
+        }
+    }
+
+    function renderClaim(c) {
+        const goat = c.goat || {};
+        const st = mapStatus(c.status);
+
+        setText('lblClaimId', c.claim_number);
+        const statusEl = document.getElementById('lblClaimStatus');
+        if (statusEl) { statusEl.textContent = st.label; statusEl.className = 'badge ' + st.cls; }
+        setText('lblReportedDate', fmtDate(c.claim_reported_on));
+        setText('lblReportedBy', (c.reported_by || c.farmer || '').trim());
+
+        setText('lblGoatId', goat.ear_tag_number);
+        setText('lblEarTag', goat.ear_tag_number);
+        setText('lblBreed', goat.breed);
+        setText('lblGender', cap(goat.gender));
+        setText('lblAge', ageLabel(goat.age_months));
+        setText('lblSumInsured', money(c.sum_insured));
+        setText('lblPolicyNumber', c.policy_number);
+        setText('lblPolicyValid', fmtDate(c.policy_valid_to));
+
+        setText('lblDateOfDeath', fmtDate(c.date_of_death));
+        setText('lblCauseOfDeath', c.cause_of_death);
+        setText('lblLocation', c.location);
+        setText('lblDeathReportedBy', (c.reported_by || c.farmer || '').trim());
+
+        renderVaccinations(c.vaccinations);
+        setStepper(st.label);
+
+        // Action buttons (display only — mutations intentionally not wired)
+        const btnPDF = document.getElementById('btnDownloadPDF');
+        if (btnPDF) btnPDF.addEventListener('click', () => alert('Generating PDF receipt for claim: ' + c.claim_number));
+        const btnApprove = document.getElementById('btnClaimApprove');
+        if (btnApprove) btnApprove.addEventListener('click', () => alert('Approve action is not enabled in this view.'));
+        const btnReject = document.getElementById('btnClaimReject');
+        if (btnReject) btnReject.addEventListener('click', () => alert('Reject action is not enabled in this view.'));
+    }
+
+    async function loadClaim() {
+        const claimNo = new URLSearchParams(window.location.search).get('id');
+        const idEl = document.getElementById('lblClaimId');
+        if (!claimNo) { if (idEl) idEl.textContent = 'No claim selected'; return; }
+        if (idEl) idEl.textContent = 'Loading…';
+        try {
+            const c = await AjahFiAPI.get('/coordinator/claims/' + encodeURIComponent(claimNo));
+            if (c) renderClaim(c);
+        } catch (err) {
+            if (idEl) idEl.textContent = 'Could not load claim';
+            console.warn('claim detail load failed:', err.message);
+        }
+    }
+
+    loadClaim();
 });
