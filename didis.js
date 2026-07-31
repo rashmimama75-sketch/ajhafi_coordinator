@@ -163,7 +163,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <td><span class="badge ${statusClass}">${didi.status}</span></td>
                     <td>${didi.joined}</td>
                     <td style="text-align: center;">
-                        <button class="btn-action-detail btn-view-didi-details" data-name="${didi.name}" title="View Details">
+                        <button class="btn-action-detail btn-view-didi-details" data-id="${didi.id}" title="View Details">
                             <span>View</span>
                         </button>
                     </td>
@@ -266,8 +266,8 @@ document.addEventListener('DOMContentLoaded', () => {
         didisTableBody.addEventListener('click', (e) => {
             const btn = e.target.closest('.btn-view-didi-details');
             if (btn) {
-                const name = btn.getAttribute('data-name');
-                window.location.href = `didi-detail.html?name=${encodeURIComponent(name)}`;
+                const didiId = btn.getAttribute('data-id');
+                window.location.href = `didi-detail.html?id=${encodeURIComponent(didiId)}`;
             }
         });
     }

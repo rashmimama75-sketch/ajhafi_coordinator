@@ -174,7 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <td><span class="badge ${statusClass}">${farmer.status}</span></td>
                     <td>${farmer.joined}</td>
                     <td style="text-align: center;">
-                        <button class="btn-action-detail btn-view-farmer-details" data-name="${farmer.name}" title="View Details">
+                        <button class="btn-action-detail btn-view-farmer-details" data-id="${farmer.id}" title="View Details">
                             <span>View</span>
                         </button>
                     </td>
@@ -188,8 +188,8 @@ document.addEventListener('DOMContentLoaded', () => {
         viewDetailsBtns.forEach(btn => {
             btn.addEventListener('click', (e) => {
                 e.stopPropagation();
-                const farmerName = btn.getAttribute('data-name');
-                window.location.href = `farmer-detail.html?name=${encodeURIComponent(farmerName)}`;
+                const farmerId = btn.getAttribute('data-id');
+                window.location.href = `farmer-detail.html?id=${encodeURIComponent(farmerId)}`;
             });
         });
 

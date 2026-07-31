@@ -114,4 +114,29 @@
     };
 
     global.AjahFiAPI = AjahFiAPI;
+
+    // --- Fill the header name/photo from the logged-in coordinator profile ---
+    function initHeaderProfile() {
+        if (!AjahFiAPI.getToken()) { return; }
+        AjahFiAPI.get('/coordinator/profile').then(function (p) {
+            if (!p) { return; }
+            if (p.full_name) {
+                document.querySelectorAll('.profile-name').forEach(function (el) {
+                    el.textContent = p.full_name.trim();
+                });
+            }
+            if (p.photo) {
+                var url = AjahFiAPI.mediaUrl(p.photo);
+                document.querySelectorAll('.profile-trigger img, .avatar-img, .profile-avatar').forEach(function (img) {
+                    if (img.tagName === 'IMG') { img.src = url; }
+                });
+            }
+        }).catch(function () { /* header is cosmetic; ignore failures */ });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initHeaderProfile);
+    } else {
+        initHeaderProfile();
+    }
 })(window);
