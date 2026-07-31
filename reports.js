@@ -96,4 +96,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initial load
     renderChart('7');
+
+    // --- Live report KPIs from backend (/coordinator/reports) ---
+    function money(n) {
+        if (n === null || n === undefined || isNaN(n)) return '—';
+        return '₹ ' + Number(n).toLocaleString('en-IN');
+    }
+    function num(n) {
+        if (n === null || n === undefined || isNaN(n)) return '—';
+        return Number(n).toLocaleString('en-IN');
+    }
+    async function loadReports() {
+        if (!window.AjahFiAPI) return;
+        try {
+            const r = await AjahFiAPI.get('/coordinator/reports');
+            if (!r) return;
+            const cards = document.querySelectorAll('.farmers-stat-card');
+            const put = (i, label, value) => {
+                if (!cards[i]) return;
+                const lbl = cards[i].querySelector('.stat-card-label');
+                const val = cards[i].querySelector('.stat-card-value');
+                if (lbl && label) lbl.textContent = label;
+                if (val) val.textContent = value;
+            };
+            put(0, 'Total Enrollments', num(r.total_enrollments));
+            put(1, 'Claims Filed', num(r.total_claims_filed));
+            put(2, 'Claims Paid', money(r.total_claims_paid));
+            put(3, 'Total Premium Collection', money(r.total_premium));
+        } catch (err) {
+            console.warn('Could not load reports:', err.message);
+        }
+    }
+    loadReports();
 });
