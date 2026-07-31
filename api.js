@@ -44,41 +44,65 @@
         },
 
         // --- core request ---
-        // opts: { method, body, auth (default true) }
+        // opts: { method, body, auth (default true), retries }
+        // Automatically retries transient failures (network errors / 502-504),
+        // which is what happens while a sleeping Render backend is waking up.
         request: function (path, opts) {
             opts = opts || {};
             var method = opts.method || 'GET';
             var auth = opts.auth !== false;
-            var headers = { 'Content-Type': 'application/json' };
+            var self = this;
 
-            if (auth) {
-                var t = this.getToken();
-                if (t) { headers['Authorization'] = 'Bearer ' + t; }
+            // Only auto-retry safe (GET) requests on network errors, so a POST
+            // that may already have been processed is never sent twice. All
+            // requests retry on explicit 502/503/504 (server not ready yet).
+            var isGet = method === 'GET';
+            var maxRetries = (opts.retries != null) ? opts.retries : 4;
+            var backoff = [1500, 3000, 5000, 8000]; // ms between attempts
+
+            function wait(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
+
+            function attempt(n) {
+                var headers = { 'Content-Type': 'application/json' };
+                if (auth) {
+                    var t = self.getToken();
+                    if (t) { headers['Authorization'] = 'Bearer ' + t; }
+                }
+                return fetch(self.base + path, {
+                    method: method,
+                    headers: headers,
+                    body: opts.body ? JSON.stringify(opts.body) : undefined
+                }).then(function (res) {
+                    // Session expired / not authorised → back to login
+                    if (res.status === 401) {
+                        self.clearSession();
+                        if (!/login\.html$/.test(window.location.pathname)) {
+                            window.location.replace('login.html');
+                        }
+                        throw new Error('Session expired. Please sign in again.');
+                    }
+                    // Server waking up / temporarily unavailable → retry
+                    if ((res.status === 502 || res.status === 503 || res.status === 504) && n < maxRetries) {
+                        return wait(backoff[Math.min(n, backoff.length - 1)]).then(function () { return attempt(n + 1); });
+                    }
+                    return res.json().catch(function () { return null; }).then(function (data) {
+                        if (!res.ok) {
+                            var msg = data && (data.detail || data.reason || data.message);
+                            if (msg && typeof msg !== 'string') { msg = JSON.stringify(msg); }
+                            throw new Error(msg || ('Request failed (HTTP ' + res.status + ')'));
+                        }
+                        return data;
+                    });
+                }, function (netErr) {
+                    // Network-level failure (offline, or backend still cold)
+                    if (isGet && n < maxRetries) {
+                        return wait(backoff[Math.min(n, backoff.length - 1)]).then(function () { return attempt(n + 1); });
+                    }
+                    throw new Error('Could not reach the server. It may be waking up — please wait a moment and refresh.');
+                });
             }
 
-            var self = this;
-            return fetch(this.base + path, {
-                method: method,
-                headers: headers,
-                body: opts.body ? JSON.stringify(opts.body) : undefined
-            }).then(function (res) {
-                // Session expired / not authorised → back to login
-                if (res.status === 401) {
-                    self.clearSession();
-                    if (!/login\.html$/.test(window.location.pathname)) {
-                        window.location.replace('login.html');
-                    }
-                    throw new Error('Session expired. Please sign in again.');
-                }
-                return res.json().catch(function () { return null; }).then(function (data) {
-                    if (!res.ok) {
-                        var msg = data && (data.detail || data.reason || data.message);
-                        if (msg && typeof msg !== 'string') { msg = JSON.stringify(msg); }
-                        throw new Error(msg || ('Request failed (HTTP ' + res.status + ')'));
-                    }
-                    return data;
-                });
-            });
+            return attempt(0);
         },
 
         get: function (path) {

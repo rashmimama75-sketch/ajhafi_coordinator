@@ -467,6 +467,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function loadDashboardStats() {
         if (!window.AjahFiAPI) return;
+        // Clear the hardcoded placeholder numbers so stale values never show.
+        ['valActivePolicies', 'valClaimsHistory', 'valEnrollments', 'valTotalDidis', 'valTotalFarmers', 'valTotalPremium']
+            .forEach(id => { const el = document.getElementById(id); if (el) el.textContent = '…'; });
+        document.querySelectorAll('.claims-status-card .status-count').forEach(el => { el.textContent = '…'; });
         try {
             const d = await AjahFiAPI.get('/coordinator/dashboard');
             if (!d) return;
