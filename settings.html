@@ -93,18 +93,18 @@
                 <div class="settings-banner-card">
                     <div class="settings-profile-left">
                         <div class="settings-avatar-container">
-                            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=150&q=80"
-                                alt="Rashmi Sharma Profile Photo" class="settings-avatar-lg">
+                            <img src="goat_thumbnail.png" id="lblProfileAvatar"
+                                alt="Profile Photo" class="settings-avatar-lg">
                             <button class="btn-camera-edit" aria-label="Change Profile Photo">
                                 <i class="fa-solid fa-camera"></i>
                             </button>
                         </div>
                         <div class="settings-profile-info">
-                            <h2 class="settings-display-name">Rashmi Sharma</h2>
-                            <div class="settings-role-badge">Coordinator</div>
+                            <h2 class="settings-display-name" id="lblProfileName">—</h2>
+                            <div class="settings-role-badge" id="lblProfileRole">Coordinator</div>
                             <div class="settings-joined-date">
-                                <i class="fa-regular fa-calendar"></i>
-                                <span>Joined on 15 Mar 2023</span>
+                                <i class="fa-solid fa-location-dot"></i>
+                                <span id="lblProfileLocation">—</span>
                             </div>
                         </div>
                     </div>
@@ -130,30 +130,27 @@
                         <div class="personal-info-list">
                             <div class="personal-info-row">
                                 <div class="personal-info-label">Full Name</div>
-                                <div class="personal-info-value">Rashmi Sharma</div>
+                                <div class="personal-info-value" id="lblProfileFullName">—</div>
                             </div>
                             <div class="personal-info-row">
                                 <div class="personal-info-label">Role</div>
-                                <div class="personal-info-value">Coordinator</div>
+                                <div class="personal-info-value" id="lblProfileRoleText">—</div>
                             </div>
                             <div class="personal-info-row">
                                 <div class="personal-info-label">Phone Number</div>
-                                <div class="personal-info-value">+91 98765 43210</div>
+                                <div class="personal-info-value" id="lblProfilePhone">—</div>
                             </div>
                             <div class="personal-info-row">
                                 <div class="personal-info-label">Date of Birth</div>
-                                <div class="personal-info-value">12 Aug 1994</div>
+                                <div class="personal-info-value" id="lblProfileDob">—</div>
                             </div>
                             <div class="personal-info-row">
                                 <div class="personal-info-label">Gender</div>
-                                <div class="personal-info-value">Female</div>
+                                <div class="personal-info-value" id="lblProfileGender">—</div>
                             </div>
                             <div class="personal-info-row">
-                                <div class="personal-info-label">Address</div>
-                                <div class="personal-info-value">
-                                    12, Green Park Colony,<br>
-                                    Bhopal, Madhya Pradesh - 462001
-                                </div>
+                                <div class="personal-info-label">Village</div>
+                                <div class="personal-info-value" id="lblProfileAddress">—</div>
                             </div>
                         </div>
                     </div>
@@ -232,6 +229,7 @@
         </main>
     </div>
     <script src="support.js"></script>
+    <script src="settings.js"></script>
 </body>
 
 </html>
