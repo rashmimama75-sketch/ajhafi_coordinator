@@ -8,6 +8,8 @@
     <script src="auth-guard.js"></script>
     <!-- API layer (backend base URL + fetch helpers) -->
     <script src="api.js"></script>
+    <!-- i18n (language switching) -->
+    <script src="lang.js"></script>
     <meta name="description" content="Goat Suraksha - Secured Farmers, Healthy Goats. Settings and profile page.">
     <title>Goat Suraksha - Settings</title>
     <!-- Fonts -->
@@ -161,7 +163,7 @@
                             </div>
                         </a>
 
-                        <a href="#" class="settings-option-item">
+                        <a href="#" class="settings-option-item" id="langOption">
                             <div class="settings-option-left">
                                 <div class="info-icon-box">
                                     <i class="fa-solid fa-earth-americas"></i>
@@ -169,7 +171,7 @@
                                 <span class="settings-option-title">Language</span>
                             </div>
                             <div class="settings-option-right">
-                                <span class="settings-option-value">English</span>
+                                <span class="settings-option-value" id="langValue">English</span>
                                 <i class="fa-solid fa-chevron-right settings-option-chevron"></i>
                             </div>
                         </a>

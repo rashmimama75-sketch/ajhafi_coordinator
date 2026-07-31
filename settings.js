@@ -35,4 +35,23 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     loadProfile();
+
+    // --- Language switcher (cycles English → हिंदी → ଓଡ଼ିଆ) ---
+    const FULL_NAMES = { en: 'English', hi: 'हिंदी', or: 'ଓଡ଼ିଆ' };
+    const langOption = document.getElementById('langOption');
+    const langValue = document.getElementById('langValue');
+    function refreshLangValue() {
+        if (langValue && window.I18N) langValue.textContent = FULL_NAMES[I18N.getLang()] || 'English';
+    }
+    refreshLangValue();
+    if (langOption) {
+        langOption.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (!window.I18N) return;
+            const order = ['en', 'hi', 'or'];
+            const next = order[(order.indexOf(I18N.getLang()) + 1) % order.length];
+            I18N.setLang(next);
+            refreshLangValue();
+        });
+    }
 });

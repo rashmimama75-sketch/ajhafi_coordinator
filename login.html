@@ -22,11 +22,18 @@
 <body>
     <div class="login-page">
         <!-- Language selector -->
-        <button class="lang-selector" id="langSelector" type="button">
-            <i class="fa-solid fa-earth-americas"></i>
-            <span>EN</span>
-            <i class="fa-solid fa-chevron-down"></i>
-        </button>
+        <div class="lang-selector-wrap">
+            <button class="lang-selector" id="langSelector" type="button">
+                <i class="fa-solid fa-earth-americas"></i>
+                <span data-lang-label>EN</span>
+                <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="lang-menu" id="langMenu">
+                <button type="button" class="lang-option" data-lang="en">English</button>
+                <button type="button" class="lang-option" data-lang="hi">हिंदी</button>
+                <button type="button" class="lang-option" data-lang="or">ଓଡ଼ିଆ</button>
+            </div>
+        </div>
 
         <div class="login-content">
             <!-- Brand -->
@@ -61,6 +68,7 @@
     </div>
 
     <script src="api.js"></script>
+    <script src="lang.js"></script>
     <script src="login.js"></script>
 </body>
 

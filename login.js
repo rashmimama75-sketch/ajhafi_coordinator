@@ -90,11 +90,31 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- Language selector (placeholder) ---
+    // --- Language selector (dropdown: EN / हिंदी / ଓଡ଼ିଆ) ---
     const langSelector = document.getElementById('langSelector');
-    if (langSelector) {
-        langSelector.addEventListener('click', () => {
-            alert('Language options coming soon.');
+    const langMenu = document.getElementById('langMenu');
+    if (langSelector && langMenu) {
+        const markActive = () => {
+            const cur = window.I18N ? I18N.getLang() : 'en';
+            langMenu.querySelectorAll('.lang-option').forEach(o => {
+                o.classList.toggle('active', o.getAttribute('data-lang') === cur);
+            });
+        };
+        langSelector.addEventListener('click', (e) => {
+            e.stopPropagation();
+            markActive();
+            langMenu.classList.toggle('open');
+        });
+        langMenu.querySelectorAll('.lang-option').forEach(opt => {
+            opt.addEventListener('click', () => {
+                if (window.I18N) I18N.setLang(opt.getAttribute('data-lang'));
+                langMenu.classList.remove('open');
+            });
+        });
+        document.addEventListener('click', (e) => {
+            if (!langMenu.contains(e.target) && !langSelector.contains(e.target)) {
+                langMenu.classList.remove('open');
+            }
         });
     }
 });
