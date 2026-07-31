@@ -1,24 +1,61 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // --- Mock Suraksha Didis Dataset ---
-    const didisData = [
-        { name: 'Sita Devi', phone: '9876543210', region: 'Baripada', status: 'Active', joined: '12 Jan 2025', avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=100&q=80' },
-        { name: 'Laxmi Murmu', phone: '8765432109', region: 'Rairangpur', status: 'Active', joined: '18 Jan 2025', avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=100&q=80' },
-        { name: 'Kamala Tudu', phone: '7654321098', region: 'Karanjia', status: 'Active', joined: '20 Jan 2025', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80' },
-        { name: 'Sunita Hembram', phone: '6543210987', region: 'Udala', status: 'Active', joined: '25 Jan 2025', avatar: 'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=100&q=80' },
-        { name: 'Parbati Soren', phone: '5432109876', region: 'Jashipur', status: 'Inactive', joined: '02 Feb 2025', avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=100&q=80' },
-        { name: 'Anita Devi', phone: '4321098765', region: 'Rairangpur', status: 'Active', joined: '05 Feb 2025', avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=100&q=80' },
-        { name: 'Radha Das', phone: '3210987654', region: 'Baripada', status: 'Active', joined: '08 Feb 2025', avatar: 'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=100&q=80' },
-        { name: 'Basanti Murmu', phone: '2109876543', region: 'Karanjia', status: 'Active', joined: '10 Feb 2025', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80' },
-        { name: 'Gita Soren', phone: '1098765432', region: 'Udala', status: 'Active', joined: '12 Feb 2025', avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=100&q=80' },
-        { name: 'Mamata Naik', phone: '9876501234', region: 'Jashipur', status: 'Inactive', joined: '15 Feb 2025', avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=100&q=80' },
-        { name: 'Champa Tudu', phone: '9123456790', region: 'Rairangpur', status: 'Active', joined: '18 Feb 2025', avatar: 'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=100&q=80' },
-        { name: 'Purnima Hansdah', phone: '9123456791', region: 'Baripada', status: 'Active', joined: '20 Feb 2025', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80' }
-    ];
+    // --- Suraksha Didis data (loaded from backend) ---
+    let didisData = [];
+
+    function fmtDate(iso) {
+        if (!iso) return '—';
+        const d = new Date(iso);
+        if (isNaN(d)) return '—';
+        return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+    }
+
+    function mapDidi(t) {
+        return {
+            id: t.id,
+            name: (t.full_name || '').trim() || '—',
+            phone: t.mobile_number || '',
+            region: (t.village || '').trim() || '—',
+            status: t.is_active ? 'Active' : 'Inactive',
+            joined: fmtDate(t.joined_at),
+            enrollments: t.enrollments,
+            avatar: (window.AjahFiAPI ? AjahFiAPI.mediaUrl(t.photo) : (t.photo || ''))
+        };
+    }
+
+    function updateDidiStats() {
+        const vals = document.querySelectorAll('.didis-stat-card .stat-card-value, .farmers-stat-card .stat-card-value');
+        if (vals.length < 3) return;
+        const active = didisData.filter(d => d.status === 'Active').length;
+        const inactive = didisData.length - active;
+        const regions = new Set(didisData.map(d => d.region).filter(r => r && r !== '—')).size;
+        vals[0].textContent = didisData.length.toLocaleString('en-IN');
+        if (vals[1]) vals[1].textContent = active.toLocaleString('en-IN');
+        if (vals[2]) vals[2].textContent = inactive.toLocaleString('en-IN');
+        if (vals[3]) vals[3].textContent = regions.toLocaleString('en-IN');
+    }
+
+    async function loadDidis() {
+        if (didisTableBody) {
+            didisTableBody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:30px;color:var(--text-muted);">Loading Suraksha Didis…</td></tr>';
+        }
+        try {
+            const data = await AjahFiAPI.get('/coordinator/team');
+            const list = (data && data.team) || [];
+            didisData = list.map(mapDidi);
+            filteredDidis = [...didisData];
+            updateDidiStats();
+            renderDidisTable();
+        } catch (err) {
+            if (didisTableBody) {
+                didisTableBody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:30px;color:var(--color-rejected);">Could not load Suraksha Didis: ' + err.message + '</td></tr>';
+            }
+        }
+    }
 
     // --- State Management ---
     let currentPage = 1;
     const itemsPerPage = 5; // As per the reference UI showing 5 items per page
-    let filteredDidis = [...didisData];
+    let filteredDidis = [];
 
     // --- DOM Elements ---
     const sidebar = document.getElementById('appSidebar');
@@ -136,12 +173,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // Update summary text
-        const totalEntries = 156; // Replicating database totals proportionally
         const displayStart = startIndex + 1;
         const displayEnd = startIndex + pageItems.length;
-        
+
         if (paginationSummary) {
-            paginationSummary.textContent = `Showing ${displayStart} to ${displayEnd} of ${filteredDidis.length === didisData.length ? totalEntries : filteredDidis.length}`;
+            paginationSummary.textContent = `Showing ${displayStart} to ${displayEnd} of ${filteredDidis.length}`;
         }
 
         const totalPages = Math.ceil(filteredDidis.length / itemsPerPage);
@@ -246,6 +282,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- Initial Render ---
-    renderDidisTable();
+    // --- Initial load from backend ---
+    loadDidis();
 });

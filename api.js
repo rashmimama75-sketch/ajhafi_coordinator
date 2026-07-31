@@ -36,6 +36,13 @@
             return !!this.getToken();
         },
 
+        // Turn a "/media/xxx.jpg" path from the API into a full URL.
+        mediaUrl: function (path) {
+            if (!path) { return ''; }
+            if (/^https?:\/\//.test(path)) { return path; }
+            return this.base + (path.charAt(0) === '/' ? path : '/' + path);
+        },
+
         // --- core request ---
         // opts: { method, body, auth (default true) }
         request: function (path, opts) {

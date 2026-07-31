@@ -1,79 +1,65 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // --- Mock Claims Dataset ---
-    const claimsData = [
-        {
-            id: 'CLM1001',
-            farmer: 'Ramesh Kumar',
-            goatId: 'G12345',
-            deathDate: '22 Jul 2026',
-            raisedDate: '23 Jul 2026, 09:45 AM',
-            status: 'Pending',
-            statusClass: 'pending',
-            amount: '₹ 5,000',
+    // --- Claims data (loaded from backend) ---
+    let claimsData = [];
+
+    function fmtDate(iso) {
+        if (!iso) return '—';
+        const d = new Date(iso);
+        if (isNaN(d)) return '—';
+        return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+    }
+
+    function mapClaimStatus(cat, status) {
+        const k = String(cat || status || '').toLowerCase();
+        if (k === 'approved' || k === 'claimed' || k === 'paid') return { label: 'Approved', cls: 'approved' };
+        if (k === 'rejected') return { label: 'Rejected', cls: 'rejected' };
+        if (k === 'hold' || k === 'under review' || k === 'under_review' || k === 'review') return { label: 'Under Review', cls: 'under-review' };
+        if (k === 'pending') return { label: 'Pending', cls: 'pending' };
+        return { label: (cat || status || '—'), cls: 'pending' };
+    }
+
+    function mapClaim(c) {
+        const s = mapClaimStatus(c.category, c.status);
+        return {
+            id: c.claim_number,
+            farmer: (c.farmer || '').trim() || '—',
+            goatId: c.ear_tag_number || '—',
+            deathDate: fmtDate(c.date_of_death),
+            cause: c.cause_of_death ? ('Cause of Death: ' + c.cause_of_death) : '',
+            status: s.label,
+            statusClass: s.cls,
+            amount: (c.claim_amount != null) ? ('₹ ' + Number(c.claim_amount).toLocaleString('en-IN')) : '—',
             amountDetail: 'Claim Amount',
-            avatar: 'https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&w=80&q=80'
-        },
-        {
-            id: 'CLM1002',
-            farmer: 'Sita Devi',
-            goatId: 'G23450',
-            deathDate: '21 Jul 2026',
-            raisedDate: '21 Jul 2026, 11:20 AM',
-            status: 'Under Review',
-            statusClass: 'under-review',
-            amount: '₹ 5,000',
-            amountDetail: 'Claim Amount',
-            avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=80&q=80'
-        },
-        {
-            id: 'CLM0999',
-            farmer: 'Mohan Singh',
-            goatId: 'G12310',
-            deathDate: '20 Jul 2026',
-            raisedDate: '20 Jul 2026, 04:10 PM',
-            status: 'Approved',
-            statusClass: 'approved',
-            amount: '₹ 5,000',
-            amountDetail: 'Paid on: 22 Jul 2026',
-            avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=80&q=80'
-        },
-        {
-            id: 'CLM0997',
-            farmer: 'Laxmi Nayak',
-            goatId: 'G12250',
-            deathDate: '19 Jul 2026',
-            raisedDate: '19 Jul 2026, 02:30 PM',
-            status: 'Rejected',
-            statusClass: 'rejected',
-            amount: '₹ 5,000',
-            amountDetail: 'Rejected on: 21 Jul 2026',
-            avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=80&q=80'
-        },
-        {
-            id: 'CLM1003',
-            farmer: 'Babu Lal',
-            goatId: 'G23330',
-            deathDate: '23 Jul 2026',
-            raisedDate: '23 Jul 2026, 08:15 AM',
-            status: 'Under Review',
-            statusClass: 'under-review',
-            amount: '₹ 5,000',
-            amountDetail: 'Claim Amount',
-            avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=80&q=80'
-        },
-        {
-            id: 'CLM1004',
-            farmer: 'Purnima Behera',
-            goatId: 'G12401',
-            deathDate: '23 Jul 2026',
-            raisedDate: '23 Jul 2026, 10:50 AM',
-            status: 'Pending',
-            statusClass: 'pending',
-            amount: '₹ 5,000',
-            amountDetail: 'Claim Amount',
-            avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=80&q=80'
+            avatar: (window.AjahFiAPI ? AjahFiAPI.mediaUrl(c.photo) : (c.photo || ''))
+        };
+    }
+
+    function updateSummaryCounts() {
+        const by = (key) => claimsData.filter(c => c.status.toLowerCase() === key).length;
+        const set = (sel, val) => { const el = document.querySelector(sel + ' .summary-card-val'); if (el) el.textContent = val; };
+        set('.card-all', claimsData.length);
+        set('.card-pending', by('pending'));
+        set('.card-review', by('under review'));
+        set('.card-approved', by('approved'));
+        set('.card-rejected', by('rejected'));
+    }
+
+    async function loadClaims() {
+        if (claimsListContainer) {
+            claimsListContainer.innerHTML = '<div class="detail-card" style="text-align:center;padding:40px;color:var(--text-muted);">Loading claims…</div>';
         }
-    ];
+        try {
+            const data = await AjahFiAPI.get('/coordinator/claims');
+            const list = (data && data.claims) || [];
+            claimsData = list.map(mapClaim);
+            updateSummaryCounts();
+            renderClaimsList();
+        } catch (err) {
+            if (claimsListContainer) {
+                claimsListContainer.innerHTML = '<div class="detail-card" style="text-align:center;padding:40px;color:var(--color-rejected);">Could not load claims: ' + err.message + '</div>';
+            }
+        }
+    }
 
     let currentFilter = 'all';
     let searchQuery = '';
@@ -134,7 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 <span>Date of Death: <strong>${claim.deathDate}</strong></span>
                             </div>
                             <div class="claim-raised-time">
-                                <span>Claim Raised: <strong>${claim.raisedDate}</strong></span>
+                                <span>${claim.cause || ''}</span>
                             </div>
                         </div>
                     </div>
@@ -247,6 +233,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Initial load
-    renderClaimsList();
+    // Initial load (from backend)
+    loadClaims();
 });
