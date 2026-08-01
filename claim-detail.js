@@ -197,23 +197,15 @@ document.addEventListener('DOMContentLoaded', () => {
         if (btnReject) btnReject.onclick = () => reviewClaim(c, 'reject', btnReject);
     }
 
-    // Send an approve/reject decision to the backend, then refresh the page.
+    // Send an approve/reject decision to the backend — no popups.
     async function reviewClaim(c, action, btn) {
         const body = { claim_number: c.claim_number, action: action };
-
         if (action === 'approve') {
-            const def = (c.claim_amount != null ? c.claim_amount : c.sum_insured) || '';
-            const input = prompt('Approve claim ' + c.claim_number + '\nEnter the approved claim amount (₹):', def);
-            if (input === null) return; // cancelled
-            const amt = Number(String(input).replace(/[^0-9.]/g, ''));
-            if (isNaN(amt) || amt <= 0) { alert('Please enter a valid amount.'); return; }
-            body.claim_amount = amt;
-        } else {
-            if (!confirm('Reject claim ' + c.claim_number + '?\nThis submits your review decision to the backend.')) return;
+            const amt = (c.claim_amount != null) ? c.claim_amount : c.sum_insured;
+            if (amt != null) body.claim_amount = amt;
         }
 
-        // Once one option is chosen, disable BOTH buttons so the other can't
-        // be clicked while the decision is being submitted.
+        // Clicking one option disables both while the decision submits.
         const btnApprove = document.getElementById('btnClaimApprove');
         const btnReject = document.getElementById('btnClaimReject');
         const original = btn.textContent;
@@ -221,24 +213,24 @@ document.addEventListener('DOMContentLoaded', () => {
         if (btnReject) btnReject.disabled = true;
         btn.textContent = 'Please wait…';
 
-        const reEnable = () => {
+        const reEnable = (label) => {
             if (btnApprove) btnApprove.disabled = false;
             if (btnReject) btnReject.disabled = false;
-            btn.textContent = original;
+            btn.textContent = label || original;
+            if (label) setTimeout(() => { btn.textContent = original; }, 2500);
         };
 
         try {
             const res = await AjahFiAPI.post('/coordinator/review_claim', body);
             if (res && res.status === 'success') {
-                alert('Claim ' + (action === 'approve' ? 'approved' : 'rejected') + ' successfully.');
-                loadClaim(); // refresh with the new state (buttons reset from new data)
+                loadClaim(); // refresh — the updated claim status is the feedback
             } else {
-                alert('Could not ' + action + ' claim: ' + ((res && res.reason) || 'unknown error'));
-                reEnable();
+                console.warn('review_claim failed:', res && res.reason);
+                reEnable('Failed');
             }
         } catch (err) {
-            alert('Could not ' + action + ' claim: ' + err.message);
-            reEnable();
+            console.warn('review_claim error:', err.message);
+            reEnable('Failed');
         }
     }
 
