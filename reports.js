@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initial load
     renderChart('7');
 
-    // --- Live report KPIs from backend (/coordinator/reports) ---
+    // --- Live report KPIs from backend (/coordinator/dashboard) ---
     function money(n) {
         if (n === null || n === undefined || isNaN(n)) return '—';
         return '₹ ' + Number(n).toLocaleString('en-IN');
@@ -109,8 +109,8 @@ document.addEventListener('DOMContentLoaded', () => {
     async function loadReports() {
         if (!window.AjahFiAPI) return;
         try {
-            const r = await AjahFiAPI.get('/coordinator/reports');
-            if (!r) return;
+            const d = await AjahFiAPI.get('/coordinator/dashboard');
+            if (!d) return;
             const cards = document.querySelectorAll('.farmers-stat-card');
             const put = (i, label, value) => {
                 if (!cards[i]) return;
@@ -119,10 +119,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (lbl && label) lbl.textContent = label;
                 if (val) val.textContent = value;
             };
-            put(0, 'Total Enrollments', num(r.total_enrollments));
-            put(1, 'Claims Filed', num(r.total_claims_filed));
-            put(2, 'Claims Paid', money(r.total_claims_paid));
-            put(3, 'Total Premium Collection', money(r.total_premium));
+            put(0, 'Active Policies', num(d.active_policies));
+            put(1, 'Total Claims', num(d.total_claims));
+            put(2, 'Today Premium Collection', money(d.range_premium));
+            put(3, 'Total Premium Collection', money(d.total_premium));
         } catch (err) {
             console.warn('Could not load reports:', err.message);
         }
