@@ -144,14 +144,33 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
     }
 
-    // --- Build a farmer accordion card ---
-    function createAccordionCard(group, openByDefault) {
+    // --- Goat list pagination (per farmer, 5 goats per page) ---
+    const GOATS_PER_PAGE = 5;
+    let goatGroups = [];
+
+    function goatRowsHtml(goats, page) {
+        const start = page * GOATS_PER_PAGE;
+        return goats.slice(start, start + GOATS_PER_PAGE).map(createGoatRowHtml).join('');
+    }
+    function goatPagerHtml(idx, page, total) {
+        const pages = Math.ceil(total / GOATS_PER_PAGE);
+        if (pages <= 1) return '';
+        const btn = (p, label, disabled, active) =>
+            '<button type="button" class="goat-page-btn' + (active ? ' active' : '') + '" data-idx="' + idx + '" data-page="' + p + '"' + (disabled ? ' disabled' : '') +
+            ' style="min-width:32px;height:32px;border-radius:8px;border:1px solid var(--border-color);background:' + (active ? 'var(--brand-primary)' : '#fff') +
+            ';color:' + (active ? '#fff' : 'var(--text-main)') + ';font-size:13px;font-weight:600;cursor:' + (disabled ? 'default' : 'pointer') + ';opacity:' + (disabled ? '0.45' : '1') + ';">' + label + '</button>';
+        let html = '<div class="goat-pagination" style="display:flex;justify-content:center;align-items:center;gap:6px;padding:14px 8px;flex-wrap:wrap;">';
+        html += btn(page - 1, '<i class="fa-solid fa-chevron-left" style="font-size:10px;"></i>', page === 0, false);
+        for (let p = 0; p < pages; p++) html += btn(p, (p + 1), false, p === page);
+        html += btn(page + 1, '<i class="fa-solid fa-chevron-right" style="font-size:10px;"></i>', page >= pages - 1, false);
+        html += '</div>';
+        return html;
+    }
+
+    // --- Build a farmer accordion card (collapsed by default; goats paginated) ---
+    function createAccordionCard(group, idx) {
         const total = group.goats.length;
         const active = group.goats.filter(g => String(g.status).toLowerCase() === 'active').length;
-        const rows = group.goats.map(createGoatRowHtml).join('');
-        const contentClass = openByDefault ? 'accordion-content active' : 'accordion-content';
-        const contentStyle = openByDefault ? '' : 'style="display: none;"';
-        const chevron = openByDefault ? 'fa-chevron-up' : 'fa-chevron-down';
         const avatar = group.photo || 'goat_thumbnail.png';
 
         return `
@@ -176,11 +195,12 @@ document.addEventListener('DOMContentLoaded', () => {
                             <span style="font-size: 10px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Active</span>
                             <h4 style="font-size: 18px; font-weight: 700; color: #16a34a; margin: 2px 0 0 0;">${active}</h4>
                         </div>
-                        <i class="fa-solid ${chevron} accordion-chevron" style="color: var(--text-muted); font-size: 12px; transition: transform 0.2s;"></i>
+                        <i class="fa-solid fa-chevron-down accordion-chevron" style="color: var(--text-muted); font-size: 12px; transition: transform 0.2s;"></i>
                     </div>
                 </div>
-                <div class="${contentClass}" ${contentStyle}>
-                    ${rows}
+                <div class="accordion-content" style="display: none;">
+                    <div class="goat-rows" id="goatRows-${idx}">${goatRowsHtml(group.goats, 0)}</div>
+                    <div class="goat-pager" id="goatPager-${idx}">${goatPagerHtml(idx, 0, total)}</div>
                 </div>
             </div>
         `;
@@ -224,8 +244,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 groups[g.farmer].goats.push(g);
             });
 
-            accordionContainer.innerHTML = order
-                .map((name, i) => createAccordionCard(groups[name], i === 0))
+            goatGroups = order.map(name => groups[name]);
+            accordionContainer.innerHTML = goatGroups
+                .map((group, i) => createAccordionCard(group, i))
                 .join('');
 
             // Update the top summary stat cards
@@ -248,6 +269,22 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Row Card Navigation Event Delegation ---
     if (accordionContainer) {
         accordionContainer.addEventListener('click', (e) => {
+            // Goat-list pagination inside a farmer accordion
+            const pageBtn = e.target.closest('.goat-page-btn');
+            if (pageBtn) {
+                e.stopPropagation();
+                if (pageBtn.disabled) return;
+                const idx = parseInt(pageBtn.getAttribute('data-idx'), 10);
+                const page = parseInt(pageBtn.getAttribute('data-page'), 10);
+                const group = goatGroups[idx];
+                if (!group) return;
+                const rowsEl = document.getElementById('goatRows-' + idx);
+                const pagerEl = document.getElementById('goatPager-' + idx);
+                if (rowsEl) rowsEl.innerHTML = goatRowsHtml(group.goats, page);
+                if (pagerEl) pagerEl.innerHTML = goatPagerHtml(idx, page, group.goats.length);
+                return;
+            }
+
             const rowCard = e.target.closest('.goat-row-card');
             if (rowCard) {
                 if (e.target.closest('a') || e.target.closest('button')) return;
