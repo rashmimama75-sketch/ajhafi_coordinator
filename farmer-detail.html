@@ -42,7 +42,7 @@
                     <span>Suraksha Didis</span>
                 </a>
                 <a href="goats.html" class="nav-item" id="navGoats">
-                    <i class="fa-solid fa-cow"></i>
+                    <img src="goat_icon.png" class="goat-nav-icon" alt="Goat">
                     <span>Goats</span>
                 </a>
                 <a href="claims.html" class="nav-item" id="navClaims">
@@ -159,6 +159,17 @@
 
             <!-- Farmer Profile Details Dashboard Body -->
             <div class="dashboard-body" style="gap: 16px;">
+                <!-- Page Title Bar with Back Button -->
+                <div class="page-title-bar" style="display: flex; align-items: center; gap: 12px; padding: 4px 0 8px 0;">
+                    <button onclick="history.back()" class="btn-back" id="btnBackFarmerDetail" aria-label="Go back" style="display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: 10px; border: 1.5px solid var(--border-color); background: var(--bg-card); color: var(--text-secondary); cursor: pointer; font-size: 15px; transition: all 0.2s ease; box-shadow: 0 1px 4px rgba(0,0,0,0.06);" onmouseover="this.style.background='var(--color-approved)'; this.style.color='#fff'; this.style.borderColor='var(--color-approved)'; this.style.boxShadow='0 4px 12px rgba(34,197,94,0.25)';" onmouseout="this.style.background='var(--bg-card)'; this.style.color='var(--text-secondary)'; this.style.borderColor='var(--border-color)'; this.style.boxShadow='0 1px 4px rgba(0,0,0,0.06)';">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                    <div style="display: flex; flex-direction: column; gap: 1px;">
+                        <h2 style="margin: 0; font-size: 18px; font-weight: 700; color: var(--text-primary); letter-spacing: -0.3px;">Farmer Details</h2>
+                        <span style="font-size: 12px; color: var(--text-muted); font-weight: 400;">View complete profile and farm information</span>
+                    </div>
+                </div>
+
                 <!-- Farmer Profile Card Header -->
                 <section class="profile-header-section">
                     <div class="profile-header-card">
@@ -251,7 +262,7 @@
                         <div class="profile-column">
                             <div class="detail-card">
                                 <div class="detail-card-header">
-                                    <i class="fa-solid fa-cow text-green"></i>
+                                    <img src="goat_icon.png" class="goat-nav-icon text-green" alt="Goat">
                                     <h3>Goat Summary</h3>
                                 </div>
                                 <div class="detail-card-body goat-summary-boxes-grid">

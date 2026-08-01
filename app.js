@@ -339,9 +339,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <i class="fa-solid fa-chevron-right" style="font-size: 8px;"></i>
                     </button>
                 </td>
-                <td>
-                    <button class="btn-more"><i class="fa-solid fa-ellipsis-vertical"></i></button>
-                </td>
+
             `;
             claimsTableBody.appendChild(tr);
         });

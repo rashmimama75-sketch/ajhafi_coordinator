@@ -146,6 +146,52 @@ h4,
     justify-content: center;
 }
 
+.goat-nav-icon {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    vertical-align: middle;
+    /* Match --text-muted: hsl(220, 12%, 50%) gray used by other FA nav icons */
+    filter: brightness(0) saturate(100%) invert(33%) sepia(9%) saturate(568%) hue-rotate(182deg) brightness(94%) contrast(89%);
+    transition: filter var(--transition-fast);
+}
+
+.nav-item:hover .goat-nav-icon,
+.nav-item.active .goat-nav-icon {
+    filter: brightness(0) saturate(100%) invert(27%) sepia(87%) saturate(516%) hue-rotate(100deg) brightness(95%) contrast(92%);
+}
+
+.bottom-nav-item .goat-nav-icon {
+    width: 18px;
+    height: 18px;
+}
+
+.bottom-nav-item.active .goat-nav-icon {
+    filter: brightness(0) saturate(100%) invert(27%) sepia(87%) saturate(516%) hue-rotate(100deg) brightness(95%) contrast(92%);
+}
+
+/* Goat icon in card headers and content areas */
+.detail-card-header .goat-nav-icon {
+    width: 18px;
+    height: 18px;
+}
+
+.detail-card-header .goat-nav-icon.text-green {
+    filter: brightness(0) saturate(100%) invert(27%) sepia(87%) saturate(516%) hue-rotate(100deg) brightness(95%) contrast(92%);
+}
+
+.notif-icon .goat-nav-icon {
+    width: 16px;
+    height: 16px;
+    filter: inherit;
+}
+
+.goat-summary-box .goat-nav-icon,
+.report-metric-card .goat-nav-icon {
+    width: 22px;
+    height: 22px;
+}
+
 .nav-item:hover {
     color: var(--brand-primary);
     background-color: var(--brand-primary-light);
@@ -1499,9 +1545,20 @@ h4,
 }
 
 /* --- Farmers Page Styles --- */
-.farmers-banner {
-    background-color: #ffffff;
-    min-height: 180px;
+.farmers-hero-card,
+.didis-hero-card {
+    width: 100%;
+    margin-bottom: -8px;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+}
+
+.hero-banner-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: var(--radius-lg);
 }
 
 .farmers-banner::before {
@@ -1510,11 +1567,10 @@ h4,
     inset: 0;
     background-image: url('banner_farmers.png');
     background-repeat: no-repeat;
-    background-size: auto 320%;
-    background-position: left 18%;
-    transform: scaleX(-1);
-    -webkit-mask-image: linear-gradient(90deg, #000 12%, transparent 55%);
-    mask-image: linear-gradient(90deg, #000 12%, transparent 55%);
+    background-size: auto 280%;
+    background-position: right 25%;
+    -webkit-mask-image: linear-gradient(270deg, #000 15%, transparent 60%);
+    mask-image: linear-gradient(270deg, #000 15%, transparent 60%);
     z-index: 1;
 }
 
@@ -1522,7 +1578,7 @@ h4,
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(90deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.5) 30%, rgba(255, 255, 255, 0) 52%);
+    background: linear-gradient(270deg, rgba(255, 255, 255, 0) 20%, rgba(255, 255, 255, 0.5) 45%, rgba(255, 255, 255, 0.95) 65%);
     z-index: 2;
 }
 
@@ -1539,6 +1595,40 @@ h4,
 .farmers-banner .banner-subtitle {
     color: var(--text-main);
     font-weight: 500;
+}
+
+.farmers-banner .banner-divider {
+    width: 40px;
+    height: 3px;
+    background-color: var(--brand-primary);
+    border-radius: 2px;
+    margin: 8px 0;
+}
+
+.farmers-banner .banner-tagline {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.farmers-banner .banner-tagline-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: var(--brand-primary-light);
+    color: var(--brand-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+}
+
+.farmers-banner .banner-tagline span {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-main);
+    line-height: 1.4;
 }
 
 .farmers-stats-grid {
@@ -2502,7 +2592,7 @@ h4,
 .legend-badge {
     width: 20px;
     height: 20px;
-    border-radius: var(--radius-sm);
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -4351,7 +4441,10 @@ h4,
 
 /* Goat Header Card Layout */
 .goat-detail-header-card {
-    background: linear-gradient(135deg, #eefaf2 0%, #f4fdf8 100%);
+    background-image: url('banner_goat_details.png');
+    background-size: cover;
+    background-position: right center;
+    background-repeat: no-repeat;
     border: 1px solid var(--border-color);
     border-radius: var(--radius-lg);
     padding: 28px;
@@ -4362,6 +4455,7 @@ h4,
     overflow: hidden;
     margin-bottom: 0;
     box-shadow: var(--shadow-sm);
+    min-height: 180px;
 }
 
 .goat-detail-header-card::before {
