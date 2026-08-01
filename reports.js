@@ -131,4 +131,41 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     loadReports();
+
+    // --- OpenStreetMap (Leaflet) with active-goat locations ---
+    function initReportsMap() {
+        const el = document.getElementById('reportsMap');
+        if (!el || typeof L === 'undefined') return;
+
+        const map = L.map(el, { scrollWheelZoom: true }).setView([20.5, 82.5], 6);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+        setTimeout(function () { map.invalidateSize(); }, 250);
+
+        if (!window.AjahFiAPI) return;
+        AjahFiAPI.get('/coordinator/goat_locations').then(function (locs) {
+            locs = Array.isArray(locs) ? locs : [];
+            const markers = [];
+            locs.forEach(function (loc) {
+                if (loc.lat == null || loc.lng == null) return;
+                const count = loc.active_goats || 0;
+                const icon = L.divIcon({
+                    className: 'goat-marker',
+                    html: '<div style="background:#16a34a;color:#fff;border-radius:50%;width:36px;height:36px;' +
+                        'display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;' +
+                        'border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,0.35);">' + count + '</div>',
+                    iconSize: [36, 36], iconAnchor: [18, 18]
+                });
+                const m = L.marker([loc.lat, loc.lng], { icon: icon }).addTo(map);
+                m.bindPopup('<strong>' + (loc.area || 'Area') + '</strong><br>Active Goats: ' + count);
+                markers.push(m);
+            });
+            if (markers.length) {
+                map.fitBounds(L.featureGroup(markers).getBounds().pad(0.4), { maxZoom: 10 });
+            }
+        }).catch(function (err) { console.warn('goat locations load failed:', err.message); });
+    }
+    initReportsMap();
 });
