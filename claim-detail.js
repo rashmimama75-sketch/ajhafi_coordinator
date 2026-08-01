@@ -235,16 +235,65 @@ document.addEventListener('DOMContentLoaded', () => {
         if (Array.isArray(c.stages) && c.stages.length) setStepperFromStages(c.stages);
         else setStepper(st.label);
 
-        // Action buttons (onclick assignment so re-renders don't stack handlers)
+        // PDF button
         const btnPDF = document.getElementById('btnDownloadPDF');
         if (btnPDF) btnPDF.onclick = () => alert('Generating PDF receipt for claim: ' + c.claim_number);
-        const btnApprove = document.getElementById('btnClaimApprove');
-        if (btnApprove) btnApprove.onclick = () => reviewClaim(c, 'approve', btnApprove);
-        const btnReject = document.getElementById('btnClaimReject');
-        if (btnReject) btnReject.onclick = () => reviewClaim(c, 'reject', btnReject);
+
+        // Approve/Reject are only active while the claim is at coordinator review
+        updateActionButtons(c);
     }
 
-    // Send an approve/reject decision to the backend — no popups.
+    // Enable Approve/Reject only when the claim is awaiting coordinator review.
+    // Once acted on (here or from the app) the claim moves on, so both buttons
+    // stay disabled and the current stage is shown.
+    function updateActionButtons(c) {
+        const btnApprove = document.getElementById('btnClaimApprove');
+        const btnReject = document.getElementById('btnClaimReject');
+        const row = document.querySelector('.claim-action-buttons-row');
+        if (!btnApprove || !btnReject) return;
+
+        // Restore default labels (in case one showed "Please wait…")
+        const setLabel = (btn, text) => { const s = btn.querySelector('span'); if (s) s.textContent = text; else btn.textContent = text; };
+        setLabel(btnApprove, 'Approved');
+        setLabel(btnReject, 'Reject');
+
+        const stages = Array.isArray(c.stages) ? c.stages : [];
+        const currentStage = stages.find(s => String(s.status).toLowerCase() === 'current');
+        const stageKey = String(c.stage || (currentStage && currentStage.key) || '').toLowerCase();
+        const reviewable = stageKey === 'coordinator_review';
+
+        const setDisabled = (btn, disabled) => {
+            btn.disabled = disabled;
+            btn.style.opacity = disabled ? '0.5' : '';
+            btn.style.cursor = disabled ? 'not-allowed' : '';
+            btn.style.pointerEvents = disabled ? 'none' : '';
+        };
+
+        let msg = document.getElementById('claimActionStatus');
+        if (!msg && row) {
+            msg = document.createElement('div');
+            msg.id = 'claimActionStatus';
+            msg.style.cssText = 'flex-basis:100%;width:100%;text-align:center;margin-top:10px;padding:10px 12px;font-size:13px;font-weight:600;color:var(--text-muted);background:#f8fafc;border-radius:10px;';
+            row.appendChild(msg);
+        }
+
+        if (reviewable) {
+            setDisabled(btnApprove, false);
+            setDisabled(btnReject, false);
+            btnApprove.onclick = () => reviewClaim(c, 'approve', btnApprove);
+            btnReject.onclick = () => reviewClaim(c, 'reject', btnReject);
+            if (msg) msg.style.display = 'none';
+        } else {
+            setDisabled(btnApprove, true);
+            setDisabled(btnReject, true);
+            btnApprove.onclick = null;
+            btnReject.onclick = null;
+            const label = currentStage ? currentStage.label : mapStatus(c.status).label;
+            if (msg) { msg.textContent = 'Current stage: ' + label; msg.style.display = 'block'; }
+        }
+    }
+
+    // Send an approve/reject decision (one-time), then refresh the true state.
     async function reviewClaim(c, action, btn) {
         const body = { claim_number: c.claim_number, action: action };
         if (action === 'approve') {
@@ -252,32 +301,23 @@ document.addEventListener('DOMContentLoaded', () => {
             if (amt != null) body.claim_amount = amt;
         }
 
-        // Clicking one option disables both while the decision submits.
+        // Lock BOTH buttons immediately so the action can't be repeated.
         const btnApprove = document.getElementById('btnClaimApprove');
         const btnReject = document.getElementById('btnClaimReject');
-        const original = btn.textContent;
-        if (btnApprove) btnApprove.disabled = true;
-        if (btnReject) btnReject.disabled = true;
-        btn.textContent = 'Please wait…';
-
-        const reEnable = (label) => {
-            if (btnApprove) btnApprove.disabled = false;
-            if (btnReject) btnReject.disabled = false;
-            btn.textContent = label || original;
-            if (label) setTimeout(() => { btn.textContent = original; }, 2500);
-        };
+        [btnApprove, btnReject].forEach(b => {
+            if (b) { b.disabled = true; b.style.pointerEvents = 'none'; b.style.opacity = '0.5'; }
+        });
+        const span = btn.querySelector('span');
+        if (span) span.textContent = 'Please wait…';
 
         try {
-            const res = await AjahFiAPI.post('/coordinator/review_claim', body);
-            if (res && res.status === 'success') {
-                loadClaim(); // refresh — the updated claim status is the feedback
-            } else {
-                console.warn('review_claim failed:', res && res.reason);
-                reEnable('Failed');
-            }
+            await AjahFiAPI.post('/coordinator/review_claim', body);
         } catch (err) {
             console.warn('review_claim error:', err.message);
-            reEnable('Failed');
+        } finally {
+            // Reload so the status badge, progress stepper and buttons all
+            // reflect the claim's new stage (buttons stay disabled once past review).
+            loadClaim();
         }
     }
 
