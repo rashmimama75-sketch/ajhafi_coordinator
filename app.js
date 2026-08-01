@@ -402,25 +402,8 @@ document.addEventListener('DOMContentLoaded', () => {
         viewBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 const claimId = btn.getAttribute('data-id');
-                selectedClaim = claimsData.find(c => c.id === claimId);
-                
-                if (selectedClaim) {
-                    modalClaimId.textContent = selectedClaim.id;
-                    modalGoatId.textContent = `GOAT ID: ${selectedClaim.goatId}`;
-                    modalFarmerName.textContent = selectedClaim.farmer;
-                    modalDateOfDeath.textContent = selectedClaim.dod;
-                    
-                    // Style status badge in modal
-                    let statusClass = 'pending';
-                    if (selectedClaim.status === 'Under Review') statusClass = 'under-review';
-                    if (selectedClaim.status === 'Approved') statusClass = 'approved';
-                    if (selectedClaim.status === 'Rejected') statusClass = 'rejected';
-                    
-                    modalStatusBadge.textContent = selectedClaim.status;
-                    modalStatusBadge.className = `badge ${statusClass}`;
-                    
-                    claimModal.classList.add('active');
-                }
+                // Open the full claim detail page instead of the modal.
+                window.location.href = 'claim-detail.html?id=' + encodeURIComponent(claimId);
             });
         });
     }
