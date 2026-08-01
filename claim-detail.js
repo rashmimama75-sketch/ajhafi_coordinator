@@ -212,23 +212,33 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!confirm('Reject claim ' + c.claim_number + '?\nThis submits your review decision to the backend.')) return;
         }
 
+        // Once one option is chosen, disable BOTH buttons so the other can't
+        // be clicked while the decision is being submitted.
+        const btnApprove = document.getElementById('btnClaimApprove');
+        const btnReject = document.getElementById('btnClaimReject');
         const original = btn.textContent;
-        btn.disabled = true;
+        if (btnApprove) btnApprove.disabled = true;
+        if (btnReject) btnReject.disabled = true;
         btn.textContent = 'Please wait…';
+
+        const reEnable = () => {
+            if (btnApprove) btnApprove.disabled = false;
+            if (btnReject) btnReject.disabled = false;
+            btn.textContent = original;
+        };
+
         try {
             const res = await AjahFiAPI.post('/coordinator/review_claim', body);
             if (res && res.status === 'success') {
                 alert('Claim ' + (action === 'approve' ? 'approved' : 'rejected') + ' successfully.');
-                loadClaim(); // refresh with the new state
+                loadClaim(); // refresh with the new state (buttons reset from new data)
             } else {
                 alert('Could not ' + action + ' claim: ' + ((res && res.reason) || 'unknown error'));
-                btn.disabled = false;
-                btn.textContent = original;
+                reEnable();
             }
         } catch (err) {
             alert('Could not ' + action + ' claim: ' + err.message);
-            btn.disabled = false;
-            btn.textContent = original;
+            reEnable();
         }
     }
 
