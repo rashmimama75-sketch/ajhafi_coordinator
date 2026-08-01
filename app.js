@@ -26,6 +26,46 @@ document.addEventListener('DOMContentLoaded', () => {
     let filteredClaims = [...claimsData];
     let selectedClaim = null;
 
+    // --- Recent claims from backend (/coordinator/claims) ---
+    function fmtDate(iso) {
+        if (!iso) return '—';
+        const d = new Date(String(iso).replace(' ', 'T'));
+        if (isNaN(d)) return String(iso);
+        return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+    }
+    function mapClaimStatus(cat, status) {
+        const k = String(cat || status || '').toLowerCase();
+        if (k === 'approved' || k === 'claimed' || k === 'paid') return 'Approved';
+        if (k === 'rejected') return 'Rejected';
+        if (k === 'hold' || k === 'under_review' || k === 'under review' || k === 'review') return 'Under Review';
+        if (k === 'pending') return 'Pending';
+        return 'Pending';
+    }
+    function mapDashClaim(c) {
+        return {
+            id: c.claim_number,
+            goatId: c.ear_tag_number || '—',
+            farmer: (c.farmer || '').trim() || '—',
+            dod: fmtDate(c.date_of_death),
+            status: mapClaimStatus(c.category, c.status),
+            amount: (c.claim_amount != null) ? ('₹' + Number(c.claim_amount).toLocaleString('en-IN')) : '—',
+            photo: (window.AjahFiAPI ? AjahFiAPI.mediaUrl(c.photo) : (c.photo || ''))
+        };
+    }
+    async function loadRecentClaims() {
+        if (!window.AjahFiAPI || !claimsTableBody) return;
+        claimsTableBody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--text-muted);padding:30px;">Loading claims…</td></tr>';
+        try {
+            const data = await AjahFiAPI.get('/coordinator/claims');
+            claimsData = ((data && data.claims) || []).map(mapDashClaim);
+            filteredClaims = [...claimsData];
+            currentPage = 1;
+            renderTable();
+        } catch (err) {
+            claimsTableBody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--color-rejected);padding:30px;">Could not load claims: ' + err.message + '</td></tr>';
+        }
+    }
+
     // --- DOM Elements ---
     const sidebar = document.getElementById('appSidebar');
     const sidebarToggleBtn = document.getElementById('sidebarToggle');
@@ -279,7 +319,7 @@ document.addEventListener('DOMContentLoaded', () => {
             tr.innerHTML = `
                 <td>
                     <div class="goat-profile-cell">
-                        <img src="goat_thumbnail.png" alt="Goat profile image" class="table-goat-img">
+                        <img src="${claim.photo || 'goat_thumbnail.png'}" onerror="this.onerror=null;this.src='goat_thumbnail.png';" alt="Goat profile image" class="table-goat-img">
                         <div class="goat-info">
                             <span class="goat-id-lbl">GOAT ID:</span>
                             <span class="goat-id-val">${claim.goatId}</span>
@@ -445,8 +485,8 @@ document.addEventListener('DOMContentLoaded', () => {
         alert("Contacting Support. A support representative will get back to you shortly.");
     });
 
-    // Initialize View
-    renderTable();
+    // Initialize View (recent claims from backend)
+    loadRecentClaims();
 
     // --- Live dashboard stats from backend (/coordinator/dashboard) ---
     function fmtNum(n) {
