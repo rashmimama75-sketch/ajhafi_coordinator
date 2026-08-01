@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const arr = [];
         for (let i = 0; i < buckets; i++) {
-            arr.push({ active: 0, claims: 0, reports: 0, endDate: new Date(now.getTime() - i * span * 86400000) });
+            arr.push({ active: 0, claims: 0, enrollments: 0, endDate: new Date(now.getTime() - i * span * 86400000) });
         }
         activities.forEach(a => {
             const t = new Date(String(a.time || '').replace(' ', 'T'));
@@ -29,15 +29,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const b = Math.floor(daysAgo / span);
             if (b >= buckets) return;
             const type = String(a.type || '').toLowerCase();
-            if (type === 'enrollment') arr[b].active++;
+            if (type === 'enrollment') { arr[b].active++; arr[b].enrollments++; }
             else if (type === 'claim') arr[b].claims++;
-            else arr[b].reports++;
         });
         arr.reverse(); // oldest bucket on the left
         const fmtDay = d => d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' });
         const fmtMon = d => d.toLocaleDateString('en-GB', { month: 'short' });
         return arr.map(b => ({
-            active: b.active, claims: b.claims, reports: b.reports,
+            active: b.active, claims: b.claims, enrollments: b.enrollments,
             label: (range === '365') ? fmtMon(b.endDate) : fmtDay(b.endDate)
         }));
     }
@@ -55,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!barChartContainer) return;
         const data = buildChartData(range);
         let max = 0;
-        data.forEach(d => { max = Math.max(max, d.active, d.claims, d.reports); });
+        data.forEach(d => { max = Math.max(max, d.active, d.claims, d.enrollments); });
         const niceMax = niceCeil(max);
         updateChartAxis(niceMax);
         const h = v => (niceMax > 0 ? Math.round(v / niceMax * 100) : 0);
@@ -63,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
             '<div class="chart-bar-group"><div class="bar-subgroup">' +
             '<div class="single-bar bar-green" style="height:' + h(item.active) + '%;" title="Active Policies: ' + item.active + '"></div>' +
             '<div class="single-bar bar-purple" style="height:' + h(item.claims) + '%;" title="Claims: ' + item.claims + '"></div>' +
-            '<div class="single-bar bar-blue" style="height:' + h(item.reports) + '%;" title="Reports: ' + item.reports + '"></div>' +
+            '<div class="single-bar bar-blue" style="height:' + h(item.enrollments) + '%;" title="Enrollments: ' + item.enrollments + '"></div>' +
             '</div><span class="bar-x-label">' + item.label + '</span></div>'
         )).join('');
     }
