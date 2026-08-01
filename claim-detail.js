@@ -68,6 +68,52 @@ document.addEventListener('DOMContentLoaded', () => {
         }).join('');
     }
 
+    // Drive the progress stepper from the backend `stages` array (the real workflow).
+    function setStepperFromStages(stages) {
+        const line = document.getElementById('stepperProgressLine');
+        if (!Array.isArray(stages) || !stages.length) return;
+        const total = stages.length;
+
+        let filledIndex = -1, currentIndex = -1, rejectedIndex = -1;
+        stages.forEach((s, i) => {
+            const st = String(s.status || '').toLowerCase();
+            if (st === 'completed') filledIndex = i;
+            if (st === 'current') currentIndex = i;
+            if (st === 'rejected') rejectedIndex = i;
+        });
+        const targetIndex = rejectedIndex >= 0 ? rejectedIndex : (currentIndex >= 0 ? currentIndex : filledIndex);
+        if (line) line.style.width = (total > 1 ? Math.max(0, targetIndex) / (total - 1) * 100 : 0) + '%';
+
+        stages.forEach((s, i) => {
+            const stepEl = document.getElementById('step' + (i + 1));
+            if (!stepEl) return;
+            const circle = stepEl.querySelector('.claim-step-circle');
+            const statusEl = stepEl.querySelector('.claim-step-status');
+            const st = String(s.status || '').toLowerCase();
+            if (circle) { circle.style.borderColor = ''; circle.style.color = ''; }
+            if (statusEl) statusEl.style.color = '';
+
+            if (st === 'completed') {
+                stepEl.className = 'claim-stepper-step completed';
+                if (circle) circle.innerHTML = '<i class="fa-solid fa-check"></i>';
+                if (statusEl) statusEl.textContent = s.at ? fmtDate(s.at) : 'Completed';
+            } else if (st === 'current') {
+                stepEl.className = 'claim-stepper-step active';
+                if (circle) circle.textContent = (i + 1);
+                if (statusEl) { statusEl.textContent = 'In Progress'; statusEl.style.color = 'var(--brand-primary)'; }
+            } else if (st === 'rejected') {
+                stepEl.className = 'claim-stepper-step';
+                if (circle) { circle.innerHTML = '<i class="fa-solid fa-xmark"></i>'; circle.style.borderColor = 'var(--color-rejected)'; circle.style.color = 'var(--color-rejected)'; }
+                if (statusEl) { statusEl.textContent = 'Rejected'; statusEl.style.color = 'var(--color-rejected)'; }
+            } else {
+                stepEl.className = 'claim-stepper-step pending';
+                if (circle) circle.textContent = (i + 1);
+                if (statusEl) statusEl.textContent = 'Pending';
+            }
+        });
+    }
+
+    // Fallback stepper (used only if the backend didn't send `stages`).
     function setStepper(statusLabel) {
         const stepperProgressLine = document.getElementById('stepperProgressLine');
         const step3 = document.getElementById('step3');
@@ -186,7 +232,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         renderVaccinations(c.vaccinations);
         renderEvidence(c.evidence);
-        setStepper(st.label);
+        if (Array.isArray(c.stages) && c.stages.length) setStepperFromStages(c.stages);
+        else setStepper(st.label);
 
         // Action buttons (onclick assignment so re-renders don't stack handlers)
         const btnPDF = document.getElementById('btnDownloadPDF');
