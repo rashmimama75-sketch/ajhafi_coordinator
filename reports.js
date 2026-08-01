@@ -28,13 +28,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const niceMax = niceCeil(max);
         updateChartAxis(niceMax);
         const h = v => (niceMax > 0 ? Math.round((+v || 0) / niceMax * 100) : 0);
+        const valSpan = v => (v > 0
+            ? '<span class="bar-value" style="position:absolute;top:-15px;left:50%;transform:translateX(-50%);font-size:9px;font-weight:700;color:#334155;white-space:nowrap;">' + v + '</span>'
+            : '');
         barChartContainer.innerHTML = days.map(d => {
             const ap = +d.active_policies || 0, cl = +d.claims || 0, en = +d.enrollments || 0;
             const label = d.label || d.date || '';
             return '<div class="chart-bar-group"><div class="bar-subgroup">' +
-                '<div class="single-bar bar-green" style="height:' + h(ap) + '%;" title="Active Policies: ' + ap + '"></div>' +
-                '<div class="single-bar bar-purple" style="height:' + h(cl) + '%;" title="Claims: ' + cl + '"></div>' +
-                '<div class="single-bar bar-blue" style="height:' + h(en) + '%;" title="Enrollments: ' + en + '"></div>' +
+                '<div class="single-bar bar-green" style="height:' + h(ap) + '%;position:relative;" title="Active Policies: ' + ap + '">' + valSpan(ap) + '</div>' +
+                '<div class="single-bar bar-purple" style="height:' + h(cl) + '%;position:relative;" title="Claims: ' + cl + '">' + valSpan(cl) + '</div>' +
+                '<div class="single-bar bar-blue" style="height:' + h(en) + '%;position:relative;" title="Enrollments: ' + en + '">' + valSpan(en) + '</div>' +
                 '</div><span class="bar-x-label">' + label + '</span></div>';
         }).join('');
     }
