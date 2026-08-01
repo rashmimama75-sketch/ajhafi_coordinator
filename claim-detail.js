@@ -163,6 +163,13 @@ document.addEventListener('DOMContentLoaded', () => {
         setText('lblReportedDate', fmtDate(c.claim_reported_on));
         setText('lblReportedBy', (c.reported_by || c.farmer || '').trim());
 
+        // Goat photo in the Goat Information card
+        const goatImg = document.getElementById('goatAvatar');
+        if (goatImg) {
+            goatImg.src = goat.photo ? (window.AjahFiAPI ? AjahFiAPI.mediaUrl(goat.photo) : goat.photo) : 'goat_thumbnail.png';
+            goatImg.onerror = function () { this.onerror = null; this.src = 'goat_thumbnail.png'; };
+        }
+
         setText('lblGoatId', goat.ear_tag_number);
         setText('lblEarTag', goat.ear_tag_number);
         setText('lblBreed', goat.breed);
