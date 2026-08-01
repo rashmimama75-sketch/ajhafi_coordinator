@@ -1,28 +1,46 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // --- Mock Chart Data ---
-    const chartData = {
-        '7': [
-            { label: '16 May', active: 120, claims: 40, reports: 30, pctActive: 48, pctClaims: 16, pctReports: 12 },
-            { label: '17 May', active: 150, claims: 55, reports: 35, pctActive: 60, pctClaims: 22, pctReports: 14 },
-            { label: '18 May', active: 180, claims: 60, reports: 40, pctActive: 72, pctClaims: 24, pctReports: 16 },
-            { label: '19 May', active: 160, claims: 50, reports: 32, pctActive: 64, pctClaims: 20, pctReports: 12.8 },
-            { label: '20 May', active: 200, claims: 70, reports: 45, pctActive: 80, pctClaims: 28, pctReports: 18 },
-            { label: '21 May', active: 170, claims: 65, reports: 38, pctActive: 68, pctClaims: 26, pctReports: 15.2 },
-            { label: '22 May', active: 190, claims: 75, reports: 50, pctActive: 76, pctClaims: 30, pctReports: 20 }
-        ],
-        '30': [
-            { label: 'Week 1', active: 620, claims: 180, reports: 120, pctActive: 55, pctClaims: 20, pctReports: 15 },
-            { label: 'Week 2', active: 750, claims: 240, reports: 160, pctActive: 65, pctClaims: 26, pctReports: 18 },
-            { label: 'Week 3', active: 890, claims: 210, reports: 140, pctActive: 75, pctClaims: 22, pctReports: 16 },
-            { label: 'Week 4', active: 986, claims: 250, reports: 180, pctActive: 85, pctClaims: 28, pctReports: 20 }
-        ],
-        '365': [
-            { label: 'Q 1', active: 2400, claims: 650, reports: 400, pctActive: 60, pctClaims: 18, pctReports: 12 },
-            { label: 'Q 2', active: 3100, claims: 820, reports: 550, pctActive: 75, pctClaims: 22, pctReports: 15 },
-            { label: 'Q 3', active: 2800, claims: 720, reports: 480, pctActive: 70, pctClaims: 20, pctReports: 13.5 },
-            { label: 'Q 4', active: 3800, claims: 980, reports: 690, pctActive: 90, pctClaims: 26, pctReports: 18 }
-        ]
-    };
+    // --- Activity Overview chart data (aggregated from /coordinator/live_activity) ---
+    let activities = [];
+
+    function niceCeil(n) { return Math.max(5, Math.ceil((n || 0) / 5) * 5); }
+
+    function updateChartAxis(maxVal) {
+        const labels = document.querySelectorAll('.grid-axis-label');
+        const steps = [maxVal, maxVal * 0.8, maxVal * 0.6, maxVal * 0.4, maxVal * 0.2, 0];
+        labels.forEach((el, i) => { if (steps[i] != null) el.textContent = Math.round(steps[i]); });
+    }
+
+    function buildChartData(range) {
+        const now = new Date();
+        let buckets, span; // span = days per bucket
+        if (range === '30') { buckets = 6; span = 5; }
+        else if (range === '365') { buckets = 12; span = 30; }
+        else { buckets = 7; span = 1; }
+
+        const arr = [];
+        for (let i = 0; i < buckets; i++) {
+            arr.push({ active: 0, claims: 0, reports: 0, endDate: new Date(now.getTime() - i * span * 86400000) });
+        }
+        activities.forEach(a => {
+            const t = new Date(String(a.time || '').replace(' ', 'T'));
+            if (isNaN(t)) return;
+            const daysAgo = Math.floor((now - t) / 86400000);
+            if (daysAgo < 0) return;
+            const b = Math.floor(daysAgo / span);
+            if (b >= buckets) return;
+            const type = String(a.type || '').toLowerCase();
+            if (type === 'enrollment') arr[b].active++;
+            else if (type === 'claim') arr[b].claims++;
+            else arr[b].reports++;
+        });
+        arr.reverse(); // oldest bucket on the left
+        const fmtDay = d => d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' });
+        const fmtMon = d => d.toLocaleDateString('en-GB', { month: 'short' });
+        return arr.map(b => ({
+            active: b.active, claims: b.claims, reports: b.reports,
+            label: (range === '365') ? fmtMon(b.endDate) : fmtDay(b.endDate)
+        }));
+    }
 
     // --- State Management ---
     const sidebar = document.getElementById('appSidebar');
@@ -32,25 +50,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const profileBtn = document.getElementById('profileDropdownBtn');
     const barChartContainer = document.getElementById('barChartContainer');
 
-    // --- Render Chart Function ---
+    // --- Render Chart Function (heights scaled to the real data) ---
     function renderChart(range) {
         if (!barChartContainer) return;
-        barChartContainer.innerHTML = '';
-        
-        const data = chartData[range] || chartData['7'];
-        data.forEach(item => {
-            const barGroupHtml = `
-                <div class="chart-bar-group">
-                    <div class="bar-subgroup">
-                        <div class="single-bar bar-green" style="height: ${item.pctActive}%;" title="Active Policies: ${item.active}"></div>
-                        <div class="single-bar bar-purple" style="height: ${item.pctClaims}%;" title="Claims: ${item.claims}"></div>
-                        <div class="single-bar bar-blue" style="height: ${item.pctReports}%;" title="Reports: ${item.reports}"></div>
-                    </div>
-                    <span class="bar-x-label">${item.label}</span>
-                </div>
-            `;
-            barChartContainer.insertAdjacentHTML('beforeend', barGroupHtml);
-        });
+        const data = buildChartData(range);
+        let max = 0;
+        data.forEach(d => { max = Math.max(max, d.active, d.claims, d.reports); });
+        const niceMax = niceCeil(max);
+        updateChartAxis(niceMax);
+        const h = v => (niceMax > 0 ? Math.round(v / niceMax * 100) : 0);
+        barChartContainer.innerHTML = data.map(item => (
+            '<div class="chart-bar-group"><div class="bar-subgroup">' +
+            '<div class="single-bar bar-green" style="height:' + h(item.active) + '%;" title="Active Policies: ' + item.active + '"></div>' +
+            '<div class="single-bar bar-purple" style="height:' + h(item.claims) + '%;" title="Claims: ' + item.claims + '"></div>' +
+            '<div class="single-bar bar-blue" style="height:' + h(item.reports) + '%;" title="Reports: ' + item.reports + '"></div>' +
+            '</div><span class="bar-x-label">' + item.label + '</span></div>'
+        )).join('');
     }
 
     // --- Toggle Chart Filter Range ---
@@ -94,8 +109,21 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Initial load
-    renderChart('7');
+    // Load activity data from the backend, then render the chart
+    async function loadActivityChart() {
+        if (window.AjahFiAPI) {
+            try {
+                const acts = await AjahFiAPI.get('/coordinator/live_activity');
+                activities = Array.isArray(acts) ? acts : [];
+            } catch (err) {
+                console.warn('Could not load activity chart:', err.message);
+                activities = [];
+            }
+        }
+        const activeBtn = document.querySelector('.btn-chart-range.active');
+        renderChart(activeBtn ? activeBtn.getAttribute('data-range') : '7');
+    }
+    loadActivityChart();
 
     // --- Live report KPIs from backend (/coordinator/dashboard) ---
     function money(n) {
