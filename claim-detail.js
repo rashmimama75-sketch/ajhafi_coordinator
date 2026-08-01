@@ -116,6 +116,43 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    const EVIDENCE_LABELS = {
+        ear_tag: 'Ear Tag Photo',
+        full_body: 'Full Body Photo',
+        close_up: 'Close-up Photo',
+        location: 'Site Visit Photo',
+        site_visit: 'Site Visit Photo',
+        document: 'Document',
+        documents: 'Documents'
+    };
+
+    function renderEvidence(list) {
+        const grid = document.getElementById('evidenceGrid');
+        if (!grid) return;
+        if (!list || !list.length) {
+            grid.innerHTML = '<div class="claim-evidence-item" style="grid-column:1 / -1;text-align:center;color:var(--text-muted);padding:20px;">No evidence uploaded for this claim.</div>';
+            return;
+        }
+        grid.innerHTML = list.map(function (ev) {
+            const url = (window.AjahFiAPI ? AjahFiAPI.mediaUrl(ev.url) : ev.url) || '';
+            const key = String(ev.type || '').toLowerCase();
+            const label = EVIDENCE_LABELS[key] || cap(String(ev.type || 'Evidence').replace(/_/g, ' '));
+            const isPdf = /\.pdf(\?|$)/i.test(ev.url || '');
+            if (isPdf) {
+                return '<div class="claim-evidence-item" style="justify-content:center;height:100%;">' +
+                    '<a href="' + url + '" target="_blank" rel="noopener" class="claim-evidence-img" ' +
+                    'style="display:flex;align-items:center;justify-content:center;background-color:#f1f5f9;text-decoration:none;">' +
+                    '<i class="fa-regular fa-file-pdf" style="font-size:28px;color:var(--color-rejected);"></i></a>' +
+                    '<span class="claim-evidence-lbl">' + label + '</span></div>';
+            }
+            return '<div class="claim-evidence-item">' +
+                '<a href="' + url + '" target="_blank" rel="noopener" title="Open full image">' +
+                '<img src="' + url + '" alt="' + label + '" class="claim-evidence-img" ' +
+                'onerror="this.onerror=null;this.src=\'goat_thumbnail.png\';"></a>' +
+                '<span class="claim-evidence-lbl">' + label + '</span></div>';
+        }).join('');
+    }
+
     function renderClaim(c) {
         const goat = c.goat || {};
         const st = mapStatus(c.status);
@@ -141,6 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setText('lblDeathReportedBy', (c.reported_by || c.farmer || '').trim());
 
         renderVaccinations(c.vaccinations);
+        renderEvidence(c.evidence);
         setStepper(st.label);
 
         // Action buttons (onclick assignment so re-renders don't stack handlers)
