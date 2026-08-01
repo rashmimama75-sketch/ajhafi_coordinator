@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // --- Activity Overview chart data (aggregated from /coordinator/live_activity) ---
-    let activities = [];
+    // --- Activity Overview chart data (from /coordinator/performance) ---
+    const RANGE_MAP = { '7': 'last7', '30': 'last30', '365': 'last365' };
+    const perfCache = {};
 
     function niceCeil(n) { return Math.max(5, Math.ceil((n || 0) / 5) * 5); }
 
@@ -8,37 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const labels = document.querySelectorAll('.grid-axis-label');
         const steps = [maxVal, maxVal * 0.8, maxVal * 0.6, maxVal * 0.4, maxVal * 0.2, 0];
         labels.forEach((el, i) => { if (steps[i] != null) el.textContent = Math.round(steps[i]); });
-    }
-
-    function buildChartData(range) {
-        const now = new Date();
-        let buckets, span; // span = days per bucket
-        if (range === '30') { buckets = 6; span = 5; }
-        else if (range === '365') { buckets = 12; span = 30; }
-        else { buckets = 7; span = 1; }
-
-        const arr = [];
-        for (let i = 0; i < buckets; i++) {
-            arr.push({ active: 0, claims: 0, enrollments: 0, endDate: new Date(now.getTime() - i * span * 86400000) });
-        }
-        activities.forEach(a => {
-            const t = new Date(String(a.time || '').replace(' ', 'T'));
-            if (isNaN(t)) return;
-            const daysAgo = Math.floor((now - t) / 86400000);
-            if (daysAgo < 0) return;
-            const b = Math.floor(daysAgo / span);
-            if (b >= buckets) return;
-            const type = String(a.type || '').toLowerCase();
-            if (type === 'enrollment') { arr[b].active++; arr[b].enrollments++; }
-            else if (type === 'claim') arr[b].claims++;
-        });
-        arr.reverse(); // oldest bucket on the left
-        const fmtDay = d => d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' });
-        const fmtMon = d => d.toLocaleDateString('en-GB', { month: 'short' });
-        return arr.map(b => ({
-            active: b.active, claims: b.claims, enrollments: b.enrollments,
-            label: (range === '365') ? fmtMon(b.endDate) : fmtDay(b.endDate)
-        }));
     }
 
     // --- State Management ---
@@ -49,22 +19,39 @@ document.addEventListener('DOMContentLoaded', () => {
     const profileBtn = document.getElementById('profileDropdownBtn');
     const barChartContainer = document.getElementById('barChartContainer');
 
-    // --- Render Chart Function (heights scaled to the real data) ---
-    function renderChart(range) {
+    // --- Render Chart from performance days[] (scaled to the real data) ---
+    function renderChart(days) {
         if (!barChartContainer) return;
-        const data = buildChartData(range);
+        days = days || [];
         let max = 0;
-        data.forEach(d => { max = Math.max(max, d.active, d.claims, d.enrollments); });
+        days.forEach(d => { max = Math.max(max, +d.active_policies || 0, +d.claims || 0, +d.enrollments || 0); });
         const niceMax = niceCeil(max);
         updateChartAxis(niceMax);
-        const h = v => (niceMax > 0 ? Math.round(v / niceMax * 100) : 0);
-        barChartContainer.innerHTML = data.map(item => (
-            '<div class="chart-bar-group"><div class="bar-subgroup">' +
-            '<div class="single-bar bar-green" style="height:' + h(item.active) + '%;" title="Active Policies: ' + item.active + '"></div>' +
-            '<div class="single-bar bar-purple" style="height:' + h(item.claims) + '%;" title="Claims: ' + item.claims + '"></div>' +
-            '<div class="single-bar bar-blue" style="height:' + h(item.enrollments) + '%;" title="Enrollments: ' + item.enrollments + '"></div>' +
-            '</div><span class="bar-x-label">' + item.label + '</span></div>'
-        )).join('');
+        const h = v => (niceMax > 0 ? Math.round((+v || 0) / niceMax * 100) : 0);
+        barChartContainer.innerHTML = days.map(d => {
+            const ap = +d.active_policies || 0, cl = +d.claims || 0, en = +d.enrollments || 0;
+            const label = d.label || d.date || '';
+            return '<div class="chart-bar-group"><div class="bar-subgroup">' +
+                '<div class="single-bar bar-green" style="height:' + h(ap) + '%;" title="Active Policies: ' + ap + '"></div>' +
+                '<div class="single-bar bar-purple" style="height:' + h(cl) + '%;" title="Claims: ' + cl + '"></div>' +
+                '<div class="single-bar bar-blue" style="height:' + h(en) + '%;" title="Enrollments: ' + en + '"></div>' +
+                '</div><span class="bar-x-label">' + label + '</span></div>';
+        }).join('');
+    }
+
+    async function loadAndRender(range) {
+        const apiRange = RANGE_MAP[range] || 'last7';
+        if (perfCache[apiRange]) { renderChart(perfCache[apiRange]); return; }
+        if (barChartContainer) barChartContainer.innerHTML = '<div style="padding:30px;color:var(--text-muted);text-align:center;width:100%;">Loading…</div>';
+        try {
+            const data = await AjahFiAPI.get('/coordinator/performance?range=' + apiRange);
+            const days = (data && data.days) || [];
+            perfCache[apiRange] = days;
+            renderChart(days);
+        } catch (err) {
+            console.warn('Could not load performance:', err.message);
+            if (barChartContainer) barChartContainer.innerHTML = '<div style="padding:30px;color:var(--color-rejected);text-align:center;width:100%;">Could not load activity data.</div>';
+        }
     }
 
     // --- Toggle Chart Filter Range ---
@@ -74,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
             rangeButtons.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             const range = btn.getAttribute('data-range');
-            renderChart(range);
+            loadAndRender(range);
         });
     });
 
@@ -108,21 +95,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Load activity data from the backend, then render the chart
-    async function loadActivityChart() {
-        if (window.AjahFiAPI) {
-            try {
-                const acts = await AjahFiAPI.get('/coordinator/live_activity');
-                activities = Array.isArray(acts) ? acts : [];
-            } catch (err) {
-                console.warn('Could not load activity chart:', err.message);
-                activities = [];
-            }
-        }
-        const activeBtn = document.querySelector('.btn-chart-range.active');
-        renderChart(activeBtn ? activeBtn.getAttribute('data-range') : '7');
-    }
-    loadActivityChart();
+    // Initial load from the backend
+    const activeRangeBtn = document.querySelector('.btn-chart-range.active');
+    loadAndRender(activeRangeBtn ? activeRangeBtn.getAttribute('data-range') : '7');
 
     // --- Live report KPIs from backend (/coordinator/dashboard) ---
     function money(n) {
