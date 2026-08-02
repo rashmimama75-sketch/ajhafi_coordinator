@@ -524,34 +524,29 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!window.AjahFiAPI) return;
         ['valActivePolicies', 'valClaimsHistory', 'valEnrollments', 'valTotalPremium']
             .forEach(id => { const el = document.getElementById(id); if (el) el.textContent = '…'; });
-        try {
-            const data = await AjahFiAPI.get('/coordinator/performance?range=' + encodeURIComponent(range));
+
+        // Headline numbers: the dashboard's period (range_*) fields — same as the app.
+        AjahFiAPI.get('/coordinator/dashboard?range=' + encodeURIComponent(range)).then(d => {
+            if (!d) return;
+            setStat('valActivePolicies', d.range_active_policies);
+            setStat('valClaimsHistory', d.range_claims);
+            setStat('valEnrollments', d.range_enrollments);
+            const prEl = document.getElementById('valTotalPremium');
+            if (prEl && d.range_premium != null) prEl.textContent = fmtPremium(d.range_premium);
+        }).catch(err => console.warn('Overview numbers failed:', err.message));
+
+        // Charts: per-day trend for the same period from the performance endpoint.
+        AjahFiAPI.get('/coordinator/performance?range=' + encodeURIComponent(range)).then(data => {
             const days = (data && data.days) || [];
             const labels = days.map(dd => {
                 const dt = new Date(String(dd.date));
                 return isNaN(dt) ? (dd.label || '') : dt.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' });
             });
-            const ap = days.map(dd => +dd.active_policies || 0);
-            const cl = days.map(dd => +dd.claims || 0);
-            const en = days.map(dd => +dd.enrollments || 0);
-            const pr = days.map(dd => +dd.premium || 0);
-            const sum = a => a.reduce((x, y) => x + y, 0);
-
-            // Headline numbers for the selected period
-            setStat('valActivePolicies', ap.length ? ap[ap.length - 1] : 0); // current active policies
-            setStat('valClaimsHistory', sum(cl));
-            setStat('valEnrollments', sum(en));
-            const prEl = document.getElementById('valTotalPremium');
-            if (prEl) prEl.textContent = fmtPremium(sum(pr));
-
-            // Charts
-            updateSpark(policiesChart, labels, ap);
-            updateSpark(claimsChart, labels, cl);
-            updateSpark(enrollmentsChart, labels, en);
-            updateSpark(premiumChart, labels, pr);
-        } catch (err) {
-            console.warn('Could not update overview:', err.message);
-        }
+            updateSpark(policiesChart, labels, days.map(dd => +dd.active_policies || 0));
+            updateSpark(claimsChart, labels, days.map(dd => +dd.claims || 0));
+            updateSpark(enrollmentsChart, labels, days.map(dd => +dd.enrollments || 0));
+            updateSpark(premiumChart, labels, days.map(dd => +dd.premium || 0));
+        }).catch(err => console.warn('Overview charts failed:', err.message));
     }
 
     const overviewSelect = document.getElementById('overviewTimeframe');
