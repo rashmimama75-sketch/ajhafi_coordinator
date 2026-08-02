@@ -139,7 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 1. Active Policies Chart (Blue / Greenish Brand color theme)
     const ctxPolicies = document.getElementById('chartActivePolicies').getContext('2d');
     const policiesGradient = getGradient(ctxPolicies, 'rgba(21, 128, 61, 0.25)', 'rgba(21, 128, 61, 0.0)');
-    new Chart(ctxPolicies, {
+    const policiesChart = new Chart(ctxPolicies, {
         type: 'line',
         data: {
             labels: datesLabel,
@@ -174,7 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 2. Claims History Chart (Purple)
     const ctxClaims = document.getElementById('chartClaimsHistory').getContext('2d');
     const claimsGradient = getGradient(ctxClaims, 'rgba(109, 40, 217, 0.25)', 'rgba(109, 40, 217, 0.0)');
-    new Chart(ctxClaims, {
+    const claimsChart = new Chart(ctxClaims, {
         type: 'line',
         data: {
             labels: datesLabel,
@@ -209,7 +209,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 3. Enrollments Chart (Green)
     const ctxEnrollments = document.getElementById('chartEnrollments').getContext('2d');
     const enrollmentsGradient = getGradient(ctxEnrollments, 'rgba(21, 128, 61, 0.25)', 'rgba(21, 128, 61, 0.0)');
-    new Chart(ctxEnrollments, {
+    const enrollmentsChart = new Chart(ctxEnrollments, {
         type: 'line',
         data: {
             labels: datesLabel,
@@ -244,7 +244,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 4. Total Premium Chart (Orange)
     const ctxPremium = document.getElementById('chartTotalPremium').getContext('2d');
     const premiumGradient = getGradient(ctxPremium, 'rgba(217, 119, 6, 0.25)', 'rgba(217, 119, 6, 0.0)');
-    new Chart(ctxPremium, {
+    const premiumChart = new Chart(ctxPremium, {
         type: 'line',
         data: {
             labels: datesLabel,
@@ -495,15 +495,9 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const d = await AjahFiAPI.get('/coordinator/dashboard');
             if (!d) return;
-            setStat('valActivePolicies', d.active_policies);
-            setStat('valClaimsHistory', d.total_claims);
-            setStat('valEnrollments', d.total_enrollments);
+            // Summary cards (not affected by the Overview time filter)
             setStat('valTotalDidis', d.total_didis);
             setStat('valTotalFarmers', d.total_farmers);
-            if (d.total_premium !== undefined && d.total_premium !== null) {
-                const el = document.getElementById('valTotalPremium');
-                if (el) el.textContent = fmtPremium(d.total_premium);
-            }
 
             const statusCards = document.querySelectorAll('.claims-status-card .status-count');
             if (statusCards.length >= 4) {
@@ -513,9 +507,56 @@ document.addEventListener('DOMContentLoaded', () => {
                 statusCards[3].textContent = fmtNum(d.claims_rejected);
             }
         } catch (err) {
-            // Keep the placeholder numbers if the call fails; log for debugging.
             console.warn('Could not load dashboard stats:', err.message);
         }
     }
     loadDashboardStats();
+
+    // --- Overview time filter: updates the 4 sparkline cards + charts ---
+    function updateSpark(chart, labels, dataArr) {
+        if (!chart) return;
+        chart.data.labels = labels;
+        chart.data.datasets[0].data = dataArr;
+        chart.update();
+    }
+
+    async function updateOverview(range) {
+        if (!window.AjahFiAPI) return;
+        ['valActivePolicies', 'valClaimsHistory', 'valEnrollments', 'valTotalPremium']
+            .forEach(id => { const el = document.getElementById(id); if (el) el.textContent = '…'; });
+        try {
+            const data = await AjahFiAPI.get('/coordinator/performance?range=' + encodeURIComponent(range));
+            const days = (data && data.days) || [];
+            const labels = days.map(dd => {
+                const dt = new Date(String(dd.date));
+                return isNaN(dt) ? (dd.label || '') : dt.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' });
+            });
+            const ap = days.map(dd => +dd.active_policies || 0);
+            const cl = days.map(dd => +dd.claims || 0);
+            const en = days.map(dd => +dd.enrollments || 0);
+            const pr = days.map(dd => +dd.premium || 0);
+            const sum = a => a.reduce((x, y) => x + y, 0);
+
+            // Headline numbers for the selected period
+            setStat('valActivePolicies', ap.length ? ap[ap.length - 1] : 0); // current active policies
+            setStat('valClaimsHistory', sum(cl));
+            setStat('valEnrollments', sum(en));
+            const prEl = document.getElementById('valTotalPremium');
+            if (prEl) prEl.textContent = fmtPremium(sum(pr));
+
+            // Charts
+            updateSpark(policiesChart, labels, ap);
+            updateSpark(claimsChart, labels, cl);
+            updateSpark(enrollmentsChart, labels, en);
+            updateSpark(premiumChart, labels, pr);
+        } catch (err) {
+            console.warn('Could not update overview:', err.message);
+        }
+    }
+
+    const overviewSelect = document.getElementById('overviewTimeframe');
+    if (overviewSelect) {
+        overviewSelect.addEventListener('change', () => updateOverview(overviewSelect.value));
+        updateOverview(overviewSelect.value); // initial (respects the default selection)
+    }
 });
