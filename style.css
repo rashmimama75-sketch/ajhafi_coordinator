@@ -2914,7 +2914,7 @@ h4,
 
 /* --- Claims Page Specific Styling --- */
 .claims-banner {
-    background-image: linear-gradient(90deg, rgba(255, 255, 255, 0.97) 0%, rgba(255, 255, 255, 0.9) 30%, rgba(255, 255, 255, 0.55) 50%, rgba(255, 255, 255, 0.15) 68%, rgba(255, 255, 255, 0) 82%), url('banner_goats.png');
+    background-image: linear-gradient(90deg, rgba(255, 255, 255, 0.97) 0%, rgba(255, 255, 255, 0.9) 30%, rgba(255, 255, 255, 0.55) 50%, rgba(255, 255, 255, 0.15) 68%, rgba(255, 255, 255, 0) 82%), url('banner_claim.png');
     background-position: right center;
 }
 
@@ -4134,11 +4134,9 @@ h4,
     top: 0;
     bottom: 0;
     width: 45%;
-    background-image: url('banner_goats.png');
+    background-image: url('banner_claim.png');
     background-size: cover;
     background-position: center right;
-    mask-image: linear-gradient(to left, rgba(0, 0, 0, 1) 60%, rgba(0, 0, 0, 0) 100%);
-    -webkit-mask-image: linear-gradient(to left, rgba(0, 0, 0, 1) 60%, rgba(0, 0, 0, 0) 100%);
     z-index: 1;
 }
 
