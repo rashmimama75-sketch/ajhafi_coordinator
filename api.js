@@ -5,7 +5,7 @@
 (function (global) {
     'use strict';
 
-    var API_BASE = 'https://backend-goat.onrender.com';
+    var API_BASE = 'https://ajahfi.goatbank.co';
 
     var TOKEN_KEY = 'ajahfi_token';
     var PROFILE_KEY = 'ajahfi_auth';
