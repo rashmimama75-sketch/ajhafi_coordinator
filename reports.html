@@ -24,6 +24,9 @@
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <!-- jsPDF (+ AutoTable) for "Download Reports" as PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
 </head>
 <body>
     <div class="app-container">
@@ -303,14 +306,14 @@
                 <!-- Bottom Report Actions Section -->
                 <section class="reports-bottom-actions">
                     <div class="reports-actions-grid" style="grid-template-columns: 1fr;">
-                        <div class="report-action-card bg-blue-tint">
+                        <div class="report-action-card bg-blue-tint" id="downloadReportCard" role="button" tabindex="0" style="cursor:pointer;">
                             <div class="report-action-inner">
                                 <div class="action-icon bg-blue-soft">
                                     <i class="fa-solid fa-download text-blue"></i>
                                 </div>
                                 <div class="action-text">
                                     <h4 class="action-card-title">Download Reports</h4>
-                                    <p class="action-card-subtitle">Download detailed reports</p>
+                                    <p class="action-card-subtitle" id="downloadReportSubtitle">Download detailed reports (PDF)</p>
                                 </div>
                             </div>
                             <i class="fa-solid fa-chevron-right action-nav-icon"></i>

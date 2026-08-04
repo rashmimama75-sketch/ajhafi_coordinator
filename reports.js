@@ -168,4 +168,126 @@ document.addEventListener('DOMContentLoaded', () => {
         }).catch(function (err) { console.warn('goat locations load failed:', err.message); });
     }
     initReportsMap();
+
+    // --- Download Report (PDF export of the live report data) ---
+    const RANGE_LABEL = { '7': 'Last 7 Days', '30': 'Last 1 Month', '365': 'Last 1 Year' };
+
+    function getJsPDF() {
+        // jsPDF UMD exposes itself as window.jspdf.jsPDF
+        return (window.jspdf && window.jspdf.jsPDF) ? window.jspdf.jsPDF : null;
+    }
+
+    async function buildAndDownloadReport() {
+        if (!window.AjahFiAPI) return;
+        const JsPDF = getJsPDF();
+        if (!JsPDF) { throw new Error('PDF library not loaded'); }
+
+        const rangeBtn = document.querySelector('.btn-chart-range.active');
+        const range = rangeBtn ? rangeBtn.getAttribute('data-range') : '7';
+        const apiRange = RANGE_MAP[range] || 'last7';
+        const rangeLabel = RANGE_LABEL[range] || 'Last 7 Days';
+
+        // Pull the same data the page shows: KPIs + the activity series.
+        const [d, days] = await Promise.all([
+            AjahFiAPI.get('/coordinator/dashboard').catch(function () { return null; }),
+            (perfCache[apiRange]
+                ? Promise.resolve(perfCache[apiRange])
+                : AjahFiAPI.get('/coordinator/performance?range=' + apiRange)
+                    .then(function (r) { return (r && r.days) || []; })
+                    .catch(function () { return []; }))
+        ]);
+
+        const now = new Date();
+        const doc = new JsPDF({ unit: 'pt', format: 'a4' });
+        const pageW = doc.internal.pageSize.getWidth();
+        const marginX = 40;
+        // Use "Rs." rather than the ₹ glyph — the built-in PDF font can't render ₹.
+        const rupee = function (n) {
+            if (n == null || isNaN(n)) return '-';
+            return 'Rs. ' + Number(n).toLocaleString('en-IN');
+        };
+        const numOrDash = function (n) { return (n == null || isNaN(n)) ? '-' : Number(n).toLocaleString('en-IN'); };
+
+        // Header
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(18);
+        doc.setTextColor(22, 101, 52); // brand green
+        doc.text('AjahFi Coordinator Report', marginX, 50);
+
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(10);
+        doc.setTextColor(100);
+        doc.text('Generated: ' + now.toLocaleString('en-IN'), marginX, 70);
+        doc.text('Activity range: ' + rangeLabel, marginX, 84);
+        doc.setDrawColor(220);
+        doc.line(marginX, 94, pageW - marginX, 94);
+
+        // Summary table
+        doc.autoTable({
+            startY: 110,
+            head: [['Summary', 'Value']],
+            body: [
+                ['Active Policies', numOrDash(d && d.active_policies)],
+                ['Total Claims', numOrDash(d && d.total_claims)],
+                ['Today Premium Collection', rupee(d && d.range_premium)],
+                ['Total Premium Collection', rupee(d && d.total_premium)]
+            ],
+            theme: 'grid',
+            headStyles: { fillColor: [22, 101, 52], textColor: 255, fontStyle: 'bold' },
+            styles: { fontSize: 10, cellPadding: 6 },
+            margin: { left: marginX, right: marginX }
+        });
+
+        // Activity Overview table
+        const bodyRows = (days || []).map(function (row) {
+            return [
+                row.label || row.date || '',
+                numOrDash(row.active_policies || 0),
+                numOrDash(row.claims || 0),
+                numOrDash(row.enrollments || 0)
+            ];
+        });
+        doc.autoTable({
+            startY: (doc.lastAutoTable ? doc.lastAutoTable.finalY : 130) + 24,
+            head: [['Date', 'Active Policies', 'Claims', 'Enrollments']],
+            body: bodyRows.length ? bodyRows : [['No activity data', '', '', '']],
+            theme: 'striped',
+            headStyles: { fillColor: [37, 99, 235], textColor: 255, fontStyle: 'bold' },
+            styles: { fontSize: 10, cellPadding: 6 },
+            columnStyles: { 1: { halign: 'center' }, 2: { halign: 'center' }, 3: { halign: 'center' } },
+            margin: { left: marginX, right: marginX },
+            didDrawPage: function () {
+                // Section title above the activity table
+            }
+        });
+
+        const stamp = now.toISOString().slice(0, 10);
+        doc.save('AjahFi_Report_' + stamp + '.pdf');
+    }
+
+    const downloadCard = document.getElementById('downloadReportCard');
+    const downloadSubtitle = document.getElementById('downloadReportSubtitle');
+    if (downloadCard) {
+        let busy = false;
+        const run = async function () {
+            if (busy) return;
+            busy = true;
+            const original = downloadSubtitle ? downloadSubtitle.textContent : '';
+            if (downloadSubtitle) downloadSubtitle.textContent = 'Preparing report…';
+            try {
+                await buildAndDownloadReport();
+                if (downloadSubtitle) downloadSubtitle.textContent = 'Report downloaded ✓';
+            } catch (err) {
+                console.warn('Download failed:', err.message);
+                if (downloadSubtitle) downloadSubtitle.textContent = 'Could not build report — try again';
+            } finally {
+                busy = false;
+                setTimeout(function () { if (downloadSubtitle) downloadSubtitle.textContent = original || 'Download detailed reports (PDF)'; }, 2500);
+            }
+        };
+        downloadCard.addEventListener('click', run);
+        downloadCard.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); run(); }
+        });
+    }
 });
