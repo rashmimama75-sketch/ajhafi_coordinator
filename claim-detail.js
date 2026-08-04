@@ -219,7 +219,19 @@ document.addEventListener('DOMContentLoaded', () => {
         setText('lblGoatId', goat.ear_tag_number);
         setText('lblEarTag', goat.ear_tag_number);
         setText('lblBreed', goat.breed);
+        setText('lblColor', cap(goat.color));
         setText('lblGender', cap(goat.gender));
+
+        // Color isn't always inlined in the claim payload — if missing, pull it
+        // from the full goat record (/sd/goats/{id}) which always returns it.
+        if (!goat.color) {
+            const gid = goat.id || goat.goat_id || c.goat_id;
+            if (gid && window.AjahFiAPI) {
+                AjahFiAPI.get('/sd/goats/' + encodeURIComponent(gid))
+                    .then(function (gd) { if (gd && gd.color) { setText('lblColor', cap(gd.color)); } })
+                    .catch(function () { /* leave as — */ });
+            }
+        }
         setText('lblAge', ageLabel(goat.age_months));
         setText('lblSumInsured', money(c.sum_insured));
         setText('lblPolicyNumber', c.policy_number);
