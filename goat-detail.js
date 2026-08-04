@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setText('lblAge', ageLabel(g.age_months));
         setText('lblWeight', g.weight_kg != null ? g.weight_kg + ' kg' : '—');
         setText('lblBreed', g.breed);
-        setText('lblDob', fmtDate(g.date_of_birth));
+        setText('lblColor', cap(g.color));
 
         const farmer = g.farmer || {};
         setText('lblInsuredBy', (farmer.name || '').trim());
@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return {
             ear_tag_number: g.ear_tag_number, breed: g.breed, gender: g.gender,
             age_months: g.age_months, weight_kg: g.weight_kg, status: g.status,
-            date_of_birth: null, enrolled_on: g.enrolled_date,
+            color: g.color, enrolled_on: g.enrolled_date,
             farmer: { name: g.farmer, village: g.village },
             photos: g.photo ? [{ type: 'face', url: g.photo }] : [],
             vaccinations: [], policy: {}
