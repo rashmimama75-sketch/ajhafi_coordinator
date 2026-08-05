@@ -127,11 +127,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>
                 <div class="support-modal-body">
                     <p>How would you like to connect with our support helpdesk?</p>
-                    <a href="tel:+919876543210" class="support-option-btn btn-call">
-                        <i class="fa-solid fa-phone"></i> Call Us
-                    </a>
-                    <button id="btnChatOption" class="support-option-btn btn-chat">
-                        <i class="fa-solid fa-comments" style="color: #22c55e;"></i> Chat Us
+                    <button class="support-option-btn btn-call disabled" disabled style="cursor: not-allowed; opacity: 0.5; pointer-events: none;">
+                        <i class="fa-solid fa-phone"></i> Call Us (Unavailable)
+                    </button>
+                    <button id="btnChatOption" class="support-option-btn btn-chat disabled" disabled style="cursor: not-allowed; opacity: 0.5; pointer-events: none;">
+                        <i class="fa-solid fa-comments" style="color: #94a3b8;"></i> Chat Us (Unavailable)
                     </button>
                 </div>
             </div>
@@ -158,9 +158,9 @@ document.addEventListener("DOMContentLoaded", () => {
         if (e.target === overlay) hideModal();
     });
 
-    chatBtn.addEventListener('click', () => {
-        hideModal();
-        alert("Connecting to chat support. Please wait...");
+    chatBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
     });
 
     // 4. Intercept all contact support button clicks
