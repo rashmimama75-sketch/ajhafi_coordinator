@@ -124,13 +124,6 @@ document.addEventListener("DOMContentLoaded", () => {
             color: #22c55e;
             margin-right: 6px;
         }
-        #supportModal .support-contact-caption {
-            margin-top: 4px;
-            text-align: center;
-            color: #64748b;
-            font-size: 13px;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-        }
     `;
     document.head.appendChild(style);
 
@@ -145,15 +138,11 @@ document.addEventListener("DOMContentLoaded", () => {
                     <button class="support-modal-close" id="btnCloseSupport">&times;</button>
                 </div>
                 <div class="support-modal-body">
-                    <p>How would you like to connect with our support helpdesk?</p>
-                    <button type="button" class="support-option-btn btn-call">
-                        <i class="fa-solid fa-phone"></i> Call Us
-                    </button>
-                    <button id="btnChatOption" type="button" class="support-option-btn btn-chat">
-                        <i class="fa-solid fa-comments" style="color: #22c55e;"></i> Chat Us
-                    </button>
-                    <div class="support-contact-number"><i class="fa-solid fa-phone"></i> +91 92373 92712</div>
-                    <div class="support-contact-caption">Reach us on this number for support</div>
+                    <p>Reach our support team by email and we'll get back to you.</p>
+                    <a href="mailto:support.ajahfi@goatbank.co" class="support-option-btn btn-call">
+                        <i class="fa-solid fa-envelope"></i> Email Us
+                    </a>
+                    <div class="support-contact-number"><i class="fa-solid fa-envelope"></i> support.ajahfi@goatbank.co</div>
                 </div>
             </div>
         </div>
@@ -177,7 +166,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (e.target === overlay) hideModal();
     });
 
-    // Call Us / Chat Us are shown but intentionally non-functional (no action on click).
+    // Support is email-only; the "Email Us" button opens the user's mail client.
 
     // 4. Intercept all contact support button clicks
     const setupButton = () => {
