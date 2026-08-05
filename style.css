@@ -3545,6 +3545,200 @@ h4,
     transform: translateX(-3px);
 }
 
+.btn-edit-profile:hover {
+    background-color: var(--brand-primary-light);
+    color: var(--brand-primary-hover);
+}
+
+/* --- Edit Profile Modal Styles --- */
+.edit-profile-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(15, 23, 42, 0.55);
+    backdrop-filter: blur(4px);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.25s ease;
+}
+
+.edit-profile-modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.edit-profile-modal-card {
+    background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.18);
+    width: 100%;
+    max-width: 460px;
+    overflow: hidden;
+    transform: translateY(12px) scale(0.98);
+    transition: transform 0.25s ease;
+}
+
+.edit-profile-modal-overlay.active .edit-profile-modal-card {
+    transform: translateY(0) scale(1);
+}
+
+.edit-profile-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 24px;
+    border-bottom: 1px solid var(--border-color, #e2e8f0);
+}
+
+.edit-profile-modal-header h3 {
+    margin: 0;
+    font-family: 'Outfit', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-primary, #0f172a);
+}
+
+.edit-profile-modal-close {
+    background: transparent;
+    border: none;
+    font-size: 24px;
+    color: #64748b;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0 4px;
+    transition: color 0.2s ease;
+}
+
+.edit-profile-modal-close:hover {
+    color: #0f172a;
+}
+
+.edit-profile-modal-body {
+    padding: 20px 24px 24px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.edit-profile-avatar-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding-bottom: 4px;
+}
+
+.modal-avatar-preview {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--brand-primary, #15803d);
+}
+
+.btn-change-photo-modal {
+    background-color: var(--brand-primary-light, #f0fdf4);
+    color: var(--brand-primary, #15803d);
+    border: 1px solid var(--brand-primary, #15803d);
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+}
+
+.btn-change-photo-modal:hover {
+    background-color: var(--brand-primary, #15803d);
+    color: #ffffff;
+}
+
+.edit-profile-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.edit-profile-field label {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: #334155;
+}
+
+.edit-profile-input {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: #0f172a;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.edit-profile-input:focus {
+    outline: none;
+    border-color: var(--brand-primary, #15803d);
+    box-shadow: 0 0 0 3px rgba(21, 128, 61, 0.15);
+}
+
+.edit-profile-modal-footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 8px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border-color, #e2e8f0);
+}
+
+.btn-modal-cancel {
+    background: transparent;
+    border: 1px solid #cbd5e1;
+    color: #475569;
+    padding: 9px 18px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-modal-cancel:hover {
+    background-color: #f1f5f9;
+    color: #0f172a;
+}
+
+.btn-modal-save {
+    background-color: var(--brand-primary, #15803d);
+    color: #ffffff;
+    border: none;
+    padding: 9px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(21, 128, 61, 0.25);
+    transition: all 0.2s ease;
+}
+
+.btn-modal-save:hover {
+    background-color: var(--brand-primary-hover, #166534);
+    box-shadow: 0 4px 10px rgba(21, 128, 61, 0.35);
+}
+
 .settings-header-right {
     display: flex;
     align-items: center;

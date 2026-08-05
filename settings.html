@@ -97,7 +97,7 @@
                         <div class="settings-avatar-container">
                             <img src="goat_thumbnail.png" id="lblProfileAvatar"
                                 alt="Profile Photo" class="settings-avatar-lg">
-                            <button class="btn-camera-edit" aria-label="Change Profile Photo">
+                            <button class="btn-camera-edit" id="btnCameraEdit" aria-label="Change Profile Photo">
                                 <i class="fa-solid fa-camera"></i>
                             </button>
                         </div>
@@ -111,7 +111,7 @@
                         </div>
                     </div>
                     <div class="settings-profile-right">
-                        <button class="btn-edit-profile">
+                        <button class="btn-edit-profile" id="btnEditProfile">
                             <i class="fa-solid fa-pencil"></i>
                             <span>Edit Profile</span>
                         </button>
@@ -222,6 +222,41 @@
             </div>
         </main>
     </div>
+    <!-- Edit Profile Modal -->
+    <div id="editProfileModal" class="edit-profile-modal-overlay">
+        <div class="edit-profile-modal-card">
+            <div class="edit-profile-modal-header">
+                <h3>Edit Profile</h3>
+                <button class="edit-profile-modal-close" id="btnCloseEditProfileModal">&times;</button>
+            </div>
+            <form id="editProfileForm" class="edit-profile-modal-body">
+                <div class="edit-profile-avatar-row">
+                    <img src="goat_thumbnail.png" id="modalProfileAvatarPreview" class="modal-avatar-preview" alt="Avatar Preview">
+                    <button type="button" class="btn-change-photo-modal" id="btnModalChangePhoto">
+                        <i class="fa-solid fa-camera"></i> Change Photo
+                    </button>
+                </div>
+                <div class="edit-profile-field">
+                    <label for="txtEditFullName">Full Name</label>
+                    <input type="text" id="txtEditFullName" class="edit-profile-input" placeholder="Enter full name" required>
+                </div>
+                <div class="edit-profile-field">
+                    <label for="txtEditPhone">Phone Number</label>
+                    <input type="tel" id="txtEditPhone" class="edit-profile-input" placeholder="Enter phone number">
+                </div>
+                <div class="edit-profile-field">
+                    <label for="txtEditVillage">Village / Location</label>
+                    <input type="text" id="txtEditVillage" class="edit-profile-input" placeholder="Enter village or location">
+                </div>
+                <div class="edit-profile-modal-footer">
+                    <button type="button" class="btn-modal-cancel" id="btnCancelEditProfile">Cancel</button>
+                    <button type="submit" class="btn-modal-save" id="btnSaveEditProfile">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <input type="file" id="fileProfilePhotoInput" accept="image/*" style="display: none;">
+
     <script src="support.js"></script>
     <script src="settings.js"></script>
 </body>
