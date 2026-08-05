@@ -127,11 +127,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>
                 <div class="support-modal-body">
                     <p>How would you like to connect with our support helpdesk?</p>
-                    <button class="support-option-btn btn-call disabled" disabled style="cursor: not-allowed; opacity: 0.5; pointer-events: none;">
-                        <i class="fa-solid fa-phone"></i> Call Us (Unavailable)
+                    <button type="button" class="support-option-btn btn-call">
+                        <i class="fa-solid fa-phone"></i> Call Us
                     </button>
-                    <button id="btnChatOption" class="support-option-btn btn-chat disabled" disabled style="cursor: not-allowed; opacity: 0.5; pointer-events: none;">
-                        <i class="fa-solid fa-comments" style="color: #94a3b8;"></i> Chat Us (Unavailable)
+                    <button id="btnChatOption" type="button" class="support-option-btn btn-chat">
+                        <i class="fa-solid fa-comments" style="color: #22c55e;"></i> Chat Us
                     </button>
                 </div>
             </div>
@@ -143,8 +143,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const modal = document.getElementById('supportModal');
     const closeBtn = document.getElementById('btnCloseSupport');
     const overlay = modal.querySelector('.support-modal-overlay');
-    const chatBtn = document.getElementById('btnChatOption');
-
     const showModal = () => {
         modal.classList.add('active');
     };
@@ -158,10 +156,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (e.target === overlay) hideModal();
     });
 
-    chatBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-    });
+    // Call Us / Chat Us are shown but intentionally non-functional (no action on click).
 
     // 4. Intercept all contact support button clicks
     const setupButton = () => {
