@@ -112,6 +112,25 @@ document.addEventListener("DOMContentLoaded", () => {
             border-color: #cbd5e1;
             transform: translateY(-1px);
         }
+        #supportModal .support-contact-number {
+            margin-top: 16px;
+            text-align: center;
+            color: #0f172a;
+            font-weight: 700;
+            font-size: 16px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        #supportModal .support-contact-number i {
+            color: #22c55e;
+            margin-right: 6px;
+        }
+        #supportModal .support-contact-caption {
+            margin-top: 4px;
+            text-align: center;
+            color: #64748b;
+            font-size: 13px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
     `;
     document.head.appendChild(style);
 
@@ -133,6 +152,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     <button id="btnChatOption" type="button" class="support-option-btn btn-chat">
                         <i class="fa-solid fa-comments" style="color: #22c55e;"></i> Chat Us
                     </button>
+                    <div class="support-contact-number"><i class="fa-solid fa-phone"></i> +91 92373 92712</div>
+                    <div class="support-contact-caption">Reach us on this number for support</div>
                 </div>
             </div>
         </div>
