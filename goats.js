@@ -221,12 +221,51 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
 
+    // --- Top summary stat cards (wired to the backend) ---
+    function setStat(id, val) {
+        const el = document.getElementById(id);
+        if (el) el.textContent = (val == null || isNaN(val)) ? '—' : Number(val).toLocaleString('en-IN');
+    }
+
+    async function loadGoatStats(goatData, goats) {
+        // Total Goats + Active/Inactive from the goats endpoint (authoritative totals).
+        const counts = (goatData && goatData.counts) || {};
+        const totalGoats = (goatData && goatData.total != null) ? goatData.total : goats.length;
+        const activeGoats = (counts.active != null) ? counts.active
+            : goats.filter(g => String(g.status).toLowerCase() === 'active').length;
+        const inactiveGoats = (counts.inactive != null) ? counts.inactive
+            : Math.max(0, totalGoats - activeGoats);
+        setStat('statTotalGoats', totalGoats);
+        setStat('statActiveGoats', activeGoats);
+        setStat('statInactiveGoats', inactiveGoats);
+
+        // Total Farmers from the dashboard (the real total, matches the Farmers page).
+        try {
+            const d = await AjahFiAPI.get('/coordinator/dashboard');
+            if (d && d.total_farmers != null) {
+                setStat('statTotalFarmers', d.total_farmers);
+            } else {
+                // Fallback: distinct farmers seen in the goat list
+                setStat('statTotalFarmers', new Set(goats.map(g => g.farmer)).size);
+            }
+        } catch (e) {
+            setStat('statTotalFarmers', new Set(goats.map(g => g.farmer)).size);
+        }
+    }
+
     async function loadGoats() {
         if (!accordionContainer) return;
         accordionContainer.innerHTML = '<div style="text-align: center; padding: 40px; color: var(--text-muted);">Loading goats…</div>';
+        // Clear hardcoded placeholders immediately so stale numbers never show.
+        ['statTotalFarmers', 'statTotalGoats', 'statActiveGoats', 'statInactiveGoats']
+            .forEach(id => { const el = document.getElementById(id); if (el) el.textContent = '…'; });
         try {
-            const data = await AjahFiAPI.get('/coordinator/goats');
+            // Pull a full page so counts and the accordion reflect all goats (endpoint is paginated).
+            const data = await AjahFiAPI.get('/coordinator/goats?page=1&page_size=1000');
             const goats = ((data && data.goats) || []).map(mapGoat);
+
+            // Wire the summary cards regardless of whether any goats exist.
+            loadGoatStats(data, goats);
 
             if (!goats.length) {
                 accordionContainer.innerHTML = '<div style="text-align: center; padding: 40px; color: var(--text-muted);">No goats found.</div>';
@@ -248,20 +287,9 @@ document.addEventListener('DOMContentLoaded', () => {
             accordionContainer.innerHTML = goatGroups
                 .map((group, i) => createAccordionCard(group, i))
                 .join('');
-
-            // Update the top summary stat cards
-            const counts = (data && data.counts) || {};
-            const totalGoats = (data && data.total != null) ? data.total : goats.length;
-            const activeGoats = (counts.active != null) ? counts.active
-                : goats.filter(g => String(g.status).toLowerCase() === 'active').length;
-            const statVals = document.querySelectorAll('.stat-card-value');
-            if (statVals.length >= 4) {
-                statVals[0].textContent = order.length;            // Total Farmers (with goats)
-                statVals[1].textContent = totalGoats;              // Total Goats
-                statVals[2].textContent = activeGoats;             // Active Goats
-                statVals[3].textContent = (totalGoats - activeGoats); // Inactive Goats
-            }
         } catch (err) {
+            ['statTotalFarmers', 'statTotalGoats', 'statActiveGoats', 'statInactiveGoats']
+                .forEach(id => { const el = document.getElementById(id); if (el) el.textContent = '—'; });
             accordionContainer.innerHTML = '<div style="text-align: center; padding: 40px; color: var(--color-rejected);">Could not load goats: ' + err.message + '</div>';
         }
     }
