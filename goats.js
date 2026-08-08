@@ -253,6 +253,26 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Fetch every goat by walking the pages (the endpoint caps page_size at 100).
+    async function fetchAllGoats() {
+        const PAGE_SIZE = 100;
+        let page = 1;
+        let all = [];
+        let meta = null;
+        while (true) {
+            const data = await AjahFiAPI.get('/coordinator/goats?page=' + page + '&page_size=' + PAGE_SIZE);
+            if (!meta) { meta = data; } // keep first response for total/counts
+            const batch = (data && data.goats) || [];
+            all = all.concat(batch);
+            const total = (data && data.total != null) ? data.total : null;
+            if (batch.length < PAGE_SIZE) break;           // last (short) page
+            if (total != null && all.length >= total) break;
+            page++;
+            if (page > 100) break;                          // safety cap (10k goats)
+        }
+        return { goats: all, meta: meta };
+    }
+
     async function loadGoats() {
         if (!accordionContainer) return;
         accordionContainer.innerHTML = '<div style="text-align: center; padding: 40px; color: var(--text-muted);">Loading goats…</div>';
@@ -260,9 +280,9 @@ document.addEventListener('DOMContentLoaded', () => {
         ['statTotalFarmers', 'statTotalGoats', 'statActiveGoats', 'statInactiveGoats']
             .forEach(id => { const el = document.getElementById(id); if (el) el.textContent = '…'; });
         try {
-            // Pull a full page so counts and the accordion reflect all goats (endpoint is paginated).
-            const data = await AjahFiAPI.get('/coordinator/goats?page=1&page_size=1000');
-            const goats = ((data && data.goats) || []).map(mapGoat);
+            const result = await fetchAllGoats();
+            const data = result.meta;
+            const goats = result.goats.map(mapGoat);
 
             // Wire the summary cards regardless of whether any goats exist.
             loadGoatStats(data, goats);
@@ -290,7 +310,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (err) {
             ['statTotalFarmers', 'statTotalGoats', 'statActiveGoats', 'statInactiveGoats']
                 .forEach(id => { const el = document.getElementById(id); if (el) el.textContent = '—'; });
-            accordionContainer.innerHTML = '<div style="text-align: center; padding: 40px; color: var(--color-rejected);">Could not load goats: ' + err.message + '</div>';
+            accordionContainer.innerHTML = '<div style="text-align: center; padding: 40px; color: var(--text-muted);">No goats found.</div>';
         }
     }
 
